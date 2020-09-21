@@ -1,0 +1,173 @@
+{
+    "author": "Zhu Binqiang <zhu.binqiang@163.com>",
+    "description": "This is a sample book created by gitbook",
+    "title": "My Note",
+    "extension": null,
+    "generator": "site",
+    "isbn": "201707101138",
+    "language": "zh-hans",
+    "links": {
+        "sharing": {
+            "all": null,
+            "facebook": null,
+            "google": null,
+            "twitter": null,
+            "weibo": null
+        },
+        "sidebar": {
+            "Binqiang's Blog": "http://blog.csdn.net/zhubinqiang"
+        }
+    },
+    "output": null,
+    "pdf": {
+        "fontSize": 12,
+        "footerTemplate": null,
+        "headerTemplate": null,
+        "margin": {
+            "bottom": 36,
+            "left": 62,
+            "right": 62,
+            "top": 36
+        },
+        "pageNumbers": true,
+        "paperSize": "a4"
+    },
+    "plugins": [
+        "-livereload",
+        "-search",
+        "search-pro",
+        "-sharing",
+        "-prism",
+        "highlight",
+        "-google_code_prettify",
+        "new-flowchart",
+        "js-sequence-diagram",
+        "latex-codecogs",
+        "betterchinese",
+        "todo",
+        "chart",
+        "chatlog",
+        "github",
+        "toc",
+        "anchor-navigation",
+        "-comscore",
+        "-maxiang",
+        "-anchors",
+        "-autocover",
+        "-asciitree",
+        "-collapsible-menu",
+        "-toggle-chapters",
+        "-richquotes",
+        "-tocstyles",
+        "-expandable-chapters",
+        "-webmaker",
+        "-atoc"
+    ],
+     "pluginsConfig": {
+          "flowchart": {
+            "line-color": "red"
+          },
+
+        "github": {
+            "url": "https://github.com/zhubinqiang/myTMS"
+        },
+
+        "mathjax":{
+            "forceSVG": true
+        },
+
+        "quiz": {
+                "labels": {
+                    "check"             : "Check my answers",
+                    "showExplanation"   : "Explain", 
+                    "showCorrect"       : "Show all",   
+                    "explanationHeader" : "Explanation"
+                },
+                "text": {
+                    "noChosen"    : "Choose at least one answer",  
+                    "incomplete"  : "Some correct answers are missing" 
+                },
+                "buttons": {
+                    "showCorrect"       : true, 
+                    "showExplanation"   : true 
+                }
+        },
+
+
+         "autocover": {
+             "title": "My Book",
+             "author": "Zhu Binqiang",
+             "font": {
+                 "size": null,
+                 "family": "Impact",
+                 "color": "#FFF"
+             },
+             "size": {
+                 "w": 1800,
+                 "h": 2360
+             },
+             "background": {
+                 "color": "#09F"
+             }
+         },
+
+        "search-pro": {
+            "cutWordLib": "nodejieba",
+            "defineWord" : ["小需求","基础建设"]
+        },
+
+        "thumbnail": {
+            "path": "http://www.moejam.com/uploads/article/20160111/d9a8fe4c99791918152a6396ec149291.jpg"
+        },
+
+        "richquotes": {
+            "star": {
+                "alert": "warning",
+                "picto": "fa-star"
+            }
+        },
+
+        "woopra": {
+            "domain": "example.com",
+            "idle_timeout": 1800000
+        },
+
+        "asciitree": {
+            "leadingChar": "no need, because plugin will guess leadingChar.",
+            "trimRight": true
+        },
+
+        "ad": {
+            "contentTop": "<div>Ads at the top of the page</div>",
+            "contentBottom": "%3Cdiv%3EAds%20at%20the%20bottom%20of%20the%20page%3C/div%3E"
+         },
+
+         "chart": {
+            "type": "c3"
+         },
+
+         "chatlog": {
+            "users": {
+                "claylo": {
+                    "balloon": "#08f",
+                    "text": "#fff"
+                },
+                "mojombo": {
+                  "balloon": "#ddd",
+                  "text": "#000"
+                }
+            }
+         },
+
+        "atoc" : {
+            "addClass": true,
+            "className": "atoc"
+        },
+
+
+         "tocstyles": {
+            "tocstyles" : [ "", "cjk-ideographic", "decimal-leading-zero" ]
+         }
+     },
+    "variables": {}
+}
