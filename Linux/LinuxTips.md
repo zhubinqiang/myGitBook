@@ -50,7 +50,7 @@ smbclient //192.168.0.1/tmp  -U username%password
 smbclient -L 198.168.0.1 -U username%password
 ```
 
-### 挂载 raw
+### 挂载 loopback
 ```sh
 sudo losetup /dev/loop0 VirtualMachineImage.raw
 sudo kpartx -a /dev/loop0
@@ -773,6 +773,53 @@ fi
 echo Hello World
 ```
 
+### 分割文本
+将 passwd 这个文件 分割成 passwd-00, passwd-01 ...
+每个文件1k 后缀是数字
+```sh
+split -b 1k passwd -d passwd-
+```
+
+将文件以正则分割为 read-00.log, read-01.log,  read-02.log
+```sh
+csplit README.md '/^# /' -n 2 {*} -f read- -b "%02d.log"
+```
+`'/^# /'`: 正则表达 开头为#
+`-n 2`: 指定分割后文件名后缀数字个数
+`-f read-`: 指定分割后文件名前缀
+`{*}`: 根据匹配重复执行分割，直到文件末尾。 `{整数}`指定次数
+`-b "%02d.log"`: 后缀格式
+
+### 合并文本
+```sh
+cat a b c
+```
+a, b, c 依次相连
+
+```sh
+paste -d',' a b c
+```
+a 在第一列， b在第二列， c在第三列 每列以','分割
+
+### 排序
+```sh
+$ cat alive
+10.67.116.1 is alive
+10.67.116.3 is alive
+10.67.116.2 is alive
+10.67.116.23 is alive
+10.67.116.11 is alive
+
+sort -t'.' -k 4 -n alive
+
+sort -t '.' -k 3,3 -k 4,4 -n alive-2
+```
+`-t`: 分隔符
+`-k 4`: 以哪一列排序
+`-k 3,3`: 起始列3 结尾列3
+`-k 3,3 -k 4,4`：先第3列，后第4列, `-k 3,4` 把3，4列作为一个整体
+`-n`: 按数字number排序
+
 
 ## 目录
 ### 列出当前目录
@@ -919,7 +966,21 @@ tar czvf abc.tar.gz -C /home/usr1/abc .
 tar xzvf abc.tar.gz --strip-components 1
 ```
 
-## 比较
+## grep
+```sh
+grep 'version' . -r --include *.build  --include *.c
+```
+在*.build 和 *.c 的文件中 查找包含“version”
+
+```sh
+grep 'version' . -r --exclude README.md
+grep 'version' . -r --exclude-dir .git
+```
+
+1. 排除 README.md 文件 查找匹配
+2. 排除 .git 目录
+
+### 比较
 统计file1中没有，file2中有的行
 ```sh
 grep -vwf file1 file2
@@ -1018,7 +1079,7 @@ sed 's/s/S/2' my.txt
 sed '1,3s/my/your/g; 3,$s/This/That/g' my.txt
 ```
 
-匹配 `()` 之内的可以当做变量来使用 `\1`, `\2`
+匹配 `\(`, `\)` 之内的可以当做变量来使用 `\1`, `\2`
 ```sh
 ➜ echo "AAA 123" | sed 's/\([A-Z]\+\) \([0-9]\+\)/\2 \1/'
 123 AAA
@@ -1705,7 +1766,28 @@ sudo sysctl -p
 ```sh
 ping build1.example.com
 dig build1.example.com
-host build1.example.com
+```
+
+```sh
+$ host www.163.com
+www.163.com is an alias for www.163.com.163jiasu.com.
+www.163.com.163jiasu.com is an alias for www.163.com.lxdns.com.
+www.163.com.lxdns.com has address 218.1.70.80
+www.163.com.lxdns.com has IPv6 address 240e:f3:a000:1::6e
+```
+
+```sh
+$ nslookup www.163.com
+Server:         127.0.0.53
+Address:        127.0.0.53#53
+
+Non-authoritative answer:
+www.163.com     canonical name = www.163.com.163jiasu.com.
+www.163.com.163jiasu.com        canonical name = www.163.com.lxdns.com.
+Name:   www.163.com.lxdns.com
+Address: 218.1.70.80
+Name:   www.163.com.lxdns.com
+Address: 240e:f3:a000:1::6e
 ```
 
 通过ip查询hostname
