@@ -773,6 +773,17 @@ fi
 echo Hello World
 ```
 
+### shell 脚本接收重定向的内容
+```sh
+args=$(cat)
+echo $args
+
+cmd=$1
+for i in $args; do
+    $cmd $i
+done
+```
+
 ### 分割文本
 将 passwd 这个文件 分割成 passwd-00, passwd-01 ...
 每个文件1k 后缀是数字
@@ -1119,6 +1130,12 @@ objdump -tT libtest.so  | awk '{if($3=="DF" && $4==".text"){print $7}}'
 获取最后一列，倒数第二列
 ```sh
 awk -F":" '{print $2,$(NF),$(NF-1),$(NF-3)}' /etc/passwd
+```
+
+使用字典
+```sh
+history  | awk '{CMD[$2]++;count++} END{for (a in CMD) print a " == " CMD[a]/count*100 "%"}' | grep -v './' | column -t | sort -k3 -rn | cat -n |
+head
 ```
 
 ## vim
