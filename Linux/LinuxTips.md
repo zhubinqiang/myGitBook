@@ -1288,7 +1288,12 @@ find . -maxdepth 1 \( -name '*.pdf' -o -name '*.txt' -o -name '*.TXT' \) -print0
 ### find 排除某些文件
 ```sh
 find . -path .repo -prune -o -name '.git' -a -type d -print
+
+find . -path ./.git -prune -o -type f -print
 ```
+
+> 这里的 `-o` 是短路求值
+> 排除 .repo 后面 `-print` 不能少
 
 ## xargs
 xargs命令的作用，是将标准输入转为命令行参数

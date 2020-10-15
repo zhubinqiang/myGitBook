@@ -7,6 +7,8 @@
 参考材料： 
 1. http://www.mohu.org/info/symbols/symbols.htm
 2. https://en.wikibooks.org/wiki/LaTeX/Mathematics#List_of_mathematical_symbols
+3. https://aaron-bird.github.io/2019/09/29/%E5%B8%B8%E7%94%A8%E7%9A%84%20LaTeX%20%E7%AC%A6%E5%8F%B7%E5%85%AC%E5%BC%8F/
+4. https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols
 
 
 TEX 是Donald E. Knuth 编写的一个以排版文章及数学公式为目标的计算机程序。TEX的版本号不断趋近于π，现在为3.141592。由Pascal 语言写成，特点: 免费、输出质量高、擅长科技排版、有点像编程。
@@ -169,6 +171,7 @@ a\qquad b
 \int_a^b f(x)\,\mathrm{d}x
 ```
 
+
 ### 6. 公式中的定界符
 这里所谓的定界符是指包围或分割公式的一些符号
 ```math
@@ -210,6 +213,8 @@ a\qquad b
 \begin{Vmatrix}1 & 2\\3 &4\end{Vmatrix}
 ```
 
+> & 表示对齐位置,同一行可以有多个 &
+
 ### 8. 排版数组
 当矩阵规模超过 10 列，或者上述矩阵类型不敷需求，可使用 array 环境。该环境可把一些元素排列成横竖都对齐的矩形阵列。
 ```
@@ -241,9 +246,23 @@ A_{m,n} =
  \end{pmatrix}
 ```
 
+## 运算符符号
+$ 1 \cdot 2 $
+$ 1 \times 2$
+$ 1 \div 2$
+$ 1 \lt 2 $
+$ 1 \le 2 $
+$ 2 \gt 1 $
+$ 2 \ge 1 $
+$ 2 \neq 1 $
+$ \pi \approx 3.14 $
+$ A \subset B $
+$ A \not\subset B $
+$ A \supset B $
+
 ## 希腊字母
 ```math
-\alpha, \beta, \gamma, 
+\alpha, \beta, \gamma, \theta,
 
 \Gamma, \pi, \Pi, 
 
@@ -309,7 +328,32 @@ M = \begin{bmatrix}
      \end{bmatrix}
 ```
 
+### 向量
+1. 头上戴箭头
+```math
+\vec x
+```
+
+```math
+\vec a \quad \overrightarrow{AB}
+```
+
+```math
+\overrightarrow{AB}
+```
+
+```math
+\overleftarrow{XY}
+```
+
+2. 用黑体表示
+```math
+\boldsymbol x
+```
 
 
-
+单位向量
+```math
+\hat{ab}
+```
 
