@@ -505,10 +505,10 @@ $$
 ![](images/introduction-to-computer-graphics/decomposing-complex-transforms.png)
 
 $$
-T(c) \cdot R(\theta) \cdot T(c)
+T(c) \cdot R(\theta) \cdot T(-c)
 $$
 
-计算的方向从右到左
+计算的方向**从右到左**
 
 ### 3维空间的齐次坐标
 3D point = $(x, y, z, 1)^T$
@@ -530,6 +530,64 @@ G && H && I && t_{z}\\
 \end{bmatrix}
 \begin{bmatrix}
 x \\ y \\ z \\ 1
+\end{bmatrix}
+$$
+
+这个式子表示: **先线性变换,再平移**
+
+### 3维空间齐次坐标表示缩放、旋转、平移
+缩放
+$$
+S(s_{x}, s_{y}, s_{z}) =
+\begin{bmatrix}
+s_{x} && 0 && 0 && 0 \\
+0 && s_{y} && 0 && 0 \\
+0 && 0 && s_{z} && 0 \\
+0 && 0 && 0 && 1 
+\end{bmatrix}
+$$
+
+平移
+$$
+T(t_{x}, t_{y}, t_{z}) =
+\begin{bmatrix}
+1 && 0 && 0 && t_{x} \\
+0 && 1 && 0 && t_{y} \\
+0 && 0 && 1 && t_{z} \\
+0 && 0 && 0 && 1 
+\end{bmatrix}
+$$
+
+旋转
+绕哪个轴旋转，哪个轴上的数字就不变 (**绕谁谁不变**)
+
+$$
+R_x(\theta) =
+\begin{bmatrix}
+1 && 0 && 0 && 0 \\
+0 && \cos\theta && -\sin\theta && 0 \\
+0 && \sin\theta && \cos\theta && 0 \\
+0 && 0 && 0 && 1 
+\end{bmatrix}
+$$
+
+$$
+R_y(\theta) =
+\begin{bmatrix}
+\cos\theta && 0 && \sin\theta && 0 \\
+0 && 1 && 0 && 0 \\
+-\sin\theta && 0 && \cos\theta && 0 \\
+0 && 0 && 0 && 1 
+\end{bmatrix}
+$$
+
+$$
+R_z(\theta) =
+\begin{bmatrix}
+\cos\theta && -\sin\theta && 0 && 0 \\
+\sin\theta && \cos\theta && 0 && 0 \\
+0 && 0 && 1 && 0 \\
+0 && 0 && 0 && 1 
 \end{bmatrix}
 $$
 
@@ -587,6 +645,13 @@ R(\theta) = R(\theta)^{-1}
 $$
 
 旋转矩阵的逆 = 旋转矩阵的转置
+
+## 视图变换 viewing transformation
+
+
+## 投影变换 projection transformation
+### 正交投影 orthographic transformation
+### 透视投影 perspective transformation
 
 ## 参考
 [^cross-product]: https://zh.wikipedia.org/wiki/%E5%8F%89%E7%A7%AF
