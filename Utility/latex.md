@@ -164,6 +164,13 @@ a\quad b
 a\qquad b
 ```
 
+换行 `\newline`
+```math
+a
+\newline
+b
+```
+
 在公式中灵活的运用空格命令可以起到美化公式的作用
 ```math
 \int_a^b f(x)\mathrm{d}x
@@ -174,10 +181,9 @@ a\qquad b
 
 ### 6. 公式中的定界符
 这里所谓的定界符是指包围或分割公式的一些符号
-```math
-
 ```
-
+\left(\sum_{k=\frac{1}{2}}^{N^2}\frac{1}{k}\right)
+```
 
 ```math
 \left(\sum_{k=\frac{1}{2}}^{N^2}\frac{1}{k}\right)
