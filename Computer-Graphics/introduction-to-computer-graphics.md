@@ -22,7 +22,7 @@ $\overrightarrow{AB} = (x_{b}-x_{a}, y_{b}-y_{a})$
 $$ \hat{n} = \frac{\vec{u}}{|\vec{u}|} $$
 
 ### 向量的点乘
-向量的点乘是一个数
+向量的点乘[^dot-product]是一个数
 
 $$ \vec{A} \cdot \vec{B} = |\vec{A}| |\vec{B}| \cos\theta $$
 
@@ -51,7 +51,7 @@ $(k\vec{A}) \cdot \vec{B} = \vec{A} \cdot (k\vec{B}) = k(\vec{A} \cdot \vec{B})$
 ### 向量的叉乘
 ![](images/introduction-to-computer-graphics/330px-Cross_product_vector.svg.png)
 
-向量叉乘的结果为一个向量，有大小有方向.
+向量叉乘[^cross-product]的结果为一个向量，有大小有方向.
 方向: 用右手螺旋定则判断. 先四指方向指向 $\vec{a}$ 的方向, 再以不超过180°转向 $\vec{b}$. 大拇指方向就是  $ \vec{a} \times \vec{b} $ 的方向
 
 $$ \vec{a} \times \vec{b} = |\vec{a}| |\vec{b}| \sin\theta $$
@@ -99,11 +99,9 @@ $\vec{w} = \vec{u} \cdot \vec{v}$ (右手定则)
 
 $\vec{p} = (\vec{p} \cdot \vec{u}) \vec{u} + (\vec{p} \cdot \vec{v}) \vec{v} +(\vec{p} \cdot \vec{w}) \vec{w}$
 
-
-
 ## 矩阵
 ### 矩阵乘法
-矩阵乘法 第1个矩阵的列数 = 第2个矩阵的行数 才有意义
+矩阵乘法 **第1个矩阵的列数 = 第2个矩阵的行数** 才有意义
 (M x N) (N x P) = (M x P)
 
 $$
@@ -197,21 +195,402 @@ z_b
 \end{pmatrix}
 $$
 
-### 2D线性变换
+## 变换
+### 缩放变换
+同比例缩放
+
+![](images/introduction-to-computer-graphics/scaling-1.jpg)
+
 $$
-\begin{bmatrix} a_{11} & a_{12} \\
-a_{21} & a_{22}
+\begin{bmatrix}
+x^\prime \\
+y^\prime
+\end{bmatrix} =
+\begin{bmatrix}
+s && 0 \\
+0 && s
 \end{bmatrix}
-\begin{bmatrix} x \\ y \end{bmatrix} =
-\begin{bmatrix} a_{11}x + a_{12}y \\
-a_{21}x + a_{22}y
+\begin{bmatrix}
+x \\
+y
 \end{bmatrix}
 $$
 
+x,y 不同比例缩放
+![](images/introduction-to-computer-graphics/scaling-2.jpg)
+
+$$
+\begin{bmatrix}
+x^\prime \\
+y^\prime
+\end{bmatrix} =
+\begin{bmatrix}
+s_x && 0 \\
+0 && s_y
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}
+$$
+
+### 对称操作
+
+![](images/introduction-to-computer-graphics/reflection.png)
+
+$$
+\begin{bmatrix}
+x^\prime \\
+y^\prime
+\end{bmatrix} =
+\begin{bmatrix}
+-1 && 0 \\
+0 && 1
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}
+$$
+
+### 切变
+提示：
+1. y=0时，水平方向的移动都为0
+2. y=1时，水平方向偏移为a
+3. 纵坐标没有变化
+
+![](images/introduction-to-computer-graphics/shearing-3.png)
+
+$$
+\begin{bmatrix}
+x^\prime \\
+y^\prime
+\end{bmatrix} =
+\begin{bmatrix}
+1 && a \\
+0 && 1
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}
+$$
+
+![](images/introduction-to-computer-graphics/shearing-1.jpg)
+
+![](images/introduction-to-computer-graphics/shearing-2.jpg)
+
+
+### 旋转变换
+默认按原点为中心逆时针方向旋转
+
+![](images/introduction-to-computer-graphics/rotation-1.png)
+
+以上是边长为单位1的正方形
+可以取2个特殊点 (1, 0), 和 (0, 1)
+以原点逆时针旋转后$\theta$角度后 ($\cos\theta$, $\sin\theta$), ($-\sin\theta$, $\cos\theta$)
+
+可以设 $\begin{bmatrix}A && B \\ C && D\end{bmatrix}\begin{bmatrix}x \\ y\end{bmatrix}$ 把上面的特殊点代入就可以求出A、B、C、D的值
+
+$$
+\begin{bmatrix}
+x^\prime \\
+y^\prime
+\end{bmatrix} =
+\begin{bmatrix}
+\cos\theta && -\sin\theta \\
+\sin\theta && \cos\theta
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}
+$$
+
+### 2D线性变换
+通过一个矩阵 乘以一个坐标 得到变换后的坐标. 这种变换成为线性变换[^linear-transform]。
+$$
+x^\prime = Ax + By \newline
+y^\prime = Cx + Dy
+$$
+
+$$
+\begin{bmatrix}
+x^\prime \\
+y^\prime
+\end{bmatrix} =
+\begin{bmatrix}
+A && B \\
+C && D
+\end{bmatrix}
+\begin{bmatrix}
+x \\ y
+\end{bmatrix} =
+\begin{bmatrix}
+Ax + By \\
+Cx + Dy
+\end{bmatrix}
+$$
+
+### 仿射变换
+仿射变换 = **先**线性变换 + **再**平移
+它是有顺序的, 调换顺序结果会不一致.
+
+$$
+\begin{bmatrix}
+x^\prime \\
+y^\prime
+\end{bmatrix} =
+\begin{bmatrix}
+A && B \\
+C && D
+\end{bmatrix}
+\begin{bmatrix}
+x \\ y
+\end{bmatrix} +
+\begin{bmatrix}
+t_{x} \\ t_{y}
+\end{bmatrix}
+$$
+
+![](images/introduction-to-computer-graphics/homogeneous-1.png)
+在平移的过程中 不是一个线性变换
+$$
+\begin{bmatrix}
+x^\prime \\
+y^\prime
+\end{bmatrix} =
+\begin{bmatrix}
+A && B \\
+C && D
+\end{bmatrix}
+\begin{bmatrix}
+x \\ y
+\end{bmatrix} +
+\begin{bmatrix}
+t_{x} \\
+t_{y}
+\end{bmatrix}=
+\begin{bmatrix}
+Ax + By + t_{x}\\
+Cx + Dy + t_{y}
+\end{bmatrix}
+$$
+
+## 齐次坐标 homogeneous coordinates
+引入了齐次坐标, 就还能运用线性变换来处理
+2D point = $(x, y, 1)^T$
+2D vector = $(x, y, 0)^T$
+
+> **Note:** 向量具有平移不变性 所以 (x, y, 0)
+
+$$
+\begin{bmatrix}
+x^\prime \\
+y^\prime \\
+w^\prime
+\end{bmatrix} =
+\begin{bmatrix}
+1 && 0 && t_{x}\\
+0 && 1 && t_{y}\\
+0 && 0 && 1
+\end{bmatrix}
+\begin{bmatrix}
+x \\ y \\ 1
+\end{bmatrix} =
+\begin{bmatrix}
+x + t_{x} \\
+y + t_{y} \\
+1
+\end{bmatrix}
+$$
+
+### 用齐次坐标表示仿射变换
+
+$$
+\begin{bmatrix}
+x^\prime \\
+y^\prime \\
+1
+\end{bmatrix} =
+\begin{bmatrix}
+A && B && t_{x}\\
+C && D && t_{y}\\
+0 && 0 && 1
+\end{bmatrix}
+\begin{bmatrix}
+x \\ y \\ 1
+\end{bmatrix}
+$$
+
+### 用齐次坐标表示缩放、旋转、平移
+缩放
+$$
+S(s_{x}, s_{y}) =
+\begin{bmatrix}
+s_{x} && 0 && 0 \\
+0 && s_{y} && 0 \\
+0 &&  0 && 1
+\end{bmatrix}
+$$
+
+旋转
+$$
+R(\theta) =
+\begin{bmatrix}
+\cos\theta && -\sin\theta && 0 \\
+\sin\theta && \cos\theta && 0 \\
+0 &&  0 && 1
+\end{bmatrix}
+$$
+
+平移
+$$
+T(t_{x}, t_{y}) =
+\begin{bmatrix}
+1 && 0 && t_{x} \\
+0 && 1 && t_{y} \\
+0 &&  0 && 1
+\end{bmatrix}
+$$
+
+### 组合变换的顺序
+先看下面这个例子从左边变换到右边
+![](images/introduction-to-computer-graphics/composite-transform.png)
+
+先平移， 再绕原点旋转 这种方式并不符合
+![](images/introduction-to-computer-graphics/transform-then-rotate.png)
+
+先绕原点旋转，再平移
+![](images/introduction-to-computer-graphics/rotate-then-transform.png)
+
+从这里可以看出顺序非常重要
+$R(45) \cdot T(1, 0) \neq T(1, 0) \cdot R(45)$
+
+注意: 矩阵乘法**从右往左**
+
+$$
+R(45) \cdot T(1, 0) \cdot
+\begin{bmatrix}
+x \\ y \\ 1
+\end{bmatrix} =
+\begin{bmatrix}
+1 && 0 && 1 \\
+0 && 1 && 0 \\
+0 && 0 && 1
+\end{bmatrix}
+\begin{bmatrix}
+\cos\theta && -\sin\theta && 0 \\
+\sin\theta && \cos\theta && 0 \\
+0 &&  0 && 1
+\end{bmatrix}
+\begin{bmatrix}
+x \\ y \\ 1
+\end{bmatrix}
+$$
+
+推广到一般就有
+$$
+A_{n}(\cdots A_{2}(A_{1}(x))) = \underbrace{A_{n} \cdots A_{2} \cdot A_{1}}_{N \ matrices} \cdot
+\begin{bmatrix}
+x \\
+y \\
+1
+\end{bmatrix}
+$$
+
+预乘n个矩阵以获得表示组合变换的单个矩阵
+
+### 如何分解图形
+![](images/introduction-to-computer-graphics/decomposing-complex-transforms.png)
+
+$$
+T(c) \cdot R(\theta) \cdot T(c)
+$$
+
+计算的方向从右到左
+
+### 3维空间的齐次坐标
+3D point = $(x, y, z, 1)^T$
+3D vector = $(x, y, z, 0)^T$
+
+### 3维空间齐次坐标表示仿射变换
+$$
+\begin{bmatrix}
+x^\prime \\
+y^\prime \\
+z^\prime \\
+1
+\end{bmatrix} =
+\begin{bmatrix}
+A && B && C && t_{x}\\
+D && E && F && t_{y}\\
+G && H && I && t_{z}\\
+0 && 0 && 0 && 1
+\end{bmatrix}
+\begin{bmatrix}
+x \\ y \\ z \\ 1
+\end{bmatrix}
+$$
+
+### 正交矩阵 Orthogonal Matrix
+正交矩阵是指其转置等于其逆的矩阵[^orthogonal-matrix]
+$A^T = A^{-1}$
+
+$$
+I = AA^{-1} = A^{-1}A = A^{T}A = AA^{T}
+\newline
+\Rightarrow A^T = A^{-1}
+$$
+
+正交矩阵的例子：
+$$
+A =
+\begin{bmatrix}
+1 && 0 \\
+0 && 1
+\end{bmatrix},
+B =
+\begin{bmatrix}
+1 && 0 \\
+0 && -1
+\end{bmatrix},
+C =
+\begin{bmatrix}
+0 && 1 && 0 \\
+-1 && 0 && 0 \\
+0 && 0 && -1
+\end{bmatrix}
+$$
+
+
+对于旋转矩阵来说
+$$
+R(\theta) =
+\begin{bmatrix}
+\cos\theta && -\sin\theta \\
+\sin\theta && \cos\theta
+\end{bmatrix}
+$$
+
+$$
+R(-\theta) =
+\begin{bmatrix}
+\cos\theta && \sin\theta \\
+-\sin\theta && \cos\theta
+\end{bmatrix} =
+R(\theta)^T
+$$
+
+$$
+R(\theta) = R(\theta)^{-1}
+$$
+
+旋转矩阵的逆 = 旋转矩阵的转置
 
 ## 参考
-https://www.zhihu.com/column/c_1249465121615204352
-
-
-
+[^cross-product]: https://zh.wikipedia.org/wiki/%E5%8F%89%E7%A7%AF
+[^dot-product]: https://baike.baidu.com/item/%E7%82%B9%E7%A7%AF
+[^linear-transform]: https://zhuanlan.zhihu.com/p/144323332
+[^orthogonal-matrix]: https://zhuanlan.zhihu.com/p/34897603
 
