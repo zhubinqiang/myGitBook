@@ -591,6 +591,28 @@ R_z(\theta) =
 \end{bmatrix}
 $$
 
+### 3D 旋转
+这一节没有明白
+
+Roll: 滚转
+Pitch: 俯仰 (上下)
+Yaw: 偏航 (左右)
+
+![](images/introduction-to-computer-graphics/3D-rotations.png)
+
+罗德里格旋转公式[^Rodrigues-rotation-formula]:
+$$
+\boldsymbol{R}(\boldsymbol{n}, \alpha) = \cos(\alpha)\boldsymbol{I} + (1-\cos(\alpha)\boldsymbol{n}\boldsymbol{n}^T) + \sin(\alpha) \begin{bmatrix}
+0 && -n_z && n_y \\
+n_z && 0 && -n_x \\
+-n_y && -n_x && 0
+\end{bmatrix}
+$$
+
+旋转轴: $\boldsymbol{n}$
+旋转角度: $\alpha$, 
+单位矩阵: $\boldsymbol{I}$
+
 ### 正交矩阵 Orthogonal Matrix
 正交矩阵是指其转置等于其逆的矩阵[^orthogonal-matrix]
 $A^T = A^{-1}$
@@ -648,14 +670,96 @@ $$
 
 ## 视图变换 viewing transformation
 
+如何拍一张照片？
+1. 搭好场景，摆好模型 (model transformation)
+2. 选取合适**角度**, 放好相机 (view transformation)
+3. 茄子，拍照 (projection transformation)
+
+上面的过程就是所谓的MVP变换了
+
+如何定义相机？
+- 位置 position: $\vec{e}$
+- 往某个方向看 look-at/gaze direction: $\hat{g}$
+- 向上看 Up dierction: $\hat{t}$
+
+![](images/introduction-to-computer-graphics/camera-postion.png)
+
+**在图形学中默认相机在原点，y轴为上方向，往-z方向看**
+
+### 模型变换 modeling tranformation
+![](images/introduction-to-computer-graphics/camera-1.png)
+
+把 $\vec{e}$ 移动到原点
+旋转 $\hat{g}$ 到-Z轴
+旋转 $\hat{t}$ 到Y轴
+
+![](images/introduction-to-computer-graphics/camera-2.png)
+
+数学公式
+$$
+M_{view} = R_{view}T_{view}
+$$
+
+变换 $\vec{e}$ 到原点
+$$
+T_{view} = \begin{bmatrix}
+1 && 0 && 0 && -x_{e} \\
+0 && 1 && 0 && -y_{e} \\
+0 && 0 && 1 && -z_{e} \\
+0 && 0 && 0 && 1
+\end{bmatrix}
+$$
+
+因为旋转矩阵, 所以 $R_{view}^{-1} = R_{view}^{T}$
+
+$$
+R_{view}^{-1} = \begin{bmatrix}
+x_{\hat{g} \times \hat{t}} && x_{t} && x_{-g} && 0 \\
+y_{\hat{g} \times \hat{t}} && y_{t} && y_{-g} && 0 \\
+z_{\hat{g} \times \hat{t}} && z_{t} && z_{-g} && 0 \\
+0 && 0 && 0 && 1
+\end{bmatrix}  \Leftrightarrow
+R_{view}^{T}
+$$
+
+$$
+R_{view} = \begin{bmatrix}
+x_{\hat{g} \times \hat{t}} && y_{\hat{g} \times \hat{t}} && z_{\hat{g} \times \hat{t}} && 0 \\
+x_{t} && y_{t} && z_{t} && 0 \\
+x_{-g} && y_{-g} && z_{-g} && 0\\
+0 && 0 && 0 && 1
+\end{bmatrix}
+$$
 
 ## 投影变换 projection transformation
 ### 正交投影 orthographic transformation
-### 透视投影 perspective transformation
+正交投影是相对简单的一种[^orthographic-transformation]，坐标的相对位置都不会改变，所有光线都是平行传播，我们只需将物体（可视部分，即上图的那个长方体）全部转换到一个的空间之中即可（其中x，y坐标便是投影结果，保留z是为了之后的遮挡检测） 
 
-## 参考
+![](images/introduction-to-computer-graphics/orthographic-transformation.jpg)
+
+### 透视投影 perspective transformation
+透视投影就是最类似人眼所看东西的方式, 物体近大远小. 
+
+![](images/introduction-to-computer-graphics/perspective.jpg)
+
+一种简单的理解方式
+1. 相机放在原点，看向-Z方向，Y轴为上方向
+2. 扔掉Z坐标轴
+3. 通过变换和缩放把结果放到 $\left[-1, 1\right]^2$ 的矩形上面
+
+![](images/introduction-to-computer-graphics/perspective.png)
+
+
+透视投影 VS 正交投影
+![](images/introduction-to-computer-graphics/orthographic-vs-perspective.png)
+
+
+## 参考文献
 [^cross-product]: https://zh.wikipedia.org/wiki/%E5%8F%89%E7%A7%AF
 [^dot-product]: https://baike.baidu.com/item/%E7%82%B9%E7%A7%AF
 [^linear-transform]: https://zhuanlan.zhihu.com/p/144323332
 [^orthogonal-matrix]: https://zhuanlan.zhihu.com/p/34897603
+[^Rodrigues-rotation-formula]: https://baike.baidu.com/item/%E7%BD%97%E5%BE%B7%E9%87%8C%E6%A0%BC%E6%97%8B%E8%BD%AC%E5%85%AC%E5%BC%8F
+[^orthographic-transformation]: https://zhuanlan.zhihu.com/p/144329075
+
 
