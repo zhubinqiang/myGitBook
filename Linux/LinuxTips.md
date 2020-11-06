@@ -1307,6 +1307,8 @@ echo "one two three" | xargs mkdir
 ➜ echo "a1;b2;c3;d4" | xargs -d';' -n2
 a1 b2
 c3 d4
+
+➜ find . -name '*.tar.gz' | xargs -n1 tar xzvf
 ```
 
 1. -p: 询问用户是否执行
