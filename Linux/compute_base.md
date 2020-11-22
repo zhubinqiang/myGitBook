@@ -40,6 +40,52 @@
 ### 4bit的加法器
 ![](images/compute_base/4bit-adder.png)
 
+## 计算机结构的简化模型
+图片来自： https://www.bilibili.com/video/BV1VE411o7nx?p=4
+
+### 模型机
+![](images/compute_base/simple-mode-1.png)
+
+### 存储器
+![](images/compute_base/simple-mode-2.png)
+
+### CPU 控制器 
+![](images/compute_base/simple-mode-3.png)
+
+#### 控制器的基本组成
+![](images/compute_base/simple-mode-4.png)
+
+![](images/compute_base/simple-mode-5.png)
+
+### CPU 运算器
+![](images/compute_base/simple-mode-6.png)
+
+#### 运算器的基本组成
+![](images/compute_base/simple-mode-7.png)
+
+### CPU的内部总线
+![](images/compute_base/simple-mode-8.png)
+
+## 执行指令的过程
+举例说明：
+
+![](images/compute_base/execute-1.png)
+
+假设模型机当前状态:
+![](images/compute_base/execute-2.png)
+
+### 取指
+![](images/compute_base/execute-fetch.gif)
+
+### 译码
+![](images/compute_base/execute-decoding.gif)
+
+### 执行
+![](images/compute_base/execute-execute.gif)
+
+### 回写
+![](images/compute_base/execute-writeback.gif)
+
 
 程序 = 指令 + 数据
 
