@@ -910,7 +910,8 @@ for((i=0; i<$len; i++));do
 done
 ```
 
-## if 使用正则
+## if
+### if 使用正则
 ```sh
 if [[ ! "${num}" =~ ^[1-9]+$ ]]; then
     exit 2
@@ -918,6 +919,26 @@ fi
 ```
 
 > **Note**: =~ 右边不能有引号
+
+### if 里面多个判断
+```sh
+linux_distro="ubuntu"
+if [ ${linux_distro} == "Ubuntu" -o ${linux_distro} == "Debian" ]; then
+    echo "debian like"
+else
+    echo "no"
+fi
+```
+
+### if 其他形式
+```sh
+linux_distro="ubuntu"
+if ( echo ${linux_distro} | grep 'ubuntu' ) || ( echo ${linux_distro} | grep 'debian' ) ; then
+    echo "debian like"
+else
+    echo "no"
+fi
+```
 
 ## 脚本参数选项
 若此脚本为 a.sh
