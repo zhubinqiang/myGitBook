@@ -58,7 +58,7 @@ $$ \vec{a} \times \vec{b} = |\vec{a}| |\vec{b}| \sin\theta $$
 
 $$ \vec{a} \times \vec{b} = 
 \begin{vmatrix} y_{a}z_{b} - y_{b}z_{a} \\
-z_{a}x_{b} - x_{z}z_{b} \\
+z_{a}x_{b} - x_{a}z_{b} \\
 x_{a}y_{b} - y_{a}x_{b}
 \end{vmatrix}
 $$
@@ -126,7 +126,7 @@ $$
 然后运算 1 * 6 + 3 * 7 = 27
 
 ### 矩阵的运算法则
-没有结合律 通常情况下 $AB \neq BA $
+没有交换律 通常情况下 $AB \neq BA $
 
 有分配律
 1. (AB)C = A(BC)
@@ -752,6 +752,34 @@ $$
 
 透视投影 VS 正交投影
 ![](images/introduction-to-computer-graphics/orthographic-vs-perspective.png)
+
+## 光栅化
+### 屏幕
+定义屏幕
+1. 一个二维数组，每个元素都是一个像素
+2. 数组的大小: 分辨率
+3. 一个典型的光栅成像设备
+
+pixel: picture element
+
+屏幕坐标系
+![](images/introduction-to-computer-graphics/screen-coordinate.png)
+
+
+如何从空间变换到屏幕？
+1. 忽略Z轴
+2. 从XY平面 $\begin{bmatrix} -1, 1 \end{bmatrix}^2$ 到 [0, width] x [0, height]
+3. 视图变换矩阵：
+$$
+M_{viewpoint} = \begin{bmatrix}
+width/2 && 0 && 0 && width/2 \\
+0 && height/2 && 0 && height/2 \\
+0 && 0 && 1 && 0 \\
+0 && 0 && 0 && 1
+\end{bmatrix}
+$$
+
+
 
 
 ## 参考文献
