@@ -42,11 +42,14 @@ $$ \cos\theta = \frac{\vec{A} \cdot \vec{B}}{|\vec{A}| |\vec{B}|}  $$
 交换律
 $\vec{A} \cdot \vec{B} = \vec{B} \cdot \vec{A}$
 
-结合律
-$\vec{A} \cdot (\vec{B} + \vec{C}) = \vec{A} \cdot \vec{B} + \vec{A} \cdot \vec{C}$
+点乘结合律不满足
+$(\vec{A} \cdot \vec{B} ) \cdot \vec{C} \neq \vec{A} \cdot (\vec{B} \cdot \vec{C})$
+
+乘以标量时满足结合律
+$(k\vec{A}) \cdot \vec{B} = \vec{A} \cdot (k\vec{B}) = k(\vec{A} \cdot \vec{B})$
 
 分配律
-$(k\vec{A}) \cdot \vec{B} = \vec{A} \cdot (k\vec{B}) = k(\vec{A} \cdot \vec{B})$
+$\vec{A} \cdot (\vec{B} + \vec{C}) = \vec{A} \cdot \vec{B} + \vec{A} \cdot \vec{C}$
 
 ### 向量的叉乘
 ![](images/introduction-to-computer-graphics/330px-Cross_product_vector.svg.png)
@@ -128,7 +131,7 @@ $$
 ### 矩阵的运算法则
 没有交换律 通常情况下 $AB \neq BA $
 
-有分配律
+有分配律, 结合律
 1. (AB)C = A(BC)
 2. A(B+C) = AB + AC
 3. (A+B)C = AC + BC
@@ -181,8 +184,8 @@ $$
 
 ### 矩阵中向量的叉乘
 $$
-\vec{A} \cdot \vec{B} =
-A*b =
+\vec{A} \times \vec{B} =
+A^* b =
 \begin{pmatrix}
 0 & -z_{a} & y_a \\
 z_{a} & 0 & -x_a \\
@@ -194,6 +197,8 @@ y_b \\
 z_b
 \end{pmatrix}
 $$
+
+上面的 $A^*$ 是 向量A的dual matrix
 
 ## 变换
 ### 缩放变换
@@ -505,7 +510,7 @@ $$
 ![](images/introduction-to-computer-graphics/decomposing-complex-transforms.png)
 
 $$
-T(c) \cdot R(\theta) \cdot T(-c)
+T(c) \cdot R(\alpha) \cdot T(-c)
 $$
 
 计算的方向**从右到左**
@@ -591,12 +596,12 @@ R_z(\theta) =
 \end{bmatrix}
 $$
 
-### 3D 旋转
-这一节没有明白
-
+ ### 3D 旋转
 Roll: 滚转
 Pitch: 俯仰 (上下)
 Yaw: 偏航 (左右)
+
+![](images/introduction-to-computer-graphics/roll-yaw-pitch.gif)
 
 ![](images/introduction-to-computer-graphics/3D-rotations.png)
 
@@ -779,7 +784,66 @@ width/2 && 0 && 0 && width/2 \\
 \end{bmatrix}
 $$
 
+为什么选择三角形?
+1. 最基础的多边形
+2. 其他多边形可以分解为不同的三角形
+3. 三角形在一个平面内
+4. 三角形内外定义清晰
+5. 三角形三个定点的位置关系可以得到一个逐渐的变换
 
+如何是像素值近似一个三角形？
+![](images/introduction-to-computer-graphics/pixel-approximate-triangle.png)
+
+通过采样的方法
+采样(sampling): 在连续的函数上在不同的地方它的值是多少.
+
+![](images/introduction-to-computer-graphics/sample-each-pixel.png)
+
+$$
+inside(tri, x,y) = \left\{
+\begin{aligned}
+1 \\
+0
+\end{aligned}
+\right.
+$$
+
+![](images/introduction-to-computer-graphics/sample-location.png)
+
+遍历所有屏幕像素的中心 (x+0.5, y+0.5) 判断是否在三角形里面
+```c
+for (int x = 0; x < xmax; ++x) {
+    for (int y = 0; y < ymax; ++y) {
+        image[x][y] = inside(tri, x+0.5, y+0.5);
+    }
+}
+```
+
+**三次叉积同向可判断点在三角形内部**
+
+![](images/introduction-to-computer-graphics/three-corss-products-1.png)
+
+以三角形ABC 从A点逆时针出发
+$\overrightarrow{AB} \times \overrightarrow{AP} = 外$
+$\overrightarrow{BC} \times \overrightarrow{BP} = 外$
+$\overrightarrow{CA} \times \overrightarrow{CP} = 外$
+
+![](images/introduction-to-computer-graphics/three-corss-products-2.png)
+$\overrightarrow{P_{0}P_{1}} \times \overrightarrow{P_{0}Q} = 外$
+$\overrightarrow{P_{1}P_{2}} \times \overrightarrow{P_{1}Q} = 外$
+$\overrightarrow{P_{2}P_{1}} \times \overrightarrow{P_{2}Q} = 里$
+
+三角形包围盒
+![](images/introduction-to-computer-graphics/bounding-box.png)
+
+在上面遍历所有像素的过程中，所有要计算的元素都在蓝色的包围盒中,不用遍历所有的像素。
+```c
+for (int x = xmin; x < xmax; ++x) {
+    for (int y = ymin; y < ymax; ++y) {
+        image[x][y] = inside(tri, x+0.5, y+0.5);
+    }
+}
+```
 
 
 ## 参考文献
