@@ -910,6 +910,19 @@ for((i=0; i<$len; i++));do
 done
 ```
 
+数组作为参数
+```sh
+print_array() {
+    local list=$1
+    for i in ${list[*]}; do
+        echo ${i}
+    done
+}
+
+list=(A B C D)
+print_array "${list[*]}"
+```
+
 ## if
 ### if 使用正则
 ```sh
@@ -924,6 +937,18 @@ fi
 ```sh
 linux_distro="ubuntu"
 if [ ${linux_distro} == "Ubuntu" -o ${linux_distro} == "Debian" ]; then
+    echo "debian like"
+else
+    echo "no"
+fi
+
+if [[ ${linux_distro} == "Ubuntu" ]] || [[ ${linux_distro} == "Debian" ]]; then
+    echo "debian like"
+else
+    echo "no"
+fi
+
+if ( echo ${linux_distro} | grep 'ubuntu' ) || ( echo ${linux_distro} | grep 'debian' ) ; then
     echo "debian like"
 else
     echo "no"
