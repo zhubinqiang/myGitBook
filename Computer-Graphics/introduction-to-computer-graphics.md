@@ -767,6 +767,9 @@ $$
 
 pixel: picture element
 
+![](images/introduction-to-computer-graphics/screen-pixels.png)
+
+
 屏幕坐标系
 ![](images/introduction-to-computer-graphics/screen-coordinate.png)
 
@@ -831,7 +834,7 @@ $\overrightarrow{CA} \times \overrightarrow{CP} = 外$
 ![](images/introduction-to-computer-graphics/three-corss-products-2.png)
 $\overrightarrow{P_{0}P_{1}} \times \overrightarrow{P_{0}Q} = 外$
 $\overrightarrow{P_{1}P_{2}} \times \overrightarrow{P_{1}Q} = 外$
-$\overrightarrow{P_{2}P_{1}} \times \overrightarrow{P_{2}Q} = 里$
+$\overrightarrow{P_{2}P_{0}} \times \overrightarrow{P_{2}Q} = 里$
 
 三角形包围盒
 ![](images/introduction-to-computer-graphics/bounding-box.png)
@@ -844,6 +847,29 @@ for (int x = xmin; x < xmax; ++x) {
     }
 }
 ```
+
+### 反走样
+在光栅化之后，出现了明显的锯齿, 走样(aliasing)
+![](images/introduction-to-computer-graphics/pixels-are-uniformly-colored-squares.png)
+
+这个才是需要的
+![](images/introduction-to-computer-graphics/triangle.png)
+
+不同的采样导致的瑕疵
+- 在空间中采样产生锯齿
+- 在不同位置上采样导致的摩尔纹
+- 在时间中采样产生的飞轮
+- many more ...
+
+采样中造成的走样的本质原因是：**信号的变化速度太快，以至于采样的速度赶不上它**。
+
+#### 先模糊再采样
+![](images/introduction-to-computer-graphics/blurred-aliasing.png)
+
+#### 频域
+![](images/introduction-to-computer-graphics/frequencies.png)
+
+
 
 
 ## 参考文献
