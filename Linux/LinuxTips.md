@@ -377,6 +377,25 @@ sudo systemctl restart sshd.service
 # sudo /etc/init.d/ssh restart
 ```
 
+### ssh 动态端口转发
+服务器端：
+```sh
+## ssh -D local端口 SSH服务器
+ssh -D *:1234 10.67.116.24 -N
+```
+
+客户端：
+```sh
+curl -x socks5://10.67.116.24:1234 192.168.100.123
+```
+上面的 `-x`: 指定代理服务器 通过 SOCKS5 协议访问
+
+```sh
+ssh -o ProxyCommand="ncat --proxy-type socks4 --proxy 10.67.116.24:1234 %h %p" user@remote-server
+
+ssh -o ProxyCommand="nc -X 5 -x 10.67.116.94:1234 %h %p" user@remote-server
+```
+
 ### ssh socks 代理
 参考[这里](https://bitbucket.org/gotoh/connect/src/) 编译出 `connect` 命令. 并加入到PATH里面。
 
@@ -395,7 +414,12 @@ Host github.com
 然后在客户端执行
 ```sh
 chmod 644 ~/.ssh/config
-ssh -p 4022 user@154.43.32.4
+ssh -p 4022 user@remote-server
+```
+
+或者在终端
+```sh
+ssh -o ProxyCommand="nc --proxy-type socks4 --proxy proxy-socks-example:1080 %h %p" user@remote-server
 ```
 
 ## 字符串
@@ -948,16 +972,6 @@ else
     echo "no"
 fi
 
-if ( echo ${linux_distro} | grep 'ubuntu' ) || ( echo ${linux_distro} | grep 'debian' ) ; then
-    echo "debian like"
-else
-    echo "no"
-fi
-```
-
-### if 其他形式
-```sh
-linux_distro="ubuntu"
 if ( echo ${linux_distro} | grep 'ubuntu' ) || ( echo ${linux_distro} | grep 'debian' ) ; then
     echo "debian like"
 else
@@ -1643,7 +1657,45 @@ exec socat STDIO SOCKS4:$proxy:$1:$2
 > export http_proxy=http://name:password@example.com:914
 > export https_proxy=http://name:password@example.com:914
 
-### git 制定key
+### git 指定ssh key
+#### 使用 [GIT_SSH_COMMAND](https://blog.csdn.net/SCHOLAR_II/article/details/72191042)
+```sh
+GIT_SSH_COMMAND="ssh -i id_rsa" git clone ssh://user@example.com/demo.git
+```
+
+> **注意**，`-i` 有时可以被您的配置文件覆盖，在这种情况下，您应该给SSH一个空配置文件
+
+```sh
+GIT_SSH_COMMAND="ssh -i id_rsa -F /dev/null" git clone ssh://user@example.com/demo.git
+```
+
+#### 使用 `sshCommand` 为每个repo设置环境变量
+```sh
+git config core.sshCommand "ssh -i ~/.ssh/id_rsa -F /dev/null"
+```
+
+#### 使用 [ssh-agent](https://wangdoc.com/ssh/key.html#ssh-agent-%E5%91%BD%E4%BB%A4%EF%BC%8Cssh-add-%E5%91%BD%E4%BB%A4)
+```sh
+## ssh-agent bash
+
+eval `ssh-agent`
+ssh-add id_rsa
+git clone ssh://user@example.com/demo.git
+
+## 列出所有key
+ssh-add -l
+
+## 删除key
+ssh-add -d id_rsa
+
+## 删除所有key
+ssh-add -D
+
+## 退出 ssh-agent
+ssh-agent -k
+```
+
+#### 使用 GIT_SSH
 git.sh
 
 ```sh

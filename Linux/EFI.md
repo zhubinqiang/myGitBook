@@ -76,17 +76,22 @@ root@example.com:/boot/efi/EFI# tree
 root@example.com:/boot/efi/EFI# efibootmgr -v
 BootCurrent: 0003
 Timeout: 1 seconds
-BootOrder: 0003,0004,0005,0006,0007
+BootOrder: 0003,0004,0005,0006,0007,0008
 Boot0003* ubuntu        HD(1,GPT,6dad458c-37df-483e-ba67-2dd9263860d4,0x800,0x100000)/File(\EFI\UBUNTU\SHIMX64.EFI)
-Boot0004* UEFI: PXE IP4 Intel(R) Ethernet Server Adapter I350-T4 NIC1   PciRoot(0x3)/Pci(0x0,0x0)/Pci(0x0,0x0)/MAC(b496913c2ba4,0)/IPv4(0.0.0.00.0.0.0,0,0)..BO
-Boot0005* UEFI: PXE IP4 Intel(R) Ethernet Server Adapter I350-T4 NIC2   PciRoot(0x3)/Pci(0x0,0x0)/Pci(0x0,0x1)/MAC(b496913c2ba5,0)/IPv4(0.0.0.00.0.0.0,0,0)..BO
-Boot0006* UEFI: PXE IP4 Intel(R) Ethernet Server Adapter I350-T4 NIC3   PciRoot(0x3)/Pci(0x0,0x0)/Pci(0x0,0x2)/MAC(b496913c2ba6,0)/IPv4(0.0.0.00.0.0.0,0,0)..BO
-Boot0007* UEFI: PXE IP4 Intel(R) Ethernet Server Adapter I350-T4 NIC4   PciRoot(0x3)/Pci(0x0,0x0)/Pci(0x0,0x3)/MAC(b496913c2ba7,0)/IPv4(0.0.0.00.0.0.0,0,0)..BO
+Boot0004* debian        PciRoot(0x0)/Pci(0x17,0x0)/Sata(4,65535,0)/HD(1,GPT,2216d7e3-920b-41b7-b36d-ad7296ffc2fa,0x800,0x100000)/File(\EFI\debian\grubx64.efi)
+Boot0005* UEFI KingstonDataTraveler 3.0PMAP     PciRoot(0x0)/Pci(0x14,0x0)/USB(17,0)N.....YM....R,Y.
+Boot000F* ubuntu        HD(1,GPT,6751aa85-46a7-4855-872c-2fbc10d9416f,0x800,0x100000)/File(\EFI\ubuntu\shimx64.efi)
+Boot0006* CentOS        HD(1,GPT,d809f25c-53bb-4986-b42d-26858a15c520,0x800,0x64000)/File(\EFI\centos\shimx64.efi)
+Boot0007* UEFI: PXE IP4 Intel(R) Ethernet Server Adapter I350-T4 NIC1   PciRoot(0x3)/Pci(0x0,0x0)/Pci(0x0,0x0)/MAC(b496913c2ba4,0)/IPv4(0.0.0.00.0.0.0,0,0)..BO
+Boot0008* UEFI: PXE IP4 Intel(R) Ethernet Server Adapter I350-T4 NIC2   PciRoot(0x3)/Pci(0x0,0x0)/Pci(0x0,0x1)/MAC(b496913c2ba5,0)/IPv4(0.0.0.00.0.0.0,0,0)..BO
 MirroredPercentageAbove4G: 0.00
 MirrorMemoryBelow4GB: false
 ```
 
-
+修改启动顺序:
+```sh
+efibootmgr -o 0006,0003,0004,0005,0007,0008
+```
 
 [^1]: 引用 http://bbs.wuyou.net/forum.php?mod=viewthread&tid=303679 作者: 2011hiboy
 [^2]: 引用 https://zhuanlan.zhihu.com/p/31365115 作者: 王诗峣
