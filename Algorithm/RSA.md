@@ -31,6 +31,65 @@ c^d \equiv m \mod(n)  \\
 2790^{2753} \equiv 65 \mod(3233)
 ```
 
+另一种理解从[B站视频](https://www.bilibili.com/video/BV14y4y1272w)中提取
+加密：对原始数据m取e(encrypt)次幂, 将结果除以N再取余数，最后得到密文c(cipher)
+正向计算出密文c很简单，反向推出原始数据很难。
+
+$$
+m^e \mod N = c
+$$
+
+解密：
+$$
+c^d \mod N = m
+$$
+
+推导过程：
+令：$m^{ed} \mod N = m$
+根据欧拉定理: $m^{\varphi(n)} \equiv 1 \mod(n)$
+其中：$\varphi(n)$ 表示在不大于n的正整数中，有多少个**与n互质**的数
+
+```math
+m^{\varphi(n)} \equiv 1 \mod(n)  \\
+(m^{\varphi(n)})^k \equiv 1^k \mod(n)  \\
+m^{k\varphi(n)} \equiv 1 \mod(n)  \\
+m^{k\varphi(n)} \times m \equiv 1 \times m \mod(n)  \\
+m^{k\varphi(n) + 1} \equiv m \mod(n)  \\
+m^{k\varphi(n) + 1} \mod n = m
+```
+
+观察：
+```math
+m^{k\varphi(n) + 1} \mod n = m \\
+m^{ed} \mod n = m
+```
+
+令 $ed = k\varphi(n) + 1$ 则：$d = \frac{k\varphi(n) + 1}{e}$
+
+对于任何的质数p 都有 $\varphi(p) = p -1$
+对于任何2个互质的整数p，q 都有 $\varphi(p \times q) = \varphi(p) \times \varphi(q) $
+例如：令 p = 17, q = 23， n = $17 \times 23 = 391$
+```math
+\varphi(n) = \\
+\varphi(17 \times 23) = \varphi(391) \\
+= \varphi(17) \times \varphi(23) \\
+=(17-1) \times (23 -1) \\
+= 352
+```
+
+选取k = 5, e = 3， e要与$\varphi(n)$ 互质
+带入公式:：
+```math
+d = \frac{k\varphi(n) + 1}{e} = \frac{5 \times 352 + 1}{3} = 587
+```
+
+求出私钥d之后，我们就不用p和q了。 将 (e, n) 作为公钥public key， (d, n)作为私钥 private key
+
+e = 3,  d = 587, n = 391
+m = 97
+加密：$97^{3} \mod 391 = 79$
+解密：$79^{587} \mod 391 = 97$
+
 ## 对称加密
 1. 甲方选择某一种加密规则，对信息进行加密；
 2. 乙方使用同一种规则，对信息进行解密。
