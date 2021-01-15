@@ -1853,6 +1853,8 @@ sudo arp-scan -l -I docker0
 #route add -net 10.239.173.0/24 enp1s0f1
 #route add -net 192.168.100.0/24 eth0
 route add default gw 10.239.173.1
+
+ip route add default via 10.239.173.1 dev eth0
 ```
 
 方法2
@@ -1881,6 +1883,18 @@ net.ipv4.icmp_echo_ignore_all=1
 生效
 ```sh
 sudo sysctl -p
+```
+
+### DNS
+当出现 resolv.conf 链接到 stub-resolv.conf
+```sh
+$ file /etc/resolv.conf
+/etc/resolv.conf: symbolic link to ../run/systemd/resolve/stub-resolv.conf
+```
+
+可以改变它的路径
+```sh
+ln -sfv /run/systemd/resolve/resolv.conf /etc/resolv.conf
 ```
 
 ### hostname 与 IP
