@@ -72,6 +72,22 @@ sudo mount -t aufs -o dirs=./fruits=rw:./vegetables=rw none ./mnt
 
 > 如果有重复的文件名，在mount命令行上，越往前的就优先级越高。
 
+### 挂载 overlay
+参考: [这里](https://wiki.archlinux.org/index.php/Overlay_filesystem)
+```sh
+mount -t overlay overlay -o lowerdir=/lower1:/lower2:/lower3,upperdir=/upper,workdir=/work /merged
+```
+
+> lowerdir 是readonly的，写操作都发生再 upperdir
+
+上面的样例有这样的顺序:
+```
+/upper
+/lower1
+/lower2
+/lower3
+```
+
 ### umount: target is busy
 遇到 `umount: /mnt: target is busy.`
 ```sh

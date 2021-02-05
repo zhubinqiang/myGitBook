@@ -116,7 +116,10 @@ m = 97
 ![](images/RSA/0.png)
 
 ## 数字签名
-参考于[这里](http://www.youdzone.com/signature.html)
+参考于这里[1](http://www.youdzone.com/signature.html) [2](http://chuquan.me/2020/03/22/ios-certificate-principle/)
+
+### 生成签名
+![](images/RSA/signature-creation.png)
 
 Bob 产生一个公钥(public key)和一个私钥(private key)，把公钥发出去，私钥自己保存。
 ![](images/RSA/1.png)
@@ -130,6 +133,9 @@ Bob给Alice写了一封信(Message)，他用私钥加密
 Bob 把信和签名 发给了Alice
 ![](images/RSA/4.png)
 
+### 签名验证
+![](images/RSA/signature-validation.png)
+
 Alice得到信和签名 之后用公钥对信解密得到信的原文
 ![](images/RSA/5.png)
 
@@ -137,4 +143,14 @@ Alice用Hash算法得到信的摘要1，对签名用公钥解密得到摘要2。
 比较摘要1和摘要2，如果一致则信的内容没有被他人修改。
 ![](images/RSA/6.png)
 
+## 数字证书
+参考于[这里](http://chuquan.me/2020/03/22/ios-certificate-principle/)
+
+**数字证书（Digital Certificate）** 是一种相当于现实世界中身份证的功能在数字信息领域中的实现。数字证书包含了个人或机构的 **身份信息** 及其 **公钥**，因此也称为 **公钥证书（Public-Key Certificate，PKC）**
+
+类似于身份证是由权威的公安局颁发，公钥证书也是由权威的 **认证机构（Certificate Authority，CA）** 颁发。认证机构向接收方提供发送方的证书，证书中包含了发送方的身份信息和公钥。为了防止证书在颁发过程中被篡改，认证机构会将身份信息和公钥作为消息，用 **CA 私钥** 进行签名，进而将 **身份信息**、**公钥**、**签名** 一起放入证书，如下图所示。
+![](images/RSA/certificate.png)
+
+接收方得到发送方证书时，通过 CA 公钥对证书进行签名验证。
+![](images/RSA/certificate-validation.png)
 
