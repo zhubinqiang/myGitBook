@@ -870,6 +870,8 @@ for (int x = xmin; x < xmax; ++x) {
 ![](images/introduction-to-computer-graphics/frequencies.png)
 
 
+#### 卷积操作
+![](images/introduction-to-computer-graphics/convolution.png)
 
 
 ## 参考文献

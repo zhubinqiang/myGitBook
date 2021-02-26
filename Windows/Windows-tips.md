@@ -34,8 +34,13 @@ new Key: command
 C:\Users\xxx\sublime_text.exe "%1"
 ```
 
+还可以添加icon
+在上面的 "Open with sublime" 右键 "new" --> "String Value"
+value name: icon
+value data: ico 的路径
+
 ## 创建快捷方式
-```
+```bat
 mklink -j VSCode VSCode-win32-x64-1.34.0
 ```
 

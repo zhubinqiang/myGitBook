@@ -85,9 +85,10 @@
     * [adb](Service/adb.md)
 
 * [Windows](Windows/README.md)
-    * [Windows批处理](Windows/Windows_batch.md)
-    * [Windows技巧](Windows/Windows_tips.md)
+    * [Windows常用命令](Windows/Windows-common-commands.md)
+    * [Windows一些技巧](Windows/Windows-tips.md)
     * [git batch](Windows/git_batch.md)
+    * [bat脚本笔记](Windows/bat-notes.md)
 
 * [Algorithm](Algorithm/README.md)
     * [RSA算法](Algorithm/RSA.md)
