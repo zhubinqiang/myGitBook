@@ -1594,6 +1594,17 @@ echo 5
 -lva
 ```
 
+这个查看头文件来自哪里
+```sh
+$ pkg-config --variable=includedir libdrm
+/usr/local/include
+
+$ pkg-config --variable=libdir libdrm
+/usr/local/lib64
+```
+
+> 上面 variable 的值都来自来自libdrm.pc
+
 `LD_LIBRARY_PATH`: 运行需要的lib库
 ```sh
 ➜ $ export LD_LIBRARY_PATH=/usr/lib64:${LD_LIBRARY_PATH} 
