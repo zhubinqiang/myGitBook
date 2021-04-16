@@ -93,6 +93,7 @@
 * [Algorithm](Algorithm/README.md)
     * [RSA算法](Algorithm/RSA.md)
     * [泰勒公式](Algorithm/taylors-formula.md)
+    * [HASH](Algorithm/hash.md)
 
 * [Network](Network/README.md)
     * [路由](Network/route.md)

@@ -525,7 +525,7 @@ echo ${s/%4;5/_}
 ### 字符串转化为数组
 ```sh
 str="ONE,TWO,THREE,FOUR"
-arr=(${str//,/})
+arr=(${str//,/ })
 echo ${arr[@]}
 ```
 
@@ -967,6 +967,7 @@ print_array() {
 }
 
 list=(A B C D)
+## must needs ""
 print_array "${list[*]}"
 ```
 
@@ -981,6 +982,9 @@ fi
 > **Note**: =~ 右边不能有引号
 
 ### if 里面多个判断
+只有单中括号 [ ] 是兼容 posix shell 标准的，比如 Bourne shell（/bin/sh）, ash, dash 这些，而其他一切双方括号，双圆括号都不兼容 posix shell 标准，而是 bash 特有的语法扩展[^shell-posix]。
+
+
 ```sh
 linux_distro="ubuntu"
 if [ ${linux_distro} == "Ubuntu" -o ${linux_distro} == "Debian" ]; then
@@ -1018,7 +1022,7 @@ $ ./a.sh -a 123 -b 345
 
 `getopts` 与 `case` 组合使用
 ```sh
-while getopts "a:b:c:" opt; do
+while getopts "a:b:c" opt; do
     case ${opt} in
         a)
             echo "a = ${OPTARG}"
@@ -1027,21 +1031,27 @@ while getopts "a:b:c:" opt; do
             echo "b = ${OPTARG}"
             ;;
         c)
-            echo "c = ${OPTARG}"
+            echo "c = true"
             ;;
         ?)
             echo "unknown arg ${OPTARG}"
             ;;
     esac
 done
+shift $(($OPTIND-1))
 ```
 
 ```sh
-$ ./a.sh -a 1 -b 2 -c 3
+$ ./a.sh -a 1 -b 2 -c
 a = 1
 b = 2
-c = 3
+c = true
 ```
+> 字符后面带有冒号后面一定要加参数 ./cmd -a XXX
+> 字符后面没有冒号 ./cmd -c
+
+getopts识别出各个选项之后，就可以配合case进行操作。操作中，有两个"常量"，
+一个是OPTARG，用来获取当前选项的值；另外一个就是OPTIND，表示当前选项在参数列表中的位移。
 
 
 ## 解压缩
@@ -2622,5 +2632,6 @@ kill $(pidof ffplay)
 | 调用上一条指令的最后一个参数作为当前指令对象, 如，假设上一条指令为： ls abc.txt bbc.txt 那么， vi !$ 相当于： vi bbc.txt | !$      |
 | 调用执行指定编号的历史记录指令,如!2, !11                                                                                 | !number |
 
+[^shell-posix]: https://www.zhihu.com/question/266787434
 
 
