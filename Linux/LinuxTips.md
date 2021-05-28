@@ -1653,7 +1653,9 @@ Copyright (C) 2012 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 Written by Roland McGrath and Ulrich Drepper.
+```
 
+```sh
 ➜ $ sudo ldconfig -p | grep libc.so
         libc.so.6 (libc6,x86-64, OS ABI: Linux 2.6.32) => /lib64/libc.so.6
 
