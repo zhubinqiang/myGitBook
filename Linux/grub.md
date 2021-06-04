@@ -50,6 +50,39 @@ GRUB_TIMEOUT_STYLE=hidden
 
 不用等 GRUB 倒计时, timeout style 有 `GRUB_TIMEOUT_STYLE=[menu|countdown|hidden]`
 
+## 转交控制权
+磁盘与分区在 grub2 中的代号 [^grub-hd]
+|     代号     |                   说明                    |
+| :----------- | :---------------------------------------- |
+| (hd0,1)      | 一般的默认语法，由 grub2 自动判断分区格式 |
+| (hd0,msdos1) | 此磁盘的分区为传统的 MBR 模式             |
+| (hd0,gpt1)   | 此磁盘的分区为 GPT 模式                   |
+
+
+硬盘搜寻顺序
+| 硬盘搜寻顺序 |         在 Grub2 当中的代号         |
+| :---------- | :---------------------------------- |
+| 第一块 (MBR) | (hd0) (hd0,msdos1) (hd0,msdos2) ... |
+| 第二块 (GPT) | (hd1) (hd1,gpt1) (hd1,gpt2) ...     |
+| 第三块       | (hd2) (hd2,1) (hd2,2) (hd2,3) ...   |
+
+
+```
+menuentry 'Go to MBR' --id 'mbr' {
+    insmod chain
+    set root=(hd0)
+    chainloader +1
+}
+
+menuentry 'Go to Windows 7' --id 'win7' {
+    insmod chain
+    insmod ntfs
+    set root=(hd0,msdos2)
+    chainloader +1
+}
+```
+
+> 在配置文件/etc/default/grub中设置 `GRUB_DEFAULT=win7` 再执行 `grub2-mkconfig` 通过 --id 里面的内容
 
 ## FAQ
 ### error: environment block too small
@@ -69,4 +102,5 @@ sudo grub-editenv grubenv create
 [^efi_define]: https://wiki.archlinux.org/index.php/GRUB_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
 [^efi_exist]: https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
 [^grub_setting]: https://wiki.archlinux.org/index.php/GRUB_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/Tips_and_tricks_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E5%B0%86_UUID_%E5%92%8C%E5%9F%BA%E7%A1%80%E8%84%9A%E6%9C%AC%E7%BB%93%E5%90%88%E4%BD%BF%E7%94%A8
+[^grub-hd]: https://wizardforcel.gitbooks.io/vbird-linux-basic-4e/content/168.html
 
