@@ -271,3 +271,42 @@ RUN yum groupinstall -y "Development Tools"
 docker run -it -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix docker-gui firefox
 ```
 
+## docker network
+docker 网络[^docker-network] 配置
+```sh
+docker network ls
+```
+
+创建一个新的 bridge
+```sh
+docker network create -d bridge --subnet 172.10.0.0/24 --gateway 172.10.0.1 my_net
+```
+
+指定网络，它会动态配置ip
+```sh
+docker run -it --network my_net busybox
+```
+
+指定network以及ip
+```sh
+docker run -it --network my_net --ip 172.10.0.3 busybox
+```
+
+在2个不同的网络中共享, 下面是在 bbox1 容器中加入了 bridge 这个默认的网络。现在在bbox1中可以和 bridge 网络中的容器通信了。
+```sh
+docker run -it --name bbox1 busybox
+
+docker network connect bridge bbox1
+```
+
+container 共享网络
+```sh
+docker run -it --name=share1 busbox
+
+docker run -it --rm --network=container:share1 busybox
+```
+
+特别的 `--network=host` 是和主机共享网络， 用 `ip addr` 可以看到container 和 host 里面网络的配置是一样的。 但注意要避开host里面已开启的端口
+
+[^docker-network]: https://www.cnblogs.com/shoufengwei/p/7268300.html
+
