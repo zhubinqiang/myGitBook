@@ -10,8 +10,8 @@
 1. 客户机从自己的PXE网卡启动，**向本网络中的DHCP服务器索取IP，并搜寻引导文件的位置**
 2. DHCP服务器返回分给**客户机IP以及bootstrap文件的放置位置**(该文件一般是放在一台TFTP服务器上)
 3. 客户机向本网络中的TFTP服务器**索取bootstrap文件**
-4. 客户机取得bootstrap文件之后**执行该文件**
-5. 根据bootstrap的执行结果，**通过TFTP服务器加载内核和文件系统**
+4. 客户机取得 bootloader 文件之后**执行该文件**
+5. 根据 bootloader 的执行结果，**通过TFTP服务器加载内核和文件系统**
 6. 进入安装画面, 此时可以通过选择FTP,HTTP,NFS方式之一进行安装
 
 ![](images/PXE/pxe-flow.jpg)
