@@ -685,6 +685,13 @@ cat << EOF > xyz.txt
 333333333333333
 EOF
 
+## 打印并重定向
+cat << EOF | tee abc.txt
+111111111111111
+222222222222222
+333333333333333
+EOF
+
 ## 追加
 cat << EOF >> xyz.txt
 111111111111111
@@ -1093,6 +1100,12 @@ grep -vwf file1 file2
 ## sed
 读音 [sɛd] said
 
+### 删除指定行
+删除第1, 3, 5 这几行
+```sh
+sed -i '1d;3d;5d' a.txt
+```
+
 ### 查找2个匹配行之间
 ```sh
 sed -n '/Subject:/,/^diff --git /'p a.aptch
@@ -1351,6 +1364,13 @@ rm: cannot remove ‘file1.txt’: No such file or directory
 
 ➜ find . -name '*.txt' -print0 | xargs -p -0 rm
 rm ./new file3.txt ./new file2.txt ./new file1.txt ?...y
+```
+
+### 找到文件不显示前缀./
+```sh
+find . -type f -printf '%P\n'
+
+find * -type f
 ```
 
 ### find 删除带空格的文件
