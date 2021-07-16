@@ -700,6 +700,21 @@ cat << EOF >> xyz.txt
 EOF
 ```
 
+转义与不转义
+没有“EOF” 会发生转义
+```sh
+cat << EOF
+$PATH
+EOF
+```
+
+```sh
+cat << "EOF"
+$PATH
+EOF
+```
+
+
 ```sh
 cat > tab.py <<EOF
 #!/usr/local/bin/python
@@ -1095,6 +1110,11 @@ grep 'version' . -r --exclude-dir .git
 统计file1中没有，file2中有的行
 ```sh
 grep -vwf file1 file2
+```
+
+### 行数
+```sh
+grep -m2 'nologin' /etc/passwd
 ```
 
 ## sed
