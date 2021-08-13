@@ -2045,6 +2045,33 @@ sudo nmcli con up static-bi
 sudo nmcli connection delete dynamic-bi
 ```
 
+当出现出现
+```sh
+$ nmcli device
+DEVICE   TYPE      STATE      CONNECTION
+docker0  bridge    unmanaged  --
+ens10f0  ethernet  unmanaged  --
+ens10f1  ethernet  unmanaged  --
+```
+参考[ethernet-device-not-managed](https://askubuntu.com/questions/882806/ethernet-device-not-managed)
+
+在 /etc/NetworkManager/conf.d/ 或 /usr/lib/NetworkManager/conf.d/
+找到 10-globally-managed-devices.conf
+```ini
+[keyfile]
+unmanaged-devices=*,except:type:wifi,except:type:gsm,except:type:cdma
+```
+
+```sh
+sudo mv 10-globally-managed-devices.conf 10-globally-managed-devices.conf.orig
+```
+
+重启服务
+```sh
+sudo systemctl restart NetworkManager
+sudo nmcli device set ens10f1 managed yes
+```
+
 ### ip 命令
 参看[这里](http://blog.csdn.net/superbfly/article/details/49467159)
 
