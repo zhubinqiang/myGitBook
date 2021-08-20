@@ -1478,6 +1478,16 @@ for i in ${IDs[@]}; do
 done
 ```
 
+往数组后面追加
+```sh
+ARGS=()
+ARGS+=(-a)
+ARGS+=(-b)
+ARGS+=(-c 123)
+
+echo ${ARG[@]}
+```
+
 ## bash 加上ex参数
 ```sh
 #!/bin/bash -ex
