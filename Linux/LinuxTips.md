@@ -563,6 +563,41 @@ pkg_config_path=${PKG_CONFIG_PATH:+":"$PKG_CONFIG_PATH}
 
 > 其实不用冒号:也成立
 
+### 冒号
+参考[csdn](https://blog.csdn.net/honghuzhilangzixin/article/details/7073312)
+
+1. 啥也不做，只起到占位符的作用
+```sh
+if [ "${a}" == "1" ]; then
+    :
+else
+    :
+fi
+```
+
+2. 注释
+
+单行注释
+```sh
+# your comment here
+: your comment here
+```
+
+多行注释
+```sh
+: 'comment line1
+comment line2
+comment line3'
+```
+
+3. 清空文件的内容
+```sh
+:> a.txt
+
+cat /dev/null > a.txt
+```
+
+
 ## 时间间隔
 ```sh
 echo -n Count:
