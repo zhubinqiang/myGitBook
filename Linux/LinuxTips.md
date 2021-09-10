@@ -736,13 +736,15 @@ EOF
 ```
 
 转义与不转义
-没有“EOF” 会发生转义
+
+EOF 转义
 ```sh
 cat << EOF
 $PATH
 EOF
 ```
 
+"EOF" 原样输出，不会转义
 ```sh
 cat << "EOF"
 $PATH
