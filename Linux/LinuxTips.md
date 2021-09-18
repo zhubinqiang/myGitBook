@@ -1123,6 +1123,12 @@ tar czvf abc.tar.gz abc --remove-files
 ```sh
 tar czvf abc.tar.gz -C /home/usr1/abc .
 ```
+上面的方法有时候会失效
+
+```sh
+tar  -czfP  /root/44tar.gz  /root/ss2
+```
+[tar: Removing leading `/' from member names](https://www.cnblogs.com/operationhome/p/9802554.html) 这里加 `P` 避免这个。
 
 解压后 删除第一层目录
 ```sh
