@@ -583,6 +583,8 @@ fi
 : your comment here
 ```
 
+> #后的注释内容不会被检查，但:后的注释内容会被检查，如果有语句如果出现语法错误，则会报错 参考[这里](https://ixyzero.com/blog/archives/2512.html)
+
 多行注释
 ```sh
 : 'comment line1
@@ -597,6 +599,14 @@ comment line3'
 cat /dev/null > a.txt
 ```
 
+4. 设置默认值
+```sh
+: ${COMPONENT_PROJECT:="123"}
+COMPONENT_BRANCH=${COMPONENT_BRANCH:-"456"}
+
+echo "[${COMPONENT_PROJECT}]"
+echo "[${COMPONENT_BRANCH}]"
+```
 
 ## 时间间隔
 ```sh
