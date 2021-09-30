@@ -2135,6 +2135,34 @@ sudo systemctl restart NetworkManager
 sudo nmcli device set ens10f1 managed yes
 ```
 
+上面的方法可以未必生效 参考[这里](https://superuser.com/questions/1429490/unmanaged-network-manager-in-ubuntu)试试下面方法
+
+在 /etc/NetworkManager/conf.d/10-globally-managed-devices.conf 中
+```sh
+[main]
+plugins=ifupdown,keyfile
+
+[ifupdown]
+managed=true
+
+[keyfile]
+unmanaged-devices=*,except:type:wifi,except:type:gsm,except:type:cdma,except:type:wwan,except:type:ethernet,except:type:vlan
+
+[device]
+wifi.scan-rand-mac-address=no
+```
+
+重启服务
+```sh
+sudo systemctl restart NetworkManager
+sudo nmcli device set ens10f1 managed yes
+```
+
+不知道为啥会得到2个动态IP, 参考[这里](https://askubuntu.com/questions/1030957/second-ip-via-dhcp-why)
+```sh
+sudo ip addr flush dev eno1
+```
+
 ### ip 命令
 参看[这里](http://blog.csdn.net/superbfly/article/details/49467159)
 
