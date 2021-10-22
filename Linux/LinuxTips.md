@@ -1184,6 +1184,15 @@ sed -i '1d;3d;5d' a.txt
 sed -n '/Subject:/,/^diff --git /'p a.aptch
 ```
 
+### 在行首或行尾添加
+refer to [here](https://www.cnblogs.com/aaronwxb/archive/2011/08/19/2145364.html)
+
+```sh
+sed 's/^/HEAD&/g' test.file
+
+sed 's/$/&TAIL/g' test.file
+```
+
 ### windows 文件格式转换到 Linux下
 ```sh
 sed -e 's/^M//g' windos_file
@@ -2594,6 +2603,11 @@ sudo timedatectl list-timezones
 
 ## 修改时区
 sudo timedatectl set-timezone Asia/Shanghai
+```
+
+或者用创建软连接的方式
+```sh
+sudo ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 ```
 
 ## 在Linux访问windows
