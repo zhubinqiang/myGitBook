@@ -805,6 +805,22 @@ COMMENT
 err.sh 2>&1 | tee -a log
 ```
 
+### log 重定向
+```bash
+#!/bin/bash -exu
+
+exec 3>&1 4>&2
+
+trap 'exec 2>&4 1>&3' 0 1 2 3
+exec 1> script.log 2>&1
+
+pwd
+
+ls 12345
+
+date
+```
+
 ### diff
 生成 patch
 ```sh
@@ -1227,6 +1243,13 @@ refer to [here](https://www.cnblogs.com/aaronwxb/archive/2011/08/19/2145364.html
 sed 's/^/HEAD&/g' test.file
 
 sed 's/$/&TAIL/g' test.file
+```
+
+### 在2个匹配行之间的行首或行尾添加
+```bash
+echo -e '11111\n22222\n33333\n44444\n55555' | sed '/333/,/555/ s/^/#&/g'
+
+echo -e '11111\n22222\n33333\n44444\n55555' | sed '/333/,/555/ s/$/&#/g'
 ```
 
 ### windows 文件格式转换到 Linux下
@@ -1791,6 +1814,11 @@ pkg-config --modversion libdrm
 ## 看 so 用了哪个gcc版本编译的
 ```sh
 objdump --full-contents --section=.comment libmfxhw64.so
+```
+
+## 看 lib 是不是 debug版本
+```bash
+readelf -S libxxx.so | grep -i debug
 ```
 
 ## 看glibc 哪个版本
