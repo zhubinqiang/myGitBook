@@ -63,6 +63,33 @@ sudo kpartx -d /dev/loop0
 sudo losetup -d /dev/loop0
 ```
 
+### 挂载虚拟硬盘
+```bash
+## dd命令创建128M的文件
+dd if=/dev/zero bs=1M count=128 of=./vdisk.img
+
+## 创建文件系统
+mkfs.ext4 vdisk.img
+
+## 挂载
+sudo mount vdisk.img /mnt
+
+## 查看 loop 设备
+losetup -a
+```
+
+### 挂载虚拟文件系统
+参考[这里](https://segmentfault.com/a/1190000006878392)
+
+```bash
+sudo mount -t proc none /mnt
+
+sudo mount -t tmpfs -o size=64m none /mnt
+```
+
+> proc、tmpfs、sysfs、devpts等都是Linux内核映射到用户空间的虚拟文件系统
+> 上面由于没有对应的源设备，上面的none可以是任意字符串。
+
 ### 挂载 AUFS
 ```sh
 sudo mount -t aufs -o dirs=./fruits:./vegetables none ./mnt
@@ -1250,6 +1277,15 @@ sed 's/$/&TAIL/g' test.file
 echo -e '11111\n22222\n33333\n44444\n55555' | sed '/333/,/555/ s/^/#&/g'
 
 echo -e '11111\n22222\n33333\n44444\n55555' | sed '/333/,/555/ s/$/&#/g'
+```
+
+### 添加多行
+```bash
+sed -i '/Service]/a \
+Environment=HTTP_PROXY=http://proxy-example.com:1234\
+Environment=HTTPS_PROXY=http://proxy-example.com:1234\
+NO_PROXY=localhost,127.0.0.0/8,*.example.com\
+' docker.service
 ```
 
 ### windows 文件格式转换到 Linux下
