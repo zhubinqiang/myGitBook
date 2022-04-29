@@ -1802,7 +1802,7 @@ echo 5
 ./install.sh <<< "y"
 ```
 
-## 几个环境变量
+## 编译、运行时几个环境变量
 `PKG_CONFIG_PATH`: 为了寻找 *.pc 文件。 通过`pkg-config --cflags --libs` 指定系统中安装库。
 ```sh
 ➜ $ export PKG_CONFIG_PATH=/usr/lib64/pkgconfig:${PKG_CONFIG_PATH}
@@ -1836,6 +1836,16 @@ $ pkg-config --variable=libdir libdrm
 库搜索路径，此环境变量指明路径会在-L指定路径之后，系统默认路径之前被搜索。
 ```sh
 ➜ $ export LIBRARY_PATH=/opt/example/lib
+```
+
+链接库搜索目录
+```sh
+gcc --print-search-dirs
+```
+
+头文件搜索目录
+```sh
+gcc -v -E - < /dev/null 2>&1 | awk '/^#include/,/^End of search/' | grep '^ '.
 ```
 
 ## 看lib的版本
