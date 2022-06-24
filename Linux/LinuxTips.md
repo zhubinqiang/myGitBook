@@ -1279,6 +1279,11 @@ echo -e '11111\n22222\n33333\n44444\n55555' | sed '/333/,/555/ s/^/#&/g'
 echo -e '11111\n22222\n33333\n44444\n55555' | sed '/333/,/555/ s/$/&#/g'
 ```
 
+### 匹配符合里面的第一行
+```bash
+sed -i '1,/enabled=0/{s/enabled=0/enabled=1/}' /etc/yum.repos.d/almalinux-powertools.repo
+```
+
 ### 添加多行
 ```bash
 sed -i '/Service]/a \
@@ -1419,6 +1424,11 @@ awk -F":" '{print $2,$(NF),$(NF-1),$(NF-3)}' /etc/passwd
 ```sh
 history  | awk '{CMD[$2]++;count++} END{for (a in CMD) print a " == " CMD[a]/count*100 "%"}' | grep -v './' | column -t | sort -k3 -rn | cat -n |
 head
+```
+
+awk从第二列到最后一列输出
+```bash
+ps | awk '{for (i=2;i<=NF;i++)printf("%s ", $i);print ""}'
 ```
 
 ## vim
@@ -1846,7 +1856,12 @@ gcc --print-search-dirs
 头文件搜索目录
 ```sh
 gcc -v -E - < /dev/null 2>&1 | awk '/^#include/,/^End of search/' | grep '^ '.
+
+## for c++
+gcc -xc++ -E -v - < /dev/null
 ```
+
+> 编译时可以通过 `-nostdinc++`, `-nostdinc` 选项屏蔽对内定目录搜索头文件
 
 ## 看lib的版本
 ```sh
@@ -1864,8 +1879,21 @@ objdump --full-contents --section=.comment libmfxhw64.so
 
 ## 看 lib 是不是 debug版本
 ```bash
-readelf -S libxxx.so | grep -i debug
+readelf -S libxxx.so | grep -i '\.debug'
 ```
+
+## patchelf 修改 runtime
+```bash
+patchelf \
+    --set-interpreter /opt/glibc-2.27/lib/ld-linux-x86-64.so.2 \
+    --set-rpath /opt/glibc-2.27/lib/ \
+    --add-needed /opt/glibc-2.27/lib/libOpenCL.so.1 dpcpp
+
+readelf -a dpcpp
+```
+
+`--set-interpreter`: 设置动态库解析器, 只针对binary，库文件无效
+`--set-rpath`: 设置 rpath
 
 ## 看glibc 哪个版本
 ```sh
