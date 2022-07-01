@@ -1921,6 +1921,15 @@ nm /usr/local/lib/lib360SCVP.so
 2. U类：是在**库中被调用**，但并没有在库中定义(表明需要其他库支持)，用U **undefined**表示；
 3. W类：是所谓的“弱态”符号，它们虽然在库中被定义，但是可能被其他库中的同名符号覆盖，用W **weak symbol**表示。
 
+## LD_DEBUG
+```sh
+LD_DEBUG=files ./main
+
+LD_DEBUG=libs ./main
+
+LD_DEBUG=symbols ./main
+```
+
 ## git
 ### git-proxy
 ```sh
