@@ -2127,6 +2127,20 @@ traceroute to 10.67.116.91 (10.67.116.91), 30 hops max, 60 byte packets
  3  media-clips2.sh.example.com (10.67.116.91)  0.200 ms  0.178 ms  0.155 ms
 ```
 
+### tcpdump 抓包
+```bash
+sudo tcpdump -n -i eth0 tcp and host 192.168.1.101 and port 80 -w mypkg.pcap
+```
+tcpdump[^tcpdump] 使网卡自动进入混杂模式
+
+-n: 用ip来代替hostname
+and: 条件组合 and / or
+指定协议: 可以指定的协议一般有：arp / icmp / tcp
+host: host关键字用来指定只抓取对应IP的报文，表示源地址，
+    或者目的地址。也可以可以用src或者dst代替host关键字，只抓单边的报文
+port：用来指定只抓取对应Port端口的报文，表示源端口，或者目的端口
+
+
 ### 建立网桥
 ```sh
 sudo apt-get install bridge-utils
@@ -2353,6 +2367,65 @@ ip route add default via 192.168.137.2
 ```sh
 ip route del default
 ```
+
+#### network namespace
+```bash
+## 新建网络空间
+ip netns add tsj
+ip netns list
+
+## veth网线
+ip link add veth-0 type veth peer name veth-1
+ip link set veth-0 up
+ip link set veth-1 up
+
+## 网线一头伸入到新建的空间
+ip link set veth-1 netns tsj
+ip netns exec tsj ip link set veth-1 name eth0
+ip netns exec tsj ip link set eth0 up
+ip netns exec tsj ip link set lo up
+## 设置网络空间里的IP
+ip netns exec tsj ip addr add 192.168.1.1/24 dev eth0
+
+## 设置host里的IP
+ip addr add 192.168.1.2/24 dev veth-0
+```
+
+
+检查连通性
+```bash
+tcpdump -i veth-0 -n icmp
+
+ip netns exec tsj ping 192.168.1.2
+
+ip netns exec tsj nc -lp 1234
+curl -v 192.168.1.1:1234
+```
+
+检查veth另一个是哪个
+```bash
+ip netns exec tsj ethtool -S eth0
+NIC statistics:
+     peer_ifindex: 6
+
+ip addr
+6: veth-0@if5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether fa:d8:fc:d5:00:62 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 192.168.1.2/24 scope global veth-0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::f8d8:fcff:fed5:62/64 scope link
+       valid_lft forever preferred_lft forever
+```
+
+删除网络空间
+```bash
+ip link delete veth-0
+ip netns delete tsj
+```
+
+veth[^veth] 是Linux中一种虚拟出来的网络设备，veth设备总是成对出现，所以一般也叫veth-pair。
+Veth就是一根“网线”，你从一头发数据，当然就从另一头收到数据了。
+
 
 ### 端口
 ```sh
@@ -2963,4 +3036,6 @@ kill $(pidof ffplay)
 
 [^shell-posix]: https://www.zhihu.com/question/266787434 作者: 韦易笑
 [^globbing]: https://www.cnblogs.com/divent/p/5762154.html 作者: divent
+[^tcpdump]: https://bbs.huaweicloud.com/blogs/113120 作者：唐盛军
+[^veth]: https://bbs.huaweicloud.com/blogs/149798 作者：唐盛军
 
