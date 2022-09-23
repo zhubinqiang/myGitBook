@@ -10,6 +10,7 @@
     * [计算机基础](Linux/compute_base.md)
     * [grub](Linux/grub.md)
     * [efi](Linux/efi.md)
+    * [dkms](Linux/dkms.md)
 
 * [Utility](Utility/README.md)
     * [Tmux](Utility/Tmux.md)

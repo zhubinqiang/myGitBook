@@ -1154,6 +1154,14 @@ else
 fi
 ```
 
+## 单行脚本
+```bash
+function_name() { command1; command2; ...; commandN; }
+
+## 空函数
+func_name() { :; }
+```
+
 ## 脚本参数选项
 若此脚本为 a.sh
 ```sh
