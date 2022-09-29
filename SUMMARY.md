@@ -85,6 +85,7 @@
     * [Systemd 入门教程：实战篇](Service/systemd_2.md)
     * [Jenkins](Service/Jenkins.md)
     * [adb](Service/adb.md)
+    * [qemu](Service/qemu.md)
 
 * [Windows](Windows/README.md)
     * [Windows常用命令](Windows/Windows-common-commands.md)
@@ -103,6 +104,7 @@
     * [TCP/IP](Network/tcp.md)
     * [DNS](Network/dns.md)
     * [DNS](Network/dhcp.md)
+    * [iptables](Network/iptables.md)
     * [虚拟机网络](Network/bridge_nat_hostonly.md)
     * [桥接](Network/bridge.md)
 
