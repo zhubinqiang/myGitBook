@@ -1301,6 +1301,12 @@ NO_PROXY=localhost,127.0.0.0/8,*.example.com\
 ' docker.service
 ```
 
+### 替换匹配行
+```bash
+cat /etc/passwd | sed "/^root/c AAAAA"
+cat /etc/passwd | sed "1c BBBBB"
+```
+
 ### windows 文件格式转换到 Linux下
 ```sh
 sed -e 's/^M//g' windos_file
