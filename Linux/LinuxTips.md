@@ -2265,6 +2265,18 @@ host 10.67.116.101
 dig -x 10.67.116.96
 ```
 
+### 多台设备DHCP获取到相同IP
+新的ubuntu系统在请求DHCP服务时默认不再使用MAC地址作为DHCP的请求ID[^multi-ip]，
+而是使用/etc/machine-id
+
+```bash
+rm /etc/machine-id
+rm /var/lib/dbus/machine-id
+
+systemd-machine-id-setup
+systemd-machine-id-setup --commit
+```
+
 ### nmcli
 一个连接(connection)就是/etc/sysconfig/network-scripts/目录下的一个配置文件，  
 接口(device)是物理设备，一个物理设备可以拥有多个配置文件，  
@@ -2361,9 +2373,12 @@ ip link set dev eth0 up/down
 ip link set dev eth0 address 00:01:4f:00:15:f1
 ```
 
-#### 查看ip地址
+#### 修改ip地址
 ```sh
+ip addr add 192.168.100.123/24 dev eth0
+ip addr del 192.168.100.123/24 dev br0
 ip addr show
+ip addr flush dev eth0
 ```
 
 #### 查看路由表
@@ -3052,4 +3067,5 @@ kill $(pidof ffplay)
 [^globbing]: https://www.cnblogs.com/divent/p/5762154.html 作者: divent
 [^tcpdump]: https://bbs.huaweicloud.com/blogs/113120 作者：唐盛军
 [^veth]: https://bbs.huaweicloud.com/blogs/149798 作者：唐盛军
+[^multi-ip]: https://www.modb.pro/db/330318
 
