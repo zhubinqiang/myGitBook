@@ -27,6 +27,28 @@ mount --bind /test1 /test2
 sshfs user@example.com:/home/user/WS mnt/
 ```
 
+
+sshfs 开机挂在的话 [^ssh_mount]:
+```bash
+#创建个脚本文件
+[root@test ~]# touch /opt/mount.sh
+[root@test ~]# vim  /opt/mount.sh
+echo 123456 | sshfs root@192.168.1.126:/root /data/ -o allow_other -o reconnect -o password_stdin
+#后面加个参数 -o password_stdin ，前面加个 echo + 目标服务器密码， 意思是不需要输目标服务器密码免密挂载 
+123456就是我服务器192.168.1.126的密码
+
+#给脚本执行权限
+[root@test ~]# chmod +x  /opt/mount.sh
+ 
+#脚本执行脚本放到开机自启配置文件里并给执行权限
+[root@test ~]# echo sh /opt/mount.sh >> /etc/rc.d/rc.local
+[root@test ~]# chmod +x /etc/rc.d/rc.local
+```
+
+sshfs 开机启动不能配置在 /etc/fstab 中。
+因为sshfs是基于ssh网络传输的，fstab配置文件在网络加载之前自动的，网络都没有加载好，fstab怎么可能成功？
+
+
 ### 挂载 ntfs
 安装 ntfs-3g
 ```sh
@@ -181,6 +203,13 @@ media       ALL=(ALL)   NOPASSWD:  ALL
 ```
 
 > media 用户得要加入wheel组  `usermod -G wheel media`
+
+
+或者添加到 /etc/sudoers.d/nopasswd 文件中
+```bash
+echo "media   ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/nopasswd
+chmod 440 /etc/sudoers.d/nopasswd
+```
 
 #### Ubuntu
 ```
@@ -2230,6 +2259,28 @@ $ file /etc/resolv.conf
 ln -sfv /run/systemd/resolve/resolv.conf /etc/resolv.conf
 ```
 
+修改DNS
+方法1：修改 /etc/resolv.conf
+```
+nameserver 127.0.0.53
+nameserver 127.0.0.54
+nameserver 127.0.0.55
+```
+
+方法2 [^dns_update]: 通过 `systemd-resolve`
+```bash
+sudo vim /etc/systemd/resolved.conf
+
+[Resolve]
+DNS=114.114.114.114
+DNS=8.8.8.8
+```
+
+```bash
+sudo systemctl restart systemd-resolved.service
+sudo systemd-resolve --status
+```
+
 ### hostname 与 IP
 通过hostname查询IP
 ```sh
@@ -3068,4 +3119,6 @@ kill $(pidof ffplay)
 [^tcpdump]: https://bbs.huaweicloud.com/blogs/113120 作者：唐盛军
 [^veth]: https://bbs.huaweicloud.com/blogs/149798 作者：唐盛军
 [^multi-ip]: https://www.modb.pro/db/330318
+[^ssh_mount]: https://www.lixian.fun/4253.html
+[^dns_update]: https://blog.51cto.com/u_14841814/2988890
 
