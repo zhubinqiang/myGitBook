@@ -41,7 +41,7 @@ value data: ico 的路径
 
 ## 创建快捷方式
 ```bat
-mklink -j VSCode VSCode-win32-x64-1.34.0
+mklink /j VSCode VSCode-win32-x64-1.34.0
 ```
 
 `/d`: 目录的快捷方式 但是权限不够

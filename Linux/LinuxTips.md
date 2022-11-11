@@ -25,10 +25,12 @@ mount --bind /test1 /test2
 #sudo apt install -y sshfs
 
 sshfs user@example.com:/home/user/WS mnt/
+
+sshfs -o uid=$(id -u) -o gid=$(id -g) user@example.com:/home/user/WS mnt/
 ```
 
 
-sshfs 开机挂在的话 [^ssh_mount]:
+sshfs 开机挂载的话 [^ssh_mount]:
 ```bash
 #创建个脚本文件
 [root@test ~]# touch /opt/mount.sh
@@ -388,7 +390,7 @@ ssh user@server 'bash -s' < local.sh helloworld
 ## 本地脚本用绝对路径, 后面可以加参数
 ssh user@server /home/user/local.sh helloworld
 
-## 用 : 执行多条命令
+## 用 ; 执行多条命令
 ssh user@server "pwd; ls; date"
 
 ## 用 -t 交互
@@ -698,6 +700,8 @@ sudo cdrecord -v -eject dev=/dev/cdwriter driveropts=burnfree CentOS.iso
 ### 得到执行脚本的路径
 ```bash
 filepath=$(cd "$(dirname "$0")"; pwd)
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ```
 
 ### 删除以-开头的文件
@@ -1281,7 +1285,7 @@ grep 'version' . -r --exclude-dir .git
 grep -vwf file1 file2
 ```
 
-### 行数
+### 输出几行
 ```sh
 grep -m2 'nologin' /etc/passwd
 ```
@@ -2099,6 +2103,12 @@ echo -e "hello123\n456" > /dev/pts/12
 
 - `mesy y` 允许写入， `mesy n` 不允许写入。 发现行不通。
 
+### 接管执行中的进程
+```bash
+sudo reptyr -T 32685
+```
+
+
 ## 网络
 ### ping
 ```sh
@@ -2440,7 +2450,11 @@ ip route show
 #### 网关
 添加默认网关
 ```sh
-ip route add default via 192.168.137.2
+ip route add default via 192.168.100.1
+
+ip route add 192.168.100.0/24 via 192.168.100.1 dev eth0
+
+ip route add 192.168.100.0/24 via 192.168.100.1 dev eth0 src 192.168.100.51
 ```
 
 删除默认网关
