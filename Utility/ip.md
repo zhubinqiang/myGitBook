@@ -57,6 +57,37 @@ ip link set eth0 address aa:aa:aa:aa:aa:aa
 ```
 
 ## ip addr
+```sh
+[root@www ~]# ip addr show
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: enp1s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:a0:a5:aa:47:2d brd ff:ff:ff:ff:ff:ff
+    inet 192.168.100.123/23 brd 10.67.117.255 scope global noprefixroute enp1s0f0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::9e31:11d2:59da:3553/64 scope link noprefixroute
+       valid_lft forever preferred_lft forever
+```
+相关参数：主要有底下这些[^ip_addr]：
+`<BROADCAST,MULTICAST,UP,LOWER_UP>` ： `BROADCAST` 表示该接口支持广播； `MULTICAST` 表示该接口支持多播； `UP` 表示该网络接口已启用； `LOWER_UP` 表示网络电缆已插入，设备已连接至网络
+`mtu 1500`: 最大传输单位（数据包大小）为 1,500 字节
+`qdisc pfifo_fast`：用于数据包排队
+`state UP` ：网络接口已启用
+
+
+broadcast：设定广播地址，如果设定值是 + 表示『让系统自动计算』
+label ：亦即是这个装置的别名，例如 eth0:0 就是了！
+scope ：这个界面的领域，通常是这几个大类：
+global ：允许来自所有来源的联机；
+site ：仅支持 IPv6 ，仅允许本主机的联机；
+link ：仅允许本装置自我联机；
+host ：仅允许本主机内部的联机；
+所以当然是使用 global 啰！预设也是 global 啦！
+
 与第三层网络层有关的参数啦！ 主要是在设定与 IP 有关的各项参数，包括 netmask, broadcast 等等。
 
 ```sh
@@ -70,16 +101,6 @@ ip link set eth0 address aa:aa:aa:aa:aa:aa
 
 IP 参数：主要就是网域的设定，例如 192.168.100.100/24 之类的设定喔；
 dev ：这个 IP 参数所要设定的接口，例如 eth0, eth1 等等；
-
-相关参数：主要有底下这些：
-broadcast：设定广播地址，如果设定值是 + 表示『让系统自动计算』
-label ：亦即是这个装置的别名，例如 eth0:0 就是了！
-scope ：这个界面的领域，通常是这几个大类：
-global ：允许来自所有来源的联机；
-site ：仅支持 IPv6 ，仅允许本主机的联机；
-link ：仅允许本装置自我联机；
-host ：仅允许本主机内部的联机；
-所以当然是使用 global 啰！预设也是 global 啦！
 
 ```sh
 ## 新增一个接口 名为 eth0:pxe
@@ -118,6 +139,7 @@ default via 192.168.100.100 dev eth0 proto static metric 101
 
 - proto：此路由的路由协议，主要有 redirect, kernel, boot, static, ra 等， 其中 kernel 指的是直接由核心判断自动设定。
 - scope：路由的范围，主要是 link ，亦即是与本装置有关的直接联机。
+- metric: metric的值越小，优先级越高。如果两块网卡的Metric的值相同，就会出现抢占优先级继而网卡冲突，将会有一块网卡无法连接 。
 
 ```sh
 ## 添加局域网的路由
@@ -146,3 +168,6 @@ ip route del default via 192.168.100.100 dev eth0
 [root@linux-node1 network-scripts]# nmcli dev disconnect eth0 && nmcli dev connect eth0
 # 一般直接连接一次设备即可，如果不成功就先断开设备再连接设备，注意必须两个指令一起运行
 ```
+
+
+[^ip_addr]: https://www.codeplayer.org/Wiki/Router/Linux%20ip%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3.html

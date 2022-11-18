@@ -67,6 +67,9 @@ sudo apt install -y exfat-utils
 ```sh
 sudo mount -t cifs //10.239.128.63/bzhux /mnt -o user=media,passwd=XXX
 
+## uid、gid分别指定为linux用户的用户id和组id
+sudo mount -t cifs //10.239.128.63/bzhux /mnt -o user=media,passwd=XXX,rw,uid=`id -u`,gid=`id -g`
+
 # 像FTP客户端一样使用smbclient, 不加-U 以当前用户名访问
 smbclient //192.168.0.1/tmp  -U username%password
 
@@ -703,6 +706,8 @@ filepath=$(cd "$(dirname "$0")"; pwd)
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ```
+
+> BASH_SOURCE，同样是一个数组，不过它的第一个元素是当前脚本的名称。这在source的时候非常有用，因为在被source的脚本中，$0是父脚本的名称，而不是被source的脚本名称。而BASH_SOURCE就可以派上用场了[^BASH_SOURCE]。
 
 ### 删除以-开头的文件
 ```bash
@@ -3135,4 +3140,5 @@ kill $(pidof ffplay)
 [^multi-ip]: https://www.modb.pro/db/330318
 [^ssh_mount]: https://www.lixian.fun/4253.html
 [^dns_update]: https://blog.51cto.com/u_14841814/2988890
+[^BASH_SOURCE]: https://www.cnblogs.com/sunfie/p/5943979.html
 
