@@ -499,6 +499,23 @@ ssh -p 4022 user@remote-server
 ssh -o ProxyCommand="nc --proxy-type socks4 --proxy proxy-socks-example:1080 %h %p" user@remote-server
 ```
 
+## netrc 实现自动登陆
+```
+machine github.com
+   login not-used
+   password your_token
+machine api.github.com
+   login not-used
+   password your_token
+```
+适用于 git, curl, wget 等
+
+```
+default login username password passwd
+```
+default 行匹配所有主机, 它必须是最后一个条目。但在我机器上面似乎不起作用。
+
+
 ## 字符串
 ### 字符串长度
 ```sh
