@@ -20,6 +20,8 @@ http://vscode.cdn.azure.cn/stable/VSCode-win32-x64-1.45.1.zip
 - Code Runner
 - Markdown Preview Enhanced
 - Table Formatter
+- Markmap
+- vscode-note
 
 ## 自定义快捷键设置
 |            命令            |     绑定键     |         说明          |
