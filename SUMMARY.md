@@ -34,6 +34,7 @@
     * [vim 查找和替换](Utility/vim_find_replace.md)
     * [vim 插件管理器Vundle](Utility/vim_vundle.md)
     * [vim 插件管理器vim-plug](Utility/vim_plug.md)
+    * [vim script](Utility/vim-script.md)
     * [FFmpeg](Utility/ffmpeg.md)
     * [Ansible](Utility/Ansible.md)
     * [eclipse FAQ](Utility/eclipse.md)
