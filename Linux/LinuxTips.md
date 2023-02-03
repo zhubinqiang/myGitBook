@@ -155,6 +155,15 @@ $ kill 7675 8018
 $ sudo umount /mnt
 ```
 
+上面可能还不行, 需要lazy umount[^umount_f_l]
+```sh
+sudo umount -f -l /mnt/
+```
+
+- `-f`: Force unmount (in case of an unreachable NFS system). (Requires kernel 2.1.116 or later.)
+- `-l`: Lazy unmount. Detach the filesystem from the filesystem hierarchy now, and cleanup all references to the filesystem as soon as it is not busy anymore. (Requires kernel 2.4.11 or later.)
+
+
 ## sudo OR root
 ### 保存 sudo 密码
 ```bash
@@ -3158,4 +3167,5 @@ kill $(pidof ffplay)
 [^ssh_mount]: https://www.lixian.fun/4253.html
 [^dns_update]: https://blog.51cto.com/u_14841814/2988890
 [^BASH_SOURCE]: https://www.cnblogs.com/sunfie/p/5943979.html
+[^umount_f_l]: https://askubuntu.com/questions/292043/how-to-unmount-nfs-when-server-is-gone
 
