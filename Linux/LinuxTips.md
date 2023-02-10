@@ -630,6 +630,14 @@ echo ${arr[@]}
 > True if the length of string is non-zero
 > 字符串长度是非0 则为真
 
+### 字符串大写
+```sh
+s="abc.txt"
+
+echo ${s^} ## Abc.txt
+echo ${s^^} ## ABC.TXT
+```
+
 ### 设置字符串默认值
 ```sh
 libva_rev=${LIBVA_REV:-"va-unified"}
@@ -1053,6 +1061,19 @@ sort -t '.' -k 3,3 -k 4,4 -n alive-2
 `-k 3,3`: 起始列3 结尾列3
 `-k 3,3 -k 4,4`：先第3列，后第4列, `-k 3,4` 把3，4列作为一个整体
 `-n`: 按数字number排序
+
+### update-alternatives
+```sh
+##                       --install <link>           <name> <path> <priority>
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 2
+
+update-alternatives --display python
+
+##                       --remove <name> <path>
+sudo update-alternatives --remove python /usr/bin/python3
+```
+
+它注册的都在 /etc/alternatives/ 目录下
 
 ## 通配符 globbing
 shell [通配符][^globbing]通常用来**匹配文件或目录 而不是文本**
