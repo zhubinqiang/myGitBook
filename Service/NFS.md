@@ -83,3 +83,17 @@ showmount -a example.com
 sudo mount -t nfs example.com:/datadisk /mnt
 ```
 
+搭建windows nfs client端，参考[这里](https://odinxu.com/post/windows-access-centos-nfs/)。
+
+`Win + R` --> `OptionalFeatures` --> Services for NFS
+
+选择
+1. Administroative Tools
+2. client for NFS
+
+然后在终端上面运行:
+```powershell
+showmount -e example.com
+mount \\example.com\datadisk X:
+```
+
