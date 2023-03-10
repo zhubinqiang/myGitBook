@@ -88,6 +88,8 @@
     * [Jenkins](Service/Jenkins.md)
     * [adb](Service/adb.md)
     * [qemu](Service/qemu.md)
+    * [apache](Service/apache.md)
+    * [nginx](Service/nginx.md)
 
 * [Windows](Windows/README.md)
     * [Windows常用命令](Windows/Windows-common-commands.md)
@@ -109,6 +111,7 @@
     * [iptables](Network/iptables.md)
     * [虚拟机网络](Network/bridge_nat_hostonly.md)
     * [桥接](Network/bridge.md)
+    * [PAC](Network/pac.md)
 
 * [计算机图形学](Computer-Graphices/README.md)
     * [计算机图形学入门](Computer-Graphics/introduction-to-computer-graphics.md)
