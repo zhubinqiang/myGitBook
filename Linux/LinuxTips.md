@@ -399,6 +399,18 @@ UserKnownHostsFile /dev/null
 ## 无参数, 在远程执行本地命令
 ssh user@server 'bash -s' < local.sh helloworld
 
+## 执行多行命令
+ssh user@server 2>&1 << EOF
+pwd
+ls ABC
+if [ "\$?" -ne "0" ]; then
+    echo failed
+    exit 2
+else
+    echo pass
+fi
+EOF
+
 ## 本地脚本用绝对路径, 后面可以加参数
 ssh user@server /home/user/local.sh helloworld
 
@@ -844,6 +856,17 @@ cat << EOF >> xyz.txt
 EOF
 ```
 
+sudo 追加
+```sh
+PROXY=http://example-proxy.com:911
+
+sudo tee -a /etc/apt/apt.conf << EOF
+Acquire::http::proxy "${PROXY}";
+Acquire::https::proxy "${PROXY}";
+EOF
+```
+
+
 转义与不转义
 
 EOF 转义
@@ -1178,6 +1201,11 @@ array2=(
 
 ## 遍历
 for i in ${array[@]}; do
+    echo $i
+done
+
+## 打印下标
+for i in ${!array[@]}; do
     echo $i
 done
 
@@ -2154,11 +2182,50 @@ echo -e "hello123\n456" > /dev/pts/12
 ```
 
 - `mesy y` 允许写入， `mesy n` 不允许写入。 发现行不通。
+```
+
+## 进程
+占用CPU最多的10个程序
+```sh
+ps -eo comm,pcpu,pmem --sort -pcpu | head
+```
+
+杀死进程
+```sh
+kill -9 1402
+
+killall -9 gedit
+
+pkill -s gedit
+```
+
+### 捕捉并响应信号
+`trap`命令在脚本中为信号分配信号处理程序。
+
+```sh
+handle() {
+    echo Hey, received signal: SIGINT
+    echo My process ID is: $$
+}
+
+trap 'handle' SIGINT
+
+while true; do
+    sleep 2
+done
+```
+
+### 杀死进程
+```sh
+killall ffplay
+
+kill $(pidof ffplay)
+```
+这里的 `killall` 有个缺点，如果命令名太长可能匹配不到
 
 ### 接管执行中的进程
 ```bash
 sudo reptyr -T 32685
-```
 
 
 ## 网络
@@ -3103,45 +3170,6 @@ DDR4: 2133,2400,3000,3333
 
 ![](images/LinuxTips/memory-ddr.png  "DDR")
 
-
-## 进程
-占用CPU最多的10个程序
-```sh
-ps -eo comm,pcpu,pmem --sort -pcpu | head
-```
-
-杀死进程
-```sh
-kill -9 1402
-
-killall -9 gedit
-
-pkill -s gedit
-```
-
-### 捕捉并响应信号
-`trap`命令在脚本中为信号分配信号处理程序。
-
-```sh
-handle() {
-    echo Hey, received signal: SIGINT
-    echo My process ID is: $$
-}
-
-trap 'handle' SIGINT
-
-while true; do
-    sleep 2
-done
-```
-
-### 杀死进程
-```sh
-killall ffplay
-
-kill $(pidof ffplay)
-```
-这里的 `killall` 有个缺点，如果命令名太长可能匹配不到
 
 # Bash 快捷键
 
