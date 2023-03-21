@@ -50,6 +50,7 @@
     * [Google搜索技巧](Utility/google_search_tips.md)
     * [爬虫scrapy](Utility/scrapy.md)
     * [GPG](Utility/gpg.md)
+    * [Ventoy](Utility/ventoy.md)
 
 * [Programing](Programing/README.md)    
     * [Shell 模板](Programing/Shell_Template.md)

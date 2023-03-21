@@ -57,6 +57,22 @@ location / {
 ```
 
 
+在 /etc/nginx/sites-available/default 配置虚拟路径
+```
+    location / {
+        # First attempt to serve request as file, then
+        # as directory, then fall back to displaying a 404.
+        try_files $uri $uri/ =404;
+    }
+
+    location /wiki {
+        alias  /home/user/WS/repos/wiki/_book/;
+        index  index.html index.htm;
+        # root  /home/user/WS/repos/wiki/_book/;
+    }
+```
+
+
 [^3block]: 作者：韩数 https://juejin.cn/post/6844903983622914062
 [^dir]: https://developer.aliyun.com/article/327244
 

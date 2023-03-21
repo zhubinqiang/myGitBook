@@ -1805,6 +1805,29 @@ fi
 - e: 遇到错误就退出
 - x: 每条命令都会打印出来，类似于debug模式
 
+## shell 查找函数定义在哪
+查询函数和别名[^list_all_aliases]
+```sh
+## zsh下生效, 在bash下无效
+## List all functions
+functions
+
+## List all aliases
+alias
+
+## bash下 不能直接显示出文件名
+## 需要全部显示之后 定位到关键字行数，再往上几行查看
+bash -ixlc : 2>&1 | grep ws
+
+zsh -ixc : 2>&1 | grep ws
+```
+
+-i: Force shell to be interactive.
+-c: Take the first argument as a command to execute
+-x: -- equivalent to --xtrace
+-l: Make bash act as if invoked as a login shell
+
+
 ## ffplay 播放 YUV
 ```sh
 ffplay -autoexit -f rawvideo -video_size 176x96 test_stream_176x96.yuv
@@ -3173,40 +3196,41 @@ DDR4: 2133,2400,3000,3333
 
 # Bash 快捷键
 
-| 操作                                                                                                                     | 快捷键  |
-| :-----                                                                                                                   | :---    |
-| 移动光标至行首                                                                                                           | CTRL+A  |
-| 第一次按时，移动光标至行首再次按时，回到原有位置                                                                         | CTRL+X  |
-| 移动光标至行尾                                                                                                           | CTRL+E  |
-| 光标向左移动一个字符                                                                                                     | CTRL+B  |
-| 光标向左移动一个单词                                                                                                     | ESC+B   |
-| 光标向右移动一个字符                                                                                                     | CTRL+F  |
-| 光标向右移动一个单词                                                                                                     | ESC+F   |
-| 删除光标前一个字符，即退格（Backspace）                                                                                  | CTRL+H  |
-| 删除光标前所有字符                                                                                                       | CTRL+U  |
-| 删除光标后所有字符                                                                                                       | CTRL+K  |
-| 删除光标前一个单词                                                                                                       | CTRL+W  |
-| 删除光标后一个字符，（相当于Delete）无任何字符时相当于exit                                                               | CTRL+D  |
-| 粘贴之前（CTRL+U/K/W）删除的内容                                                                                         | CTRL+Y  |
-| 清屏，相当于指令 clear                                                                                                   | CTRL+L  |
-| 查找并自动匹配之前使用过的指令                                                                                           | CTRL+R  |
-| 回车，相当于Enter                                                                                                        | CTRL+M  |
-| 跳到新行，等同于回车                                                                                                     | CTRL+O  |
-| 新起一行，命令行下等同于回车                                                                                             | CTRL+J  |
-| 横行制表符，在命令行中补齐指令， 效果和Tab键相同                                                                         | CTRL+ I |
-| 补齐指令                                                                                                                 | TAB     |
-| 上一条指令，等同于向上箭                                                                                                 | CTRL+P  |
-| 下一条指令，等同于向下箭                                                                                                 | CTRL+N  |
-| 中断操作                                                                                                                 | CTRL+C  |
-| 冻结终端操作（暂停脚本）                                                                                                 | CTRL+S  |
-| 恢复冻结（继续执行脚本）                                                                                                 | CTRL+Q  |
-| 使下一个单词首字母大写, 同时光标前进一个单词, 如光标停留在单词的某个字母上, 如word中的o字母上, 则o字母变大写. 而不是w    | ESC+C   |
-| 使下一个单词所有字母变大写, 同时光标前进一个单词； 如光标在o字母上, 则ord变大写, w不变.                                  | ESC+U   |
-| 使下一个单词所有字母变小写, 同时光标前进一个单词； 如光标在o字母上, 则ord变小写, w不变.                                  | ESC+I   |
-| 将光标处的字符和光标前一个字符替换位置                                                                                   | CTRL+T  |
-| 重复运行最近一条以“word”开头的指令，如!ls 或 !l                                          | !word   |
-| 调用上一条指令的最后一个参数作为当前指令对象, 如，假设上一条指令为： ls abc.txt bbc.txt 那么， vi !$ 相当于： vi bbc.txt | !$      |
-| 调用执行指定编号的历史记录指令,如!2, !11                                                                                 | !number |
+|                            操作                            |      快捷键       |
+| :--------------------------------------------------------- | :---------------- |
+| 移动光标至行首                                             | CTRL+A            |
+| 第一次按时，移动光标至行首再次按时，回到原有位置           | CTRL+X            |
+| 移动光标至行尾                                             | CTRL+E            |
+| 光标向左移动一个字符                                       | CTRL+B            |
+| 光标向左移动一个单词                                       | ESC+B, Ctrl+Left  |
+| 光标向右移动一个字符                                       | CTRL+F            |
+| 光标向右移动一个单词                                       | ESC+F, Ctrl+Right |
+| 删除光标前一个字符，即退格（Backspace）                    | CTRL+H            |
+| 删除光标前所有字符                                         | CTRL+U            |
+| 删除光标后所有字符                                         | CTRL+K            |
+| 删除光标前一个单词                                         | CTRL+W            |
+| 删除光标后一个字符，（相当于Delete）无任何字符时相当于exit | CTRL+D            |
+| 粘贴之前（CTRL+U/K/W）删除的内容                           | CTRL+Y            |
+| 清屏，相当于指令 clear                                     | CTRL+L            |
+| 查找并自动匹配之前使用过的指令                             | CTRL+R            |
+| 回车，相当于Enter                                          | CTRL+M            |
+| 跳到新行，等同于回车                                       | CTRL+O            |
+| 新起一行，命令行下等同于回车                               | CTRL+J            |
+| 横行制表符，在命令行中补齐指令， 效果和Tab键相同           | CTRL+ I           |
+| 补齐指令                                                   | TAB               |
+| 上一条指令，等同于向上箭                                   | CTRL+P            |
+| 下一条指令，等同于向下箭                                   | CTRL+N            |
+| 中断操作                                                   | CTRL+C            |
+| 冻结终端操作（暂停脚本）                                   | CTRL+S            |
+| 恢复冻结（继续执行脚本）                                   | CTRL+Q            |
+| 使下一个单词首字母大写, 同时光标前进一个单词               | ESC+C             |
+| 使下一个单词所有字母变大写, 同时光标前进一个单词；         | ESC+U             |
+| 使下一个单词所有字母变小写, 同时光标前进一个单词；         | ESC+I             |
+| 将光标处的字符和光标前一个字符替换位置                     | CTRL+T            |
+| 重复运行最近一条以“word”开头的指令，如!ls 或 !l            | !word             |
+| 调用上一条指令的最后一个参数作为当前指令对象               | !$                |
+| 调用执行指定编号的历史记录指令,如!2, !11                   | !number           |
+
 
 [^shell-posix]: https://www.zhihu.com/question/266787434 作者: 韦易笑
 [^globbing]: https://www.cnblogs.com/divent/p/5762154.html 作者: divent
@@ -3217,4 +3241,5 @@ DDR4: 2133,2400,3000,3333
 [^dns_update]: https://blog.51cto.com/u_14841814/2988890
 [^BASH_SOURCE]: https://www.cnblogs.com/sunfie/p/5943979.html
 [^umount_f_l]: https://askubuntu.com/questions/292043/how-to-unmount-nfs-when-server-is-gone
+[^list_all_aliases]: https://unix.stackexchange.com/questions/322459/is-it-possible-to-check-where-an-alias-was-defined
 
