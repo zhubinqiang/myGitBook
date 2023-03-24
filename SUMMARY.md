@@ -11,6 +11,7 @@
     * [grub](Linux/grub.md)
     * [efi](Linux/efi.md)
     * [dkms](Linux/dkms.md)
+    * [linux kernel](Linux/linux-kernel.md)
 
 * [Utility](Utility/README.md)
     * [Tmux](Utility/Tmux.md)

@@ -237,6 +237,52 @@ sudo ifup eth0
 sudo ifup eth1
 ```
 
+netplan的方式
+/etc/netplan/01-network-manager-all.yaml
+
+配置静态IP
+```yaml
+network:
+  version: 2
+  renderer: NetworkManager
+  ethernets:
+    eno1:
+      addresses: [192.168.1.11/24]
+      gateway4: 192.168.1.1
+      nameservers:
+        addresses: [10.248.2.1,10.239.27.228]
+      dhcp4: no
+```
+
+动态IP
+```yaml
+network:
+  ethernets:
+    eno1:
+      dhcp4: true
+      optional: true
+    eno2:
+      dhcp4: true
+      optional: true
+  version: 2
+```
+> 上面的 **optional: true** 是为了 避免开机的时候 A start job is running for wait for network to be configured.
+> 参考这里[askubuntu](https://askubuntu.com/questions/972215/a-start-job-is-running-for-wait-for-network-to-be-configured-ubuntu-server-17-1/1110474#1110474)
+
+
+```sh
+sudo netplan --debug apply
+```
+
+在kernel的命令行添加 `net.ifnames=0` 可以修改成之前的网卡名称像eth0 参考[这里](https://blog.csdn.net/lirui1212/article/details/105180751)
+
+参考 https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/
+1. Names incorporating Firmware/BIOS provided index numbers for on-board devices (example: eno1)
+2. Names incorporating Firmware/BIOS provided PCI Express hotplug slot index numbers (example: ens1)
+3. Names incorporating physical/geographical location of the connector of the hardware (example: enp2s0)
+4. Names incorporating the interfaces's MAC address (example: enx78e7d1ea46da)
+5. Classic, unpredictable kernel-native ethX naming (example: eth0)
+
 
 ## 设置DNS
 DNS 在/etc/resolv.conf中设置不起效
