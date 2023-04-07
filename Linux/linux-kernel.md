@@ -41,6 +41,8 @@ default:
 	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) modules
 ```
 
+> 对于 Makefile 参考 Documentation/kbuild/modules.rst
+
 
 函数修饰符`__init`（前面加下划线的表示这是给内核使用的函数），本质上是个宏定义，在内核源代码中就有`#define __init xxxx`。
 这个`__init`的作用就是将被他修饰的函数放入`.init.text`段中去（本来默认情况下函数是被放入.text段中）[^__init]。
@@ -398,10 +400,115 @@ All this code is actually replaced by a call to the `module_usb_driver()` macro:
 module_usb_driver(rtl8150_driver);
 ```
 
+
+Registering an I2C device driver: example
+```c
+static const struct i2c_device_id adxl345_i2c_id[] = {
+    { "adxl345", ADXL345 },
+    { "adxl375", ADXL375 },
+    { }
+};
+MODULE_DEVICE_TABLE(i2c, adxl345_i2c_id);
+static const struct of_device_id adxl345_of_match[] = {
+    { .compatible = "adi,adxl345" },
+    { .compatible = "adi,adxl375" },
+    { },
+};
+MODULE_DEVICE_TABLE(of, adxl345_of_match);
+static struct i2c_driver adxl345_i2c_driver = {
+    .driver = {
+        .name = "adxl345_i2c",
+        .of_match_table = adxl345_of_match,
+    },
+    .probe = adxl345_i2c_probe,
+    .remove = adxl345_i2c_remove,
+    .id_table = adxl345_i2c_id,
+};
+module_i2c_driver(adxl345_i2c_driver);
+```
+
+
+cdev[^cdev] 结构体
+
+include/linux/cdev.h
+```c
+struct cdev {
+    struct kobject kobj;
+    struct module *owner;
+    const struct file_operations *ops;
+    struct list_head list;
+    dev_t dev;
+    unsigned int count;
+} __randomize_layout;
+```
+
+include/linux/fs.h
+```c
+struct file_operations {
+    struct module *owner;
+    loff_t (*llseek) (struct file *, loff_t, int);
+    ssize_t (*read) (struct file *, char __user *, size_t, loff_t *);
+    ssize_t (*write) (struct file *, const char __user *, size_t, loff_t *);
+    __poll_t (*poll) (struct file *, struct poll_table_struct *);
+    long (*unlocked_ioctl) (struct file *, unsigned int, unsigned long);
+    long (*compat_ioctl) (struct file *, unsigned int, unsigned long);
+    int (*mmap) (struct file *, struct vm_area_struct *);
+    int (*open) (struct inode *, struct file *);
+    int (*flush) (struct file *, fl_owner_t id);
+    int (*release) (struct inode *, struct file *);
+    int (*fsync) (struct file *, loff_t, loff_t, int datasync);
+    int (*fasync) (int, struct file *, int);
+    int (*lock) (struct file *, int, struct file_lock *);
+    int (*check_flags)(int);
+    void (*show_fdinfo)(struct seq_file *m, struct file *f);
+
+    ...
+
+} __randomize_layout;
+```
+提供给应用层操作方法集
+
+
+include/linux/kdev_t.h
+
+```c
+#define MINORBITS       20
+#define MINORMASK       ((1U << MINORBITS) - 1)
+
+#define MAJOR(dev)      ((unsigned int) ((dev) >> MINORBITS))
+#define MINOR(dev)      ((unsigned int) ((dev) & MINORMASK))
+#define MKDEV(ma,mi)    (((ma) << MINORBITS) | (mi))
+```
+
+dev_t 设备号
+用来唯一标识设备的，32位无符号整型。主设备号+从设备号
+
+```c
+MAJOR(dev_t dev)        // 从设备号中提取主设备号
+MINOR(dev_t dev)        // 从设备号中提取次设备号
+MKDEV(int ma, int mi)   // 根据主次设备号生成设备号
+
+
+#define MAJOR(dev)      ((unsigned int) ((dev) >> 20))
+// 32位无符号数右移20位，得到高12位
+
+#define MINOR(dev)      ((unsigned int) ((dev) & ((1U << 20) - 1)))
+// 无符号的1 左移20位，第21位为1其余都为0， -1操作后21位为0，1~20位都为1
+// 与操作之后 取得低20位
+```
+
+**设备号是由高12位的主设备号与低20位的次设备号组成**
+
+
+
+
+
+
 [^bootlin]: https://bootlin.com/doc/training/linux-kernel/linux-kernel-slides.pdf
 [^hello.c]: https://github.com/bootlin/training-materials/blob/master/code/hello/hello.c
 [^__init]: https://github.com/TongxinV/oneBook/blob/master/0.5.Linux-Driver%20Development/0.0.%E5%AD%97%E7%AC%A6%E8%AE%BE%E5%A4%87%E5%9F%BA%E7%A1%80.md
 [^bus_type_device_device_driver]: https://zhuanlan.zhihu.com/p/590369703
+[^cdev]: https://www.bilibili.com/video/BV16J411b7pe?p=7
 
 
 
