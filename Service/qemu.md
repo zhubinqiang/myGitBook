@@ -4,6 +4,10 @@
 
 Quick EMUlator
 
+## 安装qemu
+```sh
+sudo apt install -y qemu-kvm
+```
 
 ## 创建 qcow image
 ```sh
@@ -46,6 +50,19 @@ qemu-img snapshot -a snapshot01 centos-7.4.qcow
 qemu-img snapshot -d snapshot02 centos-7.4.qcow
 ```
 
+## virt-magage
+在CentOS上面使用 virt-magage 图形界面来控制多个qemu
+
+## 通过浏览器访问
+在Ubuntu上面[^cockpit]
+```sh
+sudo apt install -y cockpit cockpit-machines
+```
+
+
+
+
+[^cockpit]: https://cockpit-project.org/running
 
 
 
