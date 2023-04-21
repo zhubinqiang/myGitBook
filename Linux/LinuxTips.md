@@ -27,6 +27,8 @@ mount --bind /test1 /test2
 sshfs user@example.com:/home/user/WS mnt/
 
 sshfs -o uid=$(id -u) -o gid=$(id -g) user@example.com:/home/user/WS mnt/
+
+sshfs -o rw,default_permissions,allow_other,uid=1000,gid=1000 user@example.com:/dev/shm /mnt
 ```
 
 

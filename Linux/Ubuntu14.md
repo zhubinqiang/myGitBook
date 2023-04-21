@@ -264,10 +264,12 @@ network:
     eno2:
       dhcp4: true
       optional: true
+      dhcp-identifier: mac
   version: 2
 ```
 > 上面的 **optional: true** 是为了 避免开机的时候 A start job is running for wait for network to be configured.
 > 参考这里[askubuntu](https://askubuntu.com/questions/972215/a-start-job-is-running-for-wait-for-network-to-be-configured-ubuntu-server-17-1/1110474#1110474)
+> `dhcp-identifier: mac` 这个是使用 [mac](https://kms.app/archives/456/) 地址去申请ip
 
 
 ```sh
