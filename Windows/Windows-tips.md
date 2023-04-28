@@ -34,6 +34,9 @@ new Key: command
 C:\Users\xxx\sublime_text.exe "%1"
 ```
 
+非 administrator `Computer\HKEY_CURRENT_USER\SOFTWARE\Classes\*\shell`
+shell这一层可能没有需要自己新建
+
 还可以添加icon
 在上面的 "Open with sublime" 右键 "new" --> "String Value"
 value name: icon
@@ -55,5 +58,13 @@ C:\Users\用户名\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
 
 把要开机启动的脚本放到 Startup[^Startup] 目录下
 
+## 没有 administrator 设置环境变量
+
+非管理员账号设置[^non_admin_env] 环境变量
+`Win + R` --> `rundll32.exe sysdm.cpl,EditEnvironmentVariables`
+
+
+
 [^Startup]: https://blog.51cto.com/u_15338624/3596049#:~:text=1.%E5%BC%80%E5%A7%8B%2D%3E%E8%BF%90%E8%A1%8C%2D,%E8%BF%99%E6%A0%B7%E5%B0%B1%E5%8F%AF%E4%BB%A5%E4%BA%86%E3%80%82
+[^non_admin_env]: https://blog.csdn.net/weixin_42005898/article/details/115531523
 

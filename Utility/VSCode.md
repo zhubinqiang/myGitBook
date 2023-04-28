@@ -33,6 +33,9 @@ http://vscode.cdn.azure.cn/stable/VSCode-win32-x64-1.45.1.zip
 ctrl + P: 快速打开
 ctrl + Shift + P: 打开命令面板
 
+## 设置
+打开文件始终在新标签页打开：`workbench.editor.enablePreview`: `false`
+
 
 ## 在Windows下创建快捷方式
 ```bat
@@ -52,7 +55,7 @@ Font Family: "Sarasa Mono Slab SC"
 
 ## 添加右键 vscode 打开
 1. 打开注册表: `Win + R` --> `regedit`
-2. 定位到: HKEY_CLASSES_ROOT\*\shell
+2. 定位到: HKEY_CLASSES_ROOT\*\shell 非 administrator `Computer\HKEY_CURRENT_USER\SOFTWARE\Classes\*`
 3. 新建 key: Open with VSCode
 4. 在“Open with VSCode”上再新建key：command
 5. 修改Value Data: `C:\Users\bzhux\Program\VSCode\Code.exe %1`
