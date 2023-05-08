@@ -58,13 +58,31 @@ C:\Users\用户名\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
 
 把要开机启动的脚本放到 Startup[^Startup] 目录下
 
+## 解决 unpin from taskbar
+打开 `%LOCALAPPDATA%\Microsoft\Windows\Shell\LayoutModification.xml` 这里的xml文件[^unping_from_taskbar]
+
+```xml
+  <CustomTaskbarLayoutCollection PinListPlacement="Replace">
+    <defaultlayout:TaskbarLayout>
+      <taskbar:TaskbarPinList>
+		  <!-- <taskbar:DesktopApp DesktopApplicationLinkPath="%APPDATA%\Microsoft\Windows\Start Menu\Programs\System Tools\File Explorer.lnk" /> -->
+      </taskbar:TaskbarPinList>
+    </defaultlayout:TaskbarLayout>
+  </CustomTaskbarLayoutCollection>
+```
+
 ## 没有 administrator 设置环境变量
 
 非管理员账号设置[^non_admin_env] 环境变量
 `Win + R` --> `rundll32.exe sysdm.cpl,EditEnvironmentVariables`
 
+下面这个好像没啥用。
+```bat
+set _COMPAT_LAYER=RunAsInvoker
+start
+```
 
 
 [^Startup]: https://blog.51cto.com/u_15338624/3596049#:~:text=1.%E5%BC%80%E5%A7%8B%2D%3E%E8%BF%90%E8%A1%8C%2D,%E8%BF%99%E6%A0%B7%E5%B0%B1%E5%8F%AF%E4%BB%A5%E4%BA%86%E3%80%82
 [^non_admin_env]: https://blog.csdn.net/weixin_42005898/article/details/115531523
-
+[^unping_from_taskbar]: https://superuser.com/questions/1251656/items-unpinned-from-taskbar-are-back-after-restart-sign-out-on-windows-10
