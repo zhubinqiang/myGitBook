@@ -42,6 +42,32 @@ shell这一层可能没有需要自己新建
 value name: icon
 value data: ico 的路径
 
+## 注册表
+```ini
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\*\shell\Open with nvim]
+"icon"="C:\\Users\\user\\WS\\icons\\Nvim.ico"
+
+[HKEY_CLASSES_ROOT\*\shell\Open with nvim\command]
+@="C:\\Users\\user\\Program\\nvim-win64\\bin\\nvim-qt.exe \"%1\""
+
+[HKEY_CLASSES_ROOT\*\shell\Opwn with VSCode]
+"icon"="C:\\Users\\user\\WS\\icons\\microsoft_visual_studio_code_icon_256x256.ico"
+
+[HKEY_CLASSES_ROOT\*\shell\Opwn with VSCode\command]
+@="C:\\Users\\user\\Program\\VSCode\\Code.exe \"%1\""
+
+
+
+[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\office\16.0\outlook\pst]
+"PSTDisableGrow"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters]
+"AllowInsecureGuestAuth"=dword:00000001
+```
+
+
 ## 创建快捷方式
 ```bat
 mklink /j VSCode VSCode-win32-x64-1.34.0
@@ -81,6 +107,14 @@ C:\Users\用户名\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
 set _COMPAT_LAYER=RunAsInvoker
 start
 ```
+
+## 解决 “you don’t have appropriate permission to perform this operation”
+Refer to https://www.stellarinfo.com/blog/dont-have-appropriate-permission-to-perform-this-operation-in-outlook/
+to fix “you don’t have appropriate permission to perform this operation” in Outlook
+
+HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\office\16.0\outlook\pst
+
+`PSTDisableGrow:  1 --> 0`
 
 
 [^Startup]: https://blog.51cto.com/u_15338624/3596049#:~:text=1.%E5%BC%80%E5%A7%8B%2D%3E%E8%BF%90%E8%A1%8C%2D,%E8%BF%99%E6%A0%B7%E5%B0%B1%E5%8F%AF%E4%BB%A5%E4%BA%86%E3%80%82
