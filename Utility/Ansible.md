@@ -28,6 +28,14 @@ ansible
 配置文件: /etc/ansible/ansible.cfg
 Invertory: /etc/ansible/hosts
 
+可以拷贝 /etc/ansible/ansible.cfg 到 ~/.ansible.cfg 作为当前用户使用
+```
+[defaults]
+inventory      = ~/.ansible/hosts
+...
+```
+
+
 /etc/ansible/hosts
 ```
 [kontron]
@@ -37,6 +45,7 @@ s3n1c2
 [pxe]
 192.168.101.100 ansible_connection=ssh        ansible_ssh_user=media
 localhost ansible_connection=ssh ansible_ssh_user=user1 ansible_ssh_pass=123456
+localhost ansible_connection=ssh ansible_ssh_user=user2 ansible_ssh_pass=123456 ansible_become_pass=123456
 ```
 
 在本机上无密码访问远程机器
