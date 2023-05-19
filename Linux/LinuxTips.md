@@ -3234,6 +3234,23 @@ DDR4: 2133,2400,3000,3333
 | 调用执行指定编号的历史记录指令,如!2, !11                   | !number           |
 
 
+## XDG基本目录规范
+XDG (X Desktop Group) 定义了一套指向应用程序的环境变量，
+这些变量指明的就是这些程序应该存储的基准目录。
+而变量的具体值取决于用户，若用户未指定，将由程序本身指向一个默认目录，
+该默认目录也应该遵从标准，而不是用户主目录。[^xdg]
+
+
+|        变量        |            默认值             |                使用场景                 |
+| :----------------- | :---------------------------- | :-------------------------------------- |
+| `$XDG_DATA_HOME`   | $HOME/.local/share            | 插件, 程序产生数据库，用户输入历史      |
+| `$XDG_CONFIG_HOME` | $HOME/.config                 | 默认的配置文件供加载和修改              |
+| `$XDG_CACHE_HOME`  | $HOME/.cache                  | 缓存的缩略图、歌曲、视频                |
+| `$XDG_RUNTIME_DIR` |                               | 套接字 (socket)、命名管道 (named pipes) |
+| `$XDG_CONFIG_DIRS` | /etc/xdg                      | 配置文件所覆盖的系统层面的配置文件      |
+| `$XDG_DATA_DIRS`   | /usr/local/share/:/usr/share/ | 被所有用户使用的插件或主题              |
+
+
 [^shell-posix]: https://www.zhihu.com/question/266787434 作者: 韦易笑
 [^globbing]: https://www.cnblogs.com/divent/p/5762154.html 作者: divent
 [^tcpdump]: https://bbs.huaweicloud.com/blogs/113120 作者：唐盛军
@@ -3244,4 +3261,5 @@ DDR4: 2133,2400,3000,3333
 [^BASH_SOURCE]: https://www.cnblogs.com/sunfie/p/5943979.html
 [^umount_f_l]: https://askubuntu.com/questions/292043/how-to-unmount-nfs-when-server-is-gone
 [^list_all_aliases]: https://unix.stackexchange.com/questions/322459/is-it-possible-to-check-where-an-alias-was-defined
+[^xdg]: https://winddoing.github.io/post/ef694e1f.html
 
