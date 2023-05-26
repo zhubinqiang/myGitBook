@@ -414,7 +414,69 @@ s5n8c2 http_port=8080
 > 特殊tags:always
 
 
+## 编写多行字符串
+
+可以使用竖线(|)字符表示要保留字符串中的换行字符 [^multi-lines]
+使用大于号(>)字符来表示换行字符转换成空格并且行内的引导空白将被删除。
+
+```yml
+---
+  - hosts: all
+
+    vars:
+      ansible_python_interpreter: /usr/bin/python3
+
+    environment:
+      http_proxy: "http://proxy.example.com:911"
+      https_proxy: "http://proxy.example.com:911"
+      no_proxy: "127.0.0.1, example.com,.example.com,10.0.0.0/8,192.168.0.0/16,localhost,.local,127.0.0.0/8"
+
+    tasks:
+      # "echo Line 1 echo Line 2 echo Line 3"
+      - name: string
+        shell:
+          echo Line 1
+          echo Line 2
+          echo Line 3
+
+      # "echo Line 1\necho Line 2\necho Line 3\n"
+      - name: pipe
+        shell: |
+          echo Line 1
+          echo Line 2
+          echo Line 3
+
+      # "echo Line 1 echo Line 2 echo Line 3\n"
+      - name: lt
+        shell: >
+          echo Line 1
+          echo Line 2
+          echo Line 3
+```
+
+`|` ： 多行字符串开始标识；(保留换行)[^pipe]
+`>` ： 同|,但是它会把中间字符串的换行符去掉，只保留一个(\n)； (折叠换行)
+`|+`： 保留末尾的换行符;
+`|-`： 删除末尾的换行符;
+`>-`： 末尾的换行符也删掉;
+`>+`： 同>;
+`&` ： 锚点标记;
+`*` ： 引用锚点。
+
+## 分步运行playbook
+```sh
+ansible-playbook addtion.yml -vvv --start-at="change root's password" --step
+```
+
+`--start-at`: 从哪个task开始
+`--step`: 执行到这里会停止并询问 `Perform task: configure ssh (y/n/c):` [^step]
+
+“y”回答会执行该任务,”n”回答会跳过该任务,而”c”回答则会继续执行剩余的所有任务而不再询问你.
 
 
+## 引用
+[^multi-lines]: https://blog.csdn.net/wwqwwqwwq352/article/details/124751292
+[^pipe]: https://www.90hsa.com/348.html
+[^step]: https://ansible-tran.readthedocs.io/en/latest/docs/playbooks_startnstep.html
 
 

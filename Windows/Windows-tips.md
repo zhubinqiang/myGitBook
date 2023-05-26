@@ -43,20 +43,35 @@ value name: icon
 value data: ico 的路径
 
 ## 注册表
+注册表[^registry]包含在操作期间 Windows 持续引用的信息，
+例如每个用户的配置文件、计算机上安装的应用程序
+以及每个用户可以创建的文档类型、文件夹
+和应用程序图标的属性表设置、系统上存在的硬件以及正在使用的端口。
+
+
+|   文件夹/预定义项   |                  说明[^regedit]                  |
+| :------------------ | :----------------------------------------------- |
+| HKEY_CLASSES_ROOT   | 存储可打开文件的类型、扩展名等，适用于所有用户   |
+| HKEY-CURRENT-USER   | 保存登录用户设置、控制面板选项、映射的网络驱动器 |
+| HKEY-LOCAL-MACHINE  | 包含机器的所有硬件和文件上安装的软件信息         |
+| HKEY-USER           | 保存所有登录在此机上用户的信息，如自定义桌面等   |
+| HKEY-CURRENT-CONFIG | 连接到计算机上的硬件配置数据，如显示器、打印机等 |
+
+
 ```ini
 Windows Registry Editor Version 5.00
 
 [HKEY_CLASSES_ROOT\*\shell\Open with nvim]
-"icon"="C:\\Users\\user\\WS\\icons\\Nvim.ico"
+"icon"="C:\\Users\\YOURNAME\\WS\\icons\\Nvim.ico"
 
 [HKEY_CLASSES_ROOT\*\shell\Open with nvim\command]
-@="C:\\Users\\user\\Program\\nvim-win64\\bin\\nvim-qt.exe \"%1\""
+@="C:\\Users\\YOURNAME\\Program\\nvim-win64\\bin\\nvim-qt.exe \"%1\""
 
 [HKEY_CLASSES_ROOT\*\shell\Opwn with VSCode]
-"icon"="C:\\Users\\user\\WS\\icons\\microsoft_visual_studio_code_icon_256x256.ico"
+"icon"="C:\\Users\\YOURNAME\\WS\\icons\\microsoft_visual_studio_code_icon_256x256.ico"
 
 [HKEY_CLASSES_ROOT\*\shell\Opwn with VSCode\command]
-@="C:\\Users\\user\\Program\\VSCode\\Code.exe \"%1\""
+@="C:\\Users\\YOURNAME\\Program\\VSCode\\Code.exe \"%1\""
 
 
 
@@ -65,7 +80,29 @@ Windows Registry Editor Version 5.00
 
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters]
 "AllowInsecureGuestAuth"=dword:00000001
+
+
+[HKEY_CURRENT_USER\Environment]
+"JAVA_HOME"="C:\\Users\\YOURNAME\\Program\\microsoft-jdk-17.0.1.12.1-windows-x64"
+"MyLinks"="C:\\Users\\YOURNAME\\MyLinks"
+"NODE_HOME"="C:\\Program Files\\nodejs"
+"NVM_HOME"="C:\\Users\\YOURNAME\\AppData\\Roaming\\nvm"
+"PYTHON_HOME"="C:\\Users\\YOURNAME\\AppData\\Local\\Programs\\Python\\Python310"
 ```
+
+## AppData文件夹
+AppData[^appdata] 文件夹下有Local，Locallow和Roaming
+
+`appdata` ==> C:\Users\YOURNAME\AppData
+`%appdata%` ==> C:\Users\YOURNAME\AppData\Roaming
+`%localappdata%` ==> C:\Users\YOURNAME\AppData\Local
+
+Roaming 文件夹是一种可以轻松与服务器同步的文件夹。
+它的数据可以随着用户的个人资料从PC移动到PC — 就像当您在域中时，您可以轻松登录到任何计算机并访问其收藏夹、文档等。
+
+Local文件夹主要包含与安装程序相关的文件夹。
+其中包含的数据 (`%localappdata%`) 无法随您的用户配置文件一起移动，因为它特定于PC，因此太大而无法与服务器同步。
+
 
 
 ## 创建快捷方式
@@ -77,7 +114,7 @@ mklink /j VSCode VSCode-win32-x64-1.34.0
 `/j`: Junction的快捷方式
 
 ## 开机启动脚本
-C:\Users\用户名\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+C:\Users\YOURNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
 > 上面的 **用户名** 根据自己的实际情况填写
 
 或者：Win + R --> `shell:startup` 打开 Startup 目录
@@ -120,3 +157,6 @@ HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\office\16.0\outlook\pst
 [^Startup]: https://blog.51cto.com/u_15338624/3596049#:~:text=1.%E5%BC%80%E5%A7%8B%2D%3E%E8%BF%90%E8%A1%8C%2D,%E8%BF%99%E6%A0%B7%E5%B0%B1%E5%8F%AF%E4%BB%A5%E4%BA%86%E3%80%82
 [^non_admin_env]: https://blog.csdn.net/weixin_42005898/article/details/115531523
 [^unping_from_taskbar]: https://superuser.com/questions/1251656/items-unpinned-from-taskbar-are-back-after-restart-sign-out-on-windows-10
+[^registry]: https://learn.microsoft.com/zh-cn/troubleshoot/windows-server/performance/windows-registry-advanced-users
+[^regedit]: https://blog.csdn.net/beiback/article/details/125589844
+[^appdata]: https://zhuanlan.zhihu.com/p/557663690

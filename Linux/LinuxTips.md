@@ -242,6 +242,12 @@ sshpass -p PASSWORD sudo fdisk -l
 ## sudo 权限不够
 ### sudo 重定向
 ```sh
+$ sudo echo 123 >> os-release
+-bash: os-release: Permission denied
+```
+因为重定向符号 “>” 和 ">>" 也是 bash 的命令。我们使用 sudo 只是让 echo 命令具有了 root 权限，但是没有让 “>” 和 ">>" 命令也具有 root 权限
+
+```sh
 echo 1 | sudo tee /proc/sys/net/ipv4/icmp_echo_ignore_all
 ```
 
@@ -1415,6 +1421,14 @@ Environment=HTTPS_PROXY=http://proxy-example.com:1234\
 NO_PROXY=localhost,127.0.0.0/8,*.example.com\
 ' docker.service
 ```
+
+### 单引号
+```bash
+sed -i '1i I'm fine' ps.txt
+
+sed -i '1i I'\''m fine' ps.txt
+```
+需要把sed命令以 I'm fine 中的单引号分隔开
 
 ### 替换匹配行
 ```bash
