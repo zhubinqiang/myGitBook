@@ -1,6 +1,14 @@
 # Computer
 [TOC]
 
+## 图灵机
+图灵思考的问题：
+1. 数学问题是否都有明确的答案。
+2. 如果有明确答案，是否可以通过有限步骤的计算得到答案。
+3. 对于可能在有限步骤计算出来的数学问题，能否有一种机器，它不断地运动，最后停下来的时候，那个数学问题就解决了。
+
+
+
 ## 晶体管
 ![](images/compute_base/transistor.png)
 
@@ -28,17 +36,67 @@
 ### 异或门
 ![](images/compute_base/xor-gate.png)
 
+![](images/compute_base/exclusive-or.png)
+上面是用与或非三种门电路实现的一种异或门
+
+### 寄存器
+![](images/compute_base/or-1.png)
+在或门的输出连接到一个输入端，一旦A或B有一个为1时，输出都是1。
+之后无论A，B怎么变化，输出端都是1.
+
+![](images/compute_base/and-1.png)
+在这个与门中，先把A，B都设置为1，之后A为0，输出都为0。
+跟上面的或门正好相反。
+
+![](images/compute_base/and-or-latch.png)
+把之前的与门和或门组合在一起，可以组成一个AND-OR锁存器(AND-OR Latch)[^and-or-latch]
+它有2个输入
+“设置”输入1，它的输出为1
+“复位”输入1，它的输出为0
+**如果“设置”和“复位”都是0，整个电路的输出为最后放入的内容**。
+
+| SET  | RESET | OUTPUT |
+| :--- | :---- | :----- |
+| 1    | 0     | 1      |
+| 0    | 0     | 1      |
+
+| SET  | RESET | OUTPUT |
+| :--- | :---- | :----- |
+| 0    | 1     | 0      |
+| 0    | 0     | 0      |
+
+![](images/compute_base/gated-latch.png)
+为了易用性，我们希望只有一条输入线，还需要一条线来启用内存。 
+
+
 
 ## 加法器
 ### 半加器
+![](images/compute_base/add-xor.png)
+除了1 + 1需要进位外，所有的末位可以用异或门来表示
+
+![](images/compute_base/add-xor-and.png)
+对于 1 + 1，它的进位1，可以用与门来表示[^add-xor-and]
+
 异或门 + 与门
 ![](images/compute_base/half-adder.png)
 
 ### 全加器
+![](images/compute_base/add-3.png)
+用半加法器计算1 + 1时产生了进位，这个进位会参与下一个计算
+所以不是2位，而是3位相加。
+
 ![](images/compute_base/full-adder.png)
+
+![](images/compute_base/full-adder-2.png)
+
 
 ### 4bit的加法器
 ![](images/compute_base/4bit-adder.png)
+
+### 8bit的加法器
+![](images/compute_base/8bit-adder.png)
+
 
 ## 计算机结构的简化模型
 图片来自： https://www.bilibili.com/video/BV1VE411o7nx?p=4
@@ -115,15 +173,15 @@ Ctrl + ALT + F[1-6]
 [下图来自这里](https://segmentfault.com/a/1190000009082089)
 ```
                    +-----------------------------------------+
-                   |          Kernel                         |
-                   |                           +--------+    |       +----------------+ 
- +----------+      |   +-------------------+   |  tty1  |<---------->| User processes |
- | Keyboard |--------->|                   |   +--------+    |       +----------------+
- +----------+      |   | Terminal Emulator |<->|  tty2  |<---------->| User processes |
- | Monitor  |<---------|                   |   +--------+    |       +----------------+
- +----------+      |   +-------------------+   |  tty3  |<---------->| User processes |
-                   |                           +--------+    |       +----------------+
-                   |                                         |
+ | Kernel       |                       |                   |              |                    |              |                |
+ | +--------+   | +----------------+    |                   |              |                    |              |                |
+ | +----------+ | +-------------------+ | tty1              | <----------> | User processes     |              |                |
+ | Keyboard     | --------->            |                   | +--------+   | +----------------+ |              |                |
+ | +----------+ |                       | Terminal Emulator | <->          | tty2               | <----------> | User processes |
+ | Monitor      | <---------            |                   | +--------+   | +----------------+ |              |                |
+ | +----------+ | +-------------------+ | tty3              | <----------> | User processes     |              |                |
+ | +--------+   | +----------------+    |                   |              |                    |              |                |
+ |              |                       |                   |              |                    |              |                |
                    +-----------------------------------------+
 ```
 
@@ -217,4 +275,7 @@ $ export DISPLAY=media-mc2.example.com:10
 VNC
 ![](images/compute_base/vnc.png)
 
+
+[^and-or-latch]: https://www.bilibili.com/video/BV1EW411u7th/?p=6&vd_source=5483606993f558f6ec3fbc3230b66c5d
+[^add-xor-and]: https://www.youtube.com/watch?v=1I5ZMmrOfnA&list=PL8dPuuaLjXtNlUrzyH5r6jN9ulIgZBpdo&index=6
 
