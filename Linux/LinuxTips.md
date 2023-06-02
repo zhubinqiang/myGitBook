@@ -232,6 +232,17 @@ chmod 440 /etc/sudoers.d/nopasswd
 %sudo       ALL=NOPASSWD:  ALL
 ```
 
+### 修改密码
+1. 通过 `passwd` 来修改密码
+
+2. 通过 `chpasswd`
+```sh
+$ openssl passwd -1 --salt abc p@ssw0rd
+$1$abc$RhzUzuFJhDnOP.l37eh3q1
+
+echo 'ubit:$1$abc$RhzUzuFJhDnOP.l37eh3q1' | chpasswd -e
+```
+
 ### sshpass 密码登录
 ```sh
 sshpass -p PASSWORD ssh user@example.com mkdir -p /tmp/abc

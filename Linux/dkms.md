@@ -105,6 +105,15 @@ $ dkms status
 hello, 1.0.0, 5.13.0-52-generic, x86_64: installed
 ```
 
+
+Use the dkms remove function before trying to build again.
+```sh
+ls /var/lib/dkms/
+sudo rm -rf /var/lib/dkms/intel-platform-vsec-dkms
+dkms status
+```
+
+
 ## 引用
 [^chart]: https://www.cnblogs.com/wwang/archive/2011/06/21/2085571.html
 [^introduce]: https://zh.m.wikipedia.org/zh-hans/%E5%8A%A8%E6%80%81%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E6%94%AF%E6%8C%81
