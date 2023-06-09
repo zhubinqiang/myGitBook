@@ -122,6 +122,8 @@ docker logs loving_mahavira
 docker stop loving_mahavira
 ```
 
+退出container 而不中断容器 `[Ctrl + P]`  +  `[Ctrl + Q]`
+
 ## 进去已经启动的docker容器
 第一种：
 ```sh
@@ -224,7 +226,7 @@ bzhux@media-pxe3$[docker] >> docker pull www.example.com:5000/media_driver_cento
 ```
 
 ## Dockerfile
-```
+```dockerfile
 FROM centos:centos7.3.1611
 MAINTAINER  zhubinqiang <zhubinqiang@gmail.com>
 
@@ -258,6 +260,36 @@ docker build -t my/centos:7.3 .
 启动 container
 ```sh
 docker run -it -P my/centos:7.3 /bin/bash
+```
+
+这个 docker 安装了 ssh，并在运行是启动
+```dockerfile
+FROM ubuntu:22.04
+
+# ENV http_proxy http://proxy.example.com:913
+# ENV https_proxy http://proxy.example.com:913
+# ENV no_proxy 127.0.0.1,*.example.com
+
+RUN apt update && \
+        DEBIAN_FRONTEND="noninteractive" apt install -y --no-install-recommends \
+        openssh-server \
+        python3 \
+        sudo \
+        iproute2
+
+RUN ssh-keygen -A && \
+        mkdir -p /run/sshd
+
+# openssl passwd -1 --salt abcd 12345
+# $1$abcd$a8c.lZRcdQJ3Amq2DOk8U0
+RUN bash -c 'echo "root:\$1\$abcd\$a8c.lZRcdQJ3Amq2DOk8U0" | /usr/sbin/chpasswd -e' &&\
+        bash -c 'echo "PermitRootLogin yes"' >> /etc/ssh/sshd_config
+
+RUN useradd -m -s /bin/bash user1 &&\
+        usermod -a -G sudo user1 &&\
+        bash -c 'echo "user1:\$1\$abcd\$a8c.lZRcdQJ3Amq2DOk8U0" | /usr/sbin/chpasswd -e' 
+
+ENTRYPOINT /usr/sbin/sshd -D
 ```
 
 ## docker 启动图像界面

@@ -22,6 +22,10 @@ http://vscode.cdn.azure.cn/stable/VSCode-win32-x64-1.45.1.zip
 - Table Formatter
 - Markmap
 - vscode-note
+- Remote - SSH
+- Python
+- One Dark Pro
+- eva theme
 
 ## 自定义快捷键设置
 |            命令            |     绑定键     |         说明          |
@@ -32,10 +36,12 @@ http://vscode.cdn.azure.cn/stable/VSCode-win32-x64-1.45.1.zip
 ## 快捷键
 ctrl + P: 快速打开
 ctrl + Shift + P: 打开命令面板
+ctrl + `: 打开终端
+
 
 ## 设置
 打开文件始终在新标签页打开：`workbench.editor.enablePreview`: `false`
-
+关闭自动更新：`Update: Mode`: `none`
 
 ## 在Windows下创建快捷方式
 ```bat
