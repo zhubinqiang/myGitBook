@@ -1251,6 +1251,22 @@ list=(A B C D)
 print_array "${list[*]}"
 ```
 
+## 字典
+```sh
+keys=(main dev fix)
+dict=(
+    [main]="12345"
+    [dev]="abcdef"
+    [fix]="xyz"
+)
+
+echo ${dict["main"]}
+
+for key in ${keys[@]}; do
+    echo "${key}: ${dict["${key}"]}"
+done
+```
+
 ## if
 ### if 使用正则
 ```sh
