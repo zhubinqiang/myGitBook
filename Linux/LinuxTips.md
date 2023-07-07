@@ -1251,14 +1251,25 @@ list=(A B C D)
 print_array "${list[*]}"
 ```
 
-## 字典
+## map
 ```sh
-keys=(main dev fix)
-dict=(
+# declare -A dict
+# dict=(
+#     [main]="12345"
+#     [dev]="abcdef"
+#     [fix]="xyz"
+# )
+
+declare -A dict=(
     [main]="12345"
     [dev]="abcdef"
     [fix]="xyz"
 )
+
+dict["master"]="m1"
+dict["test"]="t1"
+
+keys=(main dev fix master test)
 
 echo ${dict["main"]}
 
@@ -1266,6 +1277,9 @@ for key in ${keys[@]}; do
     echo "${key}: ${dict["${key}"]}"
 done
 ```
+
+> 使用 map 的时候, 需要先声明, 否则结果可能与预期不同. array可以不声明[^map].
+
 
 ## if
 ### if 使用正则
@@ -3303,4 +3317,5 @@ XDG (X Desktop Group) 定义了一套指向应用程序的环境变量，
 [^umount_f_l]: https://askubuntu.com/questions/292043/how-to-unmount-nfs-when-server-is-gone
 [^list_all_aliases]: https://unix.stackexchange.com/questions/322459/is-it-possible-to-check-where-an-alias-was-defined
 [^xdg]: https://winddoing.github.io/post/ef694e1f.html
+[^map]: https://zhuanlan.zhihu.com/p/289274320
 
