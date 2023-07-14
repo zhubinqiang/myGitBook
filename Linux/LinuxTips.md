@@ -1269,12 +1269,10 @@ declare -A dict=(
 dict["master"]="m1"
 dict["test"]="t1"
 
-keys=(main dev fix master test)
-
 echo ${dict["main"]}
 
-for key in ${keys[@]}; do
-    echo "${key}: ${dict["${key}"]}"
+for key in ${!dict[@]}; do
+    echo "key:$key, val:${dict[$key]}"
 done
 ```
 
@@ -1839,7 +1837,7 @@ ARGS+=(-c 123)
 echo ${ARG[@]}
 ```
 
-## bash 加上ex参数
+## bash 加上set的参数
 ```sh
 #!/bin/bash -ex
 
@@ -1857,10 +1855,24 @@ if ( which git-lfs &> /dev/null ); then
 else
     echo "git-lfs not found"
 fi
+
+## 这步也不会报错
+which git-lfs || true
 ```
 
-- e: 遇到错误就退出
-- x: 每条命令都会打印出来，类似于debug模式
+- `set -e`: 遇到错误就退出
+- `set -x`: 每条命令都会打印出来，类似于debug模式
+
+
+```sh
+#!/bin/bash
+
+set -euo pipefail
+```
+
+`set -u`: Bash会把所有未定义的变量视为错误。默认情况下Bash会将未定义的变量视为空，不会报错，这也是很多坑的来源。
+`set -o pipefail`: 默认情况下Bash只会检查管道（pipeline）操作最后一个命令的返回值，假如最右边的命令成功那么它就认为这个语句没问题。这个行为其实是很不安全的，所以就有了set -o pipefail。这个特别的选项表示在管道连接的命令中，只要有任何一个命令失败（返回值非0），则整个管道操作被视为失败。只有管道中所有命令都成功执行了这个管道才算成功执行。[^pipefail]
+
 
 ## shell 查找函数定义在哪
 查询函数和别名[^list_all_aliases]
@@ -3318,4 +3330,5 @@ XDG (X Desktop Group) 定义了一套指向应用程序的环境变量，
 [^list_all_aliases]: https://unix.stackexchange.com/questions/322459/is-it-possible-to-check-where-an-alias-was-defined
 [^xdg]: https://winddoing.github.io/post/ef694e1f.html
 [^map]: https://zhuanlan.zhihu.com/p/289274320
+[^pipefail]: https://zhuanlan.zhihu.com/p/107135290
 
