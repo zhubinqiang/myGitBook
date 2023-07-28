@@ -105,6 +105,38 @@ dpkg -r mozybackup
 dpkg -P mozybackup
 ```
 
+`dpkg --list` 前2个字符的含义 [^dpkg-list]
+```
+Desired=Unknown/Install/Remove/Purge/Hold
+| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
+|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
+||/ Name    Version   Architecture Description
++++-=======-=========-============-=============================================
+ii  acl     2.3.1-1   amd64        access control list - utilities
+ii  apt     2.4.8     amd64        commandline package manager
+ii  bash    5.1-6     amd64        GNU Bourne Again SHell
+ii  bolt    0.9.2-1   amd64        system daemon to manage thunderbolt 3 devices
+ii  ed      1.18-1    amd64        classic UNIX line editor
+```
+
+第一个字符: 期望的状态
+- u: Unknown (an unknown state)
+- i: Install (marked for installation)
+- r: Remove (marked for removal)
+- p: Purge (marked for purging)
+- h: Hold
+
+第二个字符：当前的状态
+- n: Not- The package is not installed
+- i: Inst – The package is successfully installed
+- c: Cfg-files – Configuration files are present
+- u: Unpacked- The package is stilled unpacked
+- f: Failed-cfg- Failed to remove configuration files
+- h: Half-inst- The package is only partially installed
+- W: trig-aWait
+- t: Trig-pend
+
+
 ## dpkg 打deb包
 ```
 mydeb
@@ -487,4 +519,5 @@ $PLYMOUTH message --text="Waiting up to 60 more seconds for network configuratio
 sleep 59
 ```
 
+[^dpkg-list]: https://linuxprograms.wordpress.com/2010/05/11/status-dpkg-list/
 
