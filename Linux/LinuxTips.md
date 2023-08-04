@@ -2040,13 +2040,16 @@ echo 5
 -lva
 ```
 
-这个查看头文件来自哪里
+这个查看头文件, lib, pc来自哪里
 ```sh
 $ pkg-config --variable=includedir libdrm
 /usr/local/include
 
 $ pkg-config --variable=libdir libdrm
 /usr/local/lib64
+
+$ pkg-config --debug  --modversion libffi 2>&1 | grep 'Parsing package file'
+Parsing package file '/usr/lib/x86_64-linux-gnu/pkgconfig/libffi.pc'
 ```
 
 > 上面 variable 的值都来自来自libdrm.pc
