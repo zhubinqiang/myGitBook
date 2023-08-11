@@ -1251,6 +1251,40 @@ list=(A B C D)
 print_array "${list[*]}"
 ```
 
+## Shell数组
+通过下标遍历
+```sh
+s="abc"
+ID=(1278 1280 1281 1282)
+
+len=${#ID[*]}
+echo $len
+for i in $(seq 0 $len); do
+    touch ${s}${ID[$i]}
+done
+```
+
+直接遍历
+```sh
+IDs=(a
+b
+c)
+
+for i in ${IDs[@]}; do
+    echo ${i}
+done
+```
+
+往数组后面追加
+```sh
+ARGS=()
+ARGS+=(-a)
+ARGS+=(-b)
+ARGS+=(-c 123)
+
+echo ${ARG[@]}
+```
+
 ## map
 ```sh
 # declare -A dict
@@ -1803,39 +1837,6 @@ find . -name '*.txt' | xargs -I {} cp {} tmp
 find . -name '*.txt' -exec cp {} tmp2 \;
 ```
 
-## Shell数组
-通过下标遍历
-```sh
-s="abc"
-ID=(1278 1280 1281 1282)
-
-len=${#ID[*]}
-echo $len
-for i in $(seq 0 $len); do
-    touch ${s}${ID[$i]}
-done
-```
-
-直接遍历
-```sh
-IDs=(a
-b
-c)
-
-for i in ${IDs[@]}; do
-    echo ${i}
-done
-```
-
-往数组后面追加
-```sh
-ARGS=()
-ARGS+=(-a)
-ARGS+=(-b)
-ARGS+=(-c 123)
-
-echo ${ARG[@]}
-```
 
 ## bash 加上set的参数
 ```sh

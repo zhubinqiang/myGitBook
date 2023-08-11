@@ -56,6 +56,31 @@ git show HEAD^^  # 查看 HEAD 的父母的父母的信息
 git show HEAD~4  # 查看 HEAD 上溯 4 代的信息
 ```
 
+`~` 与 `^` 都表示父节点，但有所区别[^parents_nodes]
+想要 HEAD 的第 10 个祖先提交，我们直接用 `HEAD~10` 就可以了。 `<rev>~<n>` 用来表示一个提交的第 n 个祖先提交，
+如果不指定 n，那么默认为 1。 另外，`HEAD~~~` 和 `HEAD~3` 是等价的
+
+很多情况下一个提交并不是只有一个父提交。
+
+```
+* 96d2876 - (HEAD)
+*   f0ef2c8 - E
+|\
+| * 29d6d68 - D
+* | 8c5e386 - C
+|/
+* c58bcd9 - B
+* 715780d - A
+```
+
+C: HEAD~^ HEAD的父节点 的父节点中的第1个
+D: HEAD~^2  HEAD的父节点 的父节点中的第2个
+B: HEAD~3 HEAD的父节点 的父节点(这里有C，D2个中的第1个) 的父节点
+
+`<rev>^<n>` 用来表示一个提交的第 n 个父提交，如果不指定 n，那么默认为 1。 和 ~ 不同的是，`HEAD^^^` 并不等价于 `HEAD^3`，而是等价于 `HEAD^1^1^1`。
+
+`<rev>~n`: 从上往下数， `<rev^n>`: 从左往右数。
+这几个效果是一样的 `HEAD~~~`、`HEAD~3`、`HEAD^^^`、`HEAD^1^1^1`
 
 你可以给复杂名称起个别名：
 ```bash
@@ -68,6 +93,7 @@ git grep 帮助我们搜索：
 ```bash
 git grep “print” V3  # 在 V3 中搜索所有的包含 print 的行
 git grep “print”     # 在所有的历史记录中搜索包含 print 的行
+git grep -n "print" $(git rev-list --all) # 在所有commit中查询
 ```
 
 定位具体的历史记录
@@ -314,6 +340,21 @@ git apply --check xxx.patch
 git am xxx.patch
 ```
 
+## apply 其他repo的patch
+```sh
+git am xxx.patch
+git am --show-current-patch
+git apply --reject xxx.patch
+vim -O a.c.rej a.c
+git add a.c
+git am --resolved
+```
+
+## cherry-pick
+```sh
+git cherry-pick A..B   # commit (A, B]
+git cherry-pick A^..B  # commit [A, B]
+```
 
 # 打包发布
 ## tar 包
@@ -337,33 +378,25 @@ git commit --amend
 # 子模块
 
 添加子模块
-```
-git submodule add git://github.com/zhubinqiang/myTMS.git
+```sh
+git submodule add https://github.com/iphysresearch/GWToolkit.git GWToolkit
+git submodule update --init --recursive
 ```
 
 clone 一个带有子模块的项目
-```
-git clone git://github.com/zhubinqiang/myTMS.git
-cd myTMS/
+```sh
+git clone ${project_url}
+cd ${project_name}
 cd third_party/
 git submodule init
 git submodule update
 ```
 
+```sh
+git clone --recursive ${project_url}
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+[^parents_nodes]: https://scarletsky.github.io/2016/12/29/tilde-and-caret-in-git/
+[^submodule]: https://iphysresearch.github.io/blog/post/programing/git/git_submodule/
 
 
