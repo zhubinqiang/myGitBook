@@ -81,6 +81,10 @@ options hello howmany=5 whom=Tom
 hello.howmany=3 hello.whom=jerry
 ```
 
+开机不想载入可以写在配置文件中，或者kernel cmdline
+```sh
+echo 'blacklist i915' > /etc/modprobe.d/blacklist-i915.conf
+```
 
 ## 模块
 ```sh
