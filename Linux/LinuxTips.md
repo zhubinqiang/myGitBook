@@ -1348,6 +1348,21 @@ else
 fi
 ```
 
+## 函数
+```sh
+f2() {
+    echo "This is f2"
+}
+
+number=2
+f${number}
+
+fun=f2
+eval ${fun}
+```
+
+
+
 ## 单行脚本
 ```bash
 function_name() { command1; command2; ...; commandN; }
