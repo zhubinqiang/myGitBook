@@ -105,7 +105,9 @@ $\vec{p} = (\vec{p} \cdot \vec{u}) \vec{u} + (\vec{p} \cdot \vec{v}) \vec{v} +(\
 ## 矩阵
 ### 矩阵乘法
 矩阵乘法 **第1个矩阵的列数 = 第2个矩阵的行数** 才有意义
-(M x N) (N x P) = (M x P)
+(M行 x N列) (N行 x P列) = (M行 x P列)
+中间的N像是抵消了一样
+
 
 $$
 \begin{bmatrix} 1 & 3 \\
@@ -198,7 +200,9 @@ z_b
 \end{pmatrix}
 $$
 
-上面的 $A^*$ 是 向量A的dual matrix
+上面的 $A^*$ 不是A向量，是向量A的dual matrix。
+
+向量的点乘和叉乘都能写出矩阵的形式。
 
 ## 变换
 ### 缩放变换
@@ -872,6 +876,35 @@ for (int x = xmin; x < xmax; ++x) {
 
 #### 卷积操作
 ![](images/introduction-to-computer-graphics/convolution.png)
+
+
+
+
+
+
+
+## 光照
+### A simple Shading Model
+Blinn-Phong refectance model 着色模型。它假设物体表面由 高光、漫反射、环境光组成。
+
+![](images/introduction-to-computer-graphics/lighting.png)
+
+
+在这幅图里面
+v 是view 观测方向
+n 是normal 法线方向
+l 是light 光照方向
+**这里面的向量都是单位向量**
+![](images/introduction-to-computer-graphics/shading-point.png)
+
+### 漫反射
+![](images/introduction-to-computer-graphics/diffuse-reflection.png)
+
+
+![](images/introduction-to-computer-graphics/lambert-consine-law.png)
+
+![](images/introduction-to-computer-graphics/lambertian-shading.png)
+
 
 
 ## 参考文献
