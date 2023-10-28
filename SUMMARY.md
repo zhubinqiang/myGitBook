@@ -119,3 +119,4 @@
 * [计算机图形学](Computer-Graphices/README.md)
     * [计算机图形学入门](Computer-Graphics/introduction-to-computer-graphics.md)
     * [OpenGL](Computer-Graphics/OpenGL.md)
+    * [OpenGL-教程笔记](Computer-Graphics/OpenGL-beginners-tutorials.md)
