@@ -96,7 +96,7 @@
 
 ### 8bit的加法器
 ![](images/compute_base/8bit-adder.png)
-
+如果第9位有进位，这个叫做溢出 overflow。
 
 ## 计算机结构的简化模型
 图片来自： https://www.bilibili.com/video/BV1VE411o7nx?p=4
