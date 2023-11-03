@@ -762,6 +762,35 @@ $$
 透视投影 VS 正交投影
 ![](images/introduction-to-computer-graphics/orthographic-vs-perspective.png)
 
+
+<!-- $$
+\begin{bmatrix}
+\frac{2n}{r-1}   &&  0  &&        \frac{r+l}{r-l} &&   0 \\
+0                &&    \frac{2n}{t-b} &&  \frac{t+b}{t-b} &&   0 \\    
+0                &&      0   &&    -\frac{f+n}{f-n} && -\frac{2fn}{f-n} \\
+0                &&      0   &&    -1           && 0
+\end{bmatrix}
+$$ -->
+
+---
+这是个透视投影矩阵
+$$
+\begin{bmatrix}
+2n/(r-l)  &&   0    &&     (r+l)/(r-l)  &&  0 \\
+0   &&   2n/(t-b) &&  (t+b)/(t-b) &&  0 \\
+0   &&      0   &&    -(f+n)/(f-n) && -2fn/(f-n) \\
+0   &&      0    &&    -1      &&      0
+\end{bmatrix}
+$$
+
+其中，l, r, b, t分别代表了视锥体的左、右、下、上边界，n和f分别代表了视锥体的近、远裁剪面。
+
+这个矩阵的作用是将视锥体裁剪到一个单位立方体中，所有在视锥体内的顶点的坐标都在[-1, 1]的范围内。这个立方体就是我们之前提到的裁剪空间（Clip Space），经过透视除法（齐次除法）后就变成了标准设备坐标（Normalized Device Coordinates, NDC），这个过程会将齐次坐标转换为三维坐标。
+
+最后，NDC会经过视口变换（Viewport Transform），将顶点从NDC映射到视口空间，也就是屏幕上的实际像素位置。这个变换会将顶点的X和Y坐标从[-1, 1]的范围映射到[0, width]和[0, height]的范围，这里的width和height是视口的宽度和高度，也就是最终渲染结果要显示的区域的大小。
+
+
+
 ## 光栅化
 ### 屏幕
 定义屏幕

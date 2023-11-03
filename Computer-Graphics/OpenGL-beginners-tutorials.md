@@ -47,6 +47,15 @@ glGenVertexArrays(1, &VertexArrayID);
 glBindVertexArray(VertexArrayID);
 ```
 
+这段代码是OpenGL中创建并绑定一个顶点数组对象（Vertex Array Object，简称VAO）的常见做法。
+
+- `GLuint VertexArrayID;`：定义一个无符号整型变量，用来存储生成的顶点数组对象的ID。
+- `glGenVertexArrays(1, &VertexArrayID);`：生成一个新的顶点数组对象。函数的第一个参数表示我们要创建的顶点数组的数量，第二个参数是一个指针，指向我们事先定义好的用于存储顶点数组ID的变量。
+- `glBindVertexArray(VertexArrayID);`：绑定我们刚刚创建的顶点数组对象。当一个顶点数组对象被绑定后，任何之后的顶点数组操作都会在当前绑定的顶点数组对象上执行。
+
+顶点数组对象是OpenGL 3.0引入的一个特性，它可以将顶点属性的定义和顶点缓冲对象的数据打包存储起来，使得后续在绘制物体时更加方便，只需要绑定相应的顶点数组对象，就可以使用预先定义和存储的顶点属性和数据。
+
+
 窗口创建成功后（即OpenGL上下文创建后）紧接着完成上述动作；这一步必须在其他OpenGL调用前完成。
 
 ### 屏幕坐标系
@@ -91,6 +100,16 @@ glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
 // Give our vertices to OpenGL.
 glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 ```
+
+这段代码是OpenGL中创建并绑定一个顶点缓冲对象（Vertex Buffer Object，简称VBO）的常见做法。
+- `GLuint vertexbuffer;`：定义一个无符号整型变量，用来存储生成的顶点缓冲对象的ID。
+- `glGenBuffers(1, &vertexbuffer);`：生成一个新的顶点缓冲对象。函数的第一个参数表示我们要创建的顶点缓冲对象的数量，第二个参数是一个指针，指向我们事先定义好的用于存储顶点缓冲对象ID的变量。
+- `glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);`：绑定我们刚刚创建的顶点缓冲对象。当一个顶点缓冲对象被绑定后，任何之后的顶点缓冲操作都会在当前绑定的顶点缓冲对象上执行。GL_ARRAY_BUFFER是一个目标，表示我们创建的是一个顶点缓冲对象。
+- `glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);`：将顶点数据复制到顶点缓冲对象中。函数的第一个参数是目标，第二个参数是顶点数据的大小，第三个参数是实际的顶点数据，第四个参数是我们希望如何使用这个数据。GL_STATIC_DRAW表示顶点数据几乎不会改变，它给OpenGL提示，可以将数据放在显卡的内存中以优化性能。
+
+这段代码的主要目的是将顶点数据上传到GPU，这样在渲染时，GPU可以直接访问这些数据，提高渲染效率。
+
+
 
 现在终于可以绘制三角形了：
 ```cpp

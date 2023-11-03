@@ -56,10 +56,30 @@ $$
 上面的过程表示为：
 (1, 1, 1) * (1, 0, 0) = (1, 0, 0)
 
+
+图元：点(GL_POINTS)、线(GL_LINES)、线条(GL_LINE_STRIP)、三角面(GL_TRIANGLES)
+片元：存储在GPU里面，与像素一一对应的元素。
+fragment: 对片元 像素级别的处理， 像深度测试、blend测试，模板测试
+
+
 ## 光照
 Phong Reflection Model
 
 ![](images/OpenGL/phone-reflection-model.png)
+
+
+
+
+## 纹理
+纹理的大小需要2的幂次方
+
+![](images/OpenGL-beginners-tutorials/MipMap_Example_STS101.jpg)
+
+原因是
+
+mipsmap
+
+
 
 
 
