@@ -573,7 +573,7 @@ glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 ```
 
 第三步：在GLSL中用MVP变换顶点
-```cpp
+```glsl
 // Input vertex data, different for all executions of this shader.
 layout(location = 0) in vec3 vertexPosition_modelspace;
 

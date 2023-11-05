@@ -790,6 +790,23 @@ $$
 最后，NDC会经过视口变换（Viewport Transform），将顶点从NDC映射到视口空间，也就是屏幕上的实际像素位置。这个变换会将顶点的X和Y坐标从[-1, 1]的范围映射到[0, width]和[0, height]的范围，这里的width和height是视口的宽度和高度，也就是最终渲染结果要显示的区域的大小。
 
 
+这个视频 [探秘三维透视投影 - 齐次坐标的妙用](https://www.bilibili.com/video/BV1LS4y1b7xZ/) 解释了如何用透视投影矩阵变换后，顶点处于近大远小的透视效果，以及剪裁到 [-1， 1] 的立方体中。
+
+![](images/introduction-to-computer-graphics/perspective-projection-1.png)
+远处的P 会投射到 近处的P撇
+
+![](images/introduction-to-computer-graphics/perspective-projection-2.png)
+![](images/introduction-to-computer-graphics/perspective-projection-3.png)
+原本z坐标上面的数字可以丢弃了，但它另外一个作用就是处理物体遮挡的问题。
+
+![](images/introduction-to-computer-graphics/perspective-projection-4.png)
+z坐标上面的变换到 [-1, 1] 之间。近处平面f上面的物体投影之后z坐标是-1，远处平面就是1。
+
+
+![](images/introduction-to-computer-graphics/perspective-projection-5.png)
+![](images/introduction-to-computer-graphics/perspective-projection-6.png)
+透视投影之后，整个物体已经发生形变。
+
 
 ## 光栅化
 ### 屏幕
@@ -805,6 +822,9 @@ pixel: picture element
 
 屏幕坐标系
 ![](images/introduction-to-computer-graphics/screen-coordinate.png)
+像素是一个小方块，它的坐标(x, y) , 其中x，y 都是整数。
+它的范围是 (0, 0) 到 (width - 1, height -1)。
+像素的中心坐标是(x + 0.5, y + 0.5)
 
 
 如何从空间变换到屏幕？
