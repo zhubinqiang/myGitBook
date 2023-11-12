@@ -807,6 +807,19 @@ z坐标上面的变换到 [-1, 1] 之间。近处平面f上面的物体投影之
 ![](images/introduction-to-computer-graphics/perspective-projection-6.png)
 透视投影之后，整个物体已经发生形变。
 
+## 视口变换 viewing transformation
+视口变换是先忽略z轴，在x，y平面内 [-1, 1] 转换成 [0, width] x [0, heigh]
+
+它的变换矩阵如下:
+$$
+\begin{bmatrix}
+width/2  &&   0    &&     0  &&  width/2 \\
+0   &&   height/2 &&  0 &&  height/2 \\
+0   &&      0   &&    1 &&  0 \\
+0   &&      0   &&    0 &&      1
+\end{bmatrix}
+$$
+
 
 ## 光栅化
 ### 屏幕

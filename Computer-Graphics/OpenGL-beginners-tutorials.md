@@ -1883,6 +1883,15 @@ pow(cosAlpha,5)用来控制镜面反射的波瓣。可以通过增大第二个�
 
 这个着色模型得益于其简单性，已经使用多年。但它存在很多问题，因而被microfacet BRDF（bidirectional reflection distribution function，微表面双向反射分布函数）之类的基于物理的（physically-based）模型所取代，这些内容后面会讲到。
 
+```glsl
+color =
+    // Ambient : simulates indirect lighting
+    MaterialAmbientColor +
+    // Diffuse : "color" of the object
+    MaterialDiffuseColor * LightColor * LightPower * cosTheta / (distance*distance) +
+    // Specular : reflective highlight, like a mirror
+    MaterialSpecularColor * LightColor * LightPower * pow(cosAlpha,5) / (distance*distance);
+```
 
 
 ![](images/OpenGL-beginners-tutorials/)
