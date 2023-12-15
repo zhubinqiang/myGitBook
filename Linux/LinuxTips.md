@@ -1231,6 +1231,8 @@ done
 ## 数组长度
 len=${#array[*]}
 
+echo ${!array2[@]} ## 0 1 2 3 4
+
 ## 通过下标遍历
 for((i=0; i<$len; i++));do
     echo ${array[$i]}
