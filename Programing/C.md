@@ -1573,8 +1573,8 @@ void f1() {
 
 
 ## Others
-`<stdio.h>`: 在系统目录下查找  
-`"a.c"`:  先在当前目录下找出，没有找到的话去系统目录查找。  
+### `<stdio.h>`: 在系统目录下查找
+`"a.c"`:  先在当前目录下找出，没有找到的话去系统目录查找。
 ```c
 #include <stdio.h>
 #include "a.c"
@@ -1587,6 +1587,72 @@ int main(void) {
     return 0;
 }
 ```
+
+### api.h
+在这个示例中，我们将函数指针类型定义放在了 `api.h` 文件中，每个厂商的实现放在了单独的文件中，然后在 `main.c` 文件中使用了这些实现。这种组织方式更加清晰和模块化，使得不同部分的代码更容易独立开发和维护。
+
+`api.h` 文件：
+```c
+// api.h
+
+// 定义 API 的函数指针类型
+typedef int (*APIFunction)(int);
+
+// 选择实现的函数声明
+APIFunction SelectImplementation(int vendor);
+```
+
+`vendor_a.c` 文件：
+```c
+// vendor_a.c
+
+#include "api.h"
+
+// 厂商 A 的实现
+int VendorAImplementation(int value) {
+    return value * 2;
+}
+```
+
+`vendor_b.c` 文件：
+```c
+// vendor_b.c
+
+#include "api.h"
+
+// 厂商 B 的实现
+int VendorBImplementation(int value) {
+    return value * value;
+}
+```
+
+`main.c` 文件：
+```c
+// main.c
+
+#include <stdio.h>
+#include "api.h"
+
+int main() {
+    int input = 3;
+    int selectedVendor = 1; // 假设选择了厂商 A
+
+    // 选择实现
+    APIFunction apiFunction = SelectImplementation(selectedVendor);
+
+    // 使用选择的实现
+    if (apiFunction != NULL) {
+        int result = apiFunction(input);
+        printf("Result using selected vendor's implementation: %d\n", result);
+    } else {
+        printf("Selected vendor's implementation not found\n");
+    }
+
+    return 0;
+}
+```
+
+
 
 
 

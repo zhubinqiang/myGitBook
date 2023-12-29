@@ -1803,10 +1803,23 @@ find . -name '*.html' -print0 | xargs -0 file
 find -iname "*txt*" -exec mv -v {} /home/user \;
 ```
 
-### find 删除当前目录下超过100天的文件
+### find 删除当前目录下超过5天的文件
 ```sh
-find . -maxdepth 1 -ctime 100 -exec rm -rf {} \;
+find . -maxdepth 1 -ctime +5 -exec rm -rf {} \;
 ```
+
+- `find . -ctime -5`：查找创建时间在5天之内的文件。
+- `find . -ctime +5`：查找创建时间在5天之前的文件。
+- `find . -ctime  5`: 查找创建时间精确为5天的文件。
+
+```
+   -5  -4  -3  -2  -1  0
+   |   |   |   |   |   |
+   +---+---+---+---+---+
+   ^                   ^
+  5天前              今天
+```
+
 
 ### find 找到可执行文件 并strip
 ```sh
