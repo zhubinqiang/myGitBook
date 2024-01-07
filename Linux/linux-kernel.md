@@ -160,7 +160,7 @@ The device model is organized around three main data structures:
 - The struct device_driver structure, which represents one driver capable of handling certain devices on a certain bus.
 - The struct device structure, which represents one device connected to a bus
 
-下面简要说明各自的概念及它们之间的关系：
+**下面简要说明各自的概念及它们之间的关系**：
 bus_type：
 bus_type代表计算机中的一类总线类型。总线是一种通信系统，允许连接到它的不同设备进行数据交换。每种类型的总线都有其特定的协议和行为方式。在内核中，bus_type结构体定义了一组特定类型的总线所共有的操作和特性。
 
@@ -185,7 +185,7 @@ device代表系统中的一个具体硬件设备。在内核设备模型中，�
 当操作系统（例如Linux）中的应用程序需要向一个设备发送一段字符时，该过程涉及到bus_type、device_driver和device的交互。以下是一个简化的例子，说明这三者在数据流中的作用：
 
 
-示例场景
+**示例场景**
 假设有一个应用程序需要向一个通过USB连接的打印机发送一段文本以打印。
 
 步骤和数据流
@@ -217,6 +217,40 @@ bus_type的作用：
 总结
 在这个过程中，bus_type（USB总线）定义了如何物理连接和通信，device（打印机）是实际的硬件设备，而device_driver是使打印机能与操作系统交流的软件组件。这个流程涵盖了数据从应用程序到硬件设备的完整路径，展示了这三个内核组件如何协同工作以实现设备通信和操作。
 
+**以一个USB闪存驱动器为例来说明/dev/目录下的设备文件和内核中的device实例之间的关系**
+
+示例场景
+假设你将一个USB闪存驱动器插入计算机的USB端口。
+
+
+**内核中的device实例的创建**
+
+USB闪存驱动器被连接：
+当你插入USB闪存驱动器时，USB总线控制器检测到了一个新设备的连接。
+
+内核识别新设备：
+内核的USB子系统响应这个新设备，启动一个新的device实例来代表这个USB闪存驱动器。
+
+加载设备驱动：
+根据USB闪存驱动器的识别信息（如厂商ID和产品ID），内核选择并加载适当的驱动程序（如果尚未加载）。
+/dev/目录下的设备文件的创建
+
+udev创建设备文件：
+一旦内核识别并准备好设备，udev（设备管理器）将在/dev/目录下为该设备创建一个设备文件。假设文件被命名为/dev/sdb1。
+应用程序通过设备文件访问USB闪存驱动器
+
+
+应用程序访问设备：
+一个文件浏览器或命令行工具现在可以通过访问/dev/sdb1设备文件来与USB闪存驱动器交互。
+
+读写操作：
+当你尝试从USB闪存驱动器读取文件或向其写入文件时，这些操作会转化为对应的read或write系统调用，它们作用于/dev/sdb1。
+系统调用经由设备文件转发到内核中负责该设备的驱动程序。
+驱动程序随后会操作内核中的device实例来执行实际的硬件操作。
+
+
+总结
+在这个例子中，内核中的device实例是USB闪存驱动器在内核设备模型中的表示，而/dev/sdb1是一个设备文件，它提供了一个用户空间应用程序可以通过文件I/O操作访问USB闪存驱动器的接口。这两者通过设备驱动程序连接起来，使得用户空间操作能够转化为内核和硬件层面的动作。
 
 
 sysfs is usually mounted in /sys
