@@ -967,6 +967,53 @@ l 是light 光照方向
 
 ![](images/introduction-to-computer-graphics/lambertian-shading.png)
 
+这里面参数
+1. 对于这个 $I/r^2$ 指的是能量从源开始以一个球向外辐射(距离的平方反比)
+2. $\boldsymbol{x} \cdot \boldsymbol{I}$, 两个单位向量点乘，他们的模长都是1。所以结果是 $\cos{\theta}$
+3. $max(0, \boldsymbol{x} \cdot \boldsymbol{I})$ 值的是结果是介于(0, $\cos{\theta}$)之间。表示直射多少能量。
+4. $k_d$ 这里指的是反射了多少
+
+## 插值
+### 线性插值
+这里有个视频来解释线性插值 Rasterizer Algorithm Explanation[^Rasterizer-Algorithm-Explanation]
+![](images/introduction-to-computer-graphics/linear-interpolation.png)
+
+### 双线性插值
+![](images/introduction-to-computer-graphics/bilinear-interpolation.png)
+
+先用 A与B 通过线性插值 计算出P
+用 C与D 通过线性插值 计算出Q
+再通过P与Q 线性插值。
+
+## 重心坐标
+对于一维 [^Barycentric-Interpolation]来说， 处于 $x_1$ 与 $x_2$ 之间的p，把线段的长度分成了2部分。可以看做
+p占据了t的 $x_1$ 加上 $(1-t)x_2$。
+
+p点的值可以表示为：
+$$
+t = tx_1 + (1-t)x_2
+$$
+
+![](images/introduction-to-computer-graphics/barycentric-interpolation-1.png)
+
+对于二维来说，p点把三角形的面积分成了3部分
+A点对面的的三角形，与A不相邻的三角形 $A_A$
+![](images/introduction-to-computer-graphics/barycentric-interpolation-3.png)
+
+![](images/introduction-to-computer-graphics/barycentric-interpolation-4.png)
+
+p(x, y)点还可以表示为：
+$$
+\alpha = \frac{-(x - x_B)(y_C - y_B) + (y - y_B)(x_C - x_B)}{-(x_A - x_B)(y_C - y_B) +(y_A - y_B)(x_C - x_B)} \\
+\beta = \frac{-(x - x_C)(y_A - y_C) + (y - y_C)(x_A - x_C)}{-(x_B - x_C)(y_A - y_C) +(y_B - y_C)(x_A - x_C)} \\
+\gamma = 1 - \alpha - \beta
+$$
+
+一旦算出重心坐标，可以利用重心坐标可以为纹理坐标、颜色等插值。
+![](images/introduction-to-computer-graphics/barycentric-interpolation-5.png)
+
+> **重心坐标在投影不能保证坐标是不变**
+
 
 
 ## 参考文献
@@ -976,5 +1023,7 @@ l 是light 光照方向
 [^orthogonal-matrix]: https://zhuanlan.zhihu.com/p/34897603
 [^Rodrigues-rotation-formula]: https://baike.baidu.com/item/%E7%BD%97%E5%BE%B7%E9%87%8C%E6%A0%BC%E6%97%8B%E8%BD%AC%E5%85%AC%E5%BC%8F
 [^orthographic-transformation]: https://zhuanlan.zhihu.com/p/144329075
+[^Rasterizer-Algorithm-Explanation]: https://www.youtube.com/watch?v=t7Ztio8cwqM
+[^Barycentric-Interpolation]: https://blog.csdn.net/silangquan/article/details/21990713
 
 
