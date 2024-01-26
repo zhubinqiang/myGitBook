@@ -1617,6 +1617,11 @@ sed '1,3s/my/your/g; 3,$s/This/That/g' my.txt
 123 AAA
 ```
 
+提取字符串中的数字
+```bash
+echo "performance: 15779.3 GFLOPS" | sed 's/[^0-9.]*\([0-9.]\+\).*/\1/'
+```
+
 ```sh
 [media@s5n8c2 t2]$ sed 's/This is my \([^,]*\),.*is \(.*\)/\1:\2/g' my.txt
 cat:betty
@@ -2502,6 +2507,31 @@ net.ipv4.icmp_echo_ignore_all=1
 sudo sysctl -p
 ```
 
+## sysctl 修改内核参数
+用于在内核运行时动态地读取或修改内核参数[^sysctl]
+```bash
+## 查看所有可读变量
+sudo sysctl -a
+
+## 查看单个变量
+sudo sysctl net.ipv4.icmp_echo_ignore_all
+cat /proc/sys/net/ipv4/icmp_echo_ignore_all
+
+## 设置内核参数
+sudo sysctl net.ipv4.icmp_echo_ignore_all=1
+```
+
+
+修改 /etc/sysctl.conf 会长时有效
+```
+net.ipv4.icmp_echo_ignore_all = 1
+```
+
+需要执行下面命令使其立即生效
+```bash
+sudo sysctl -p
+```
+
 ### DNS
 当出现 resolv.conf 链接到 stub-resolv.conf
 ```sh
@@ -3365,4 +3395,5 @@ XDG (X Desktop Group) 定义了一套指向应用程序的环境变量，
 [^xdg]: https://winddoing.github.io/post/ef694e1f.html
 [^map]: https://zhuanlan.zhihu.com/p/289274320
 [^pipefail]: https://zhuanlan.zhihu.com/p/107135290
+[^sysctl]: https://www.iplaysoft.com/tools/linux-command/c/sysctl.html
 
