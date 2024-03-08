@@ -689,6 +689,21 @@ pkg_config_path=${PKG_CONFIG_PATH:+":"$PKG_CONFIG_PATH}
 
 > 其实不用冒号:也成立
 
+
+### shell在变量中存储多行输出
+
+变量中存储多行输出 需要加双引号[^multi-lines]
+```bash
+res=$(echo -e "abc\ndef")
+
+## 只有一行
+echo $res
+
+## 多行输出
+echo "${res}"
+```
+
+
 ### 冒号
 参考[csdn](https://blog.csdn.net/honghuzhilangzixin/article/details/7073312)
 
@@ -709,7 +724,7 @@ fi
 : your comment here
 ```
 
-> #后的注释内容不会被检查，但:后的注释内容会被检查，如果有语句如果出现语法错误，则会报错 参考[这里](https://ixyzero.com/blog/archives/2512.html)
+> 第一行的 # 后面的注释内容不会被检查，但:后的注释内容会被检查，如果有语句如果出现语法错误，则会报错 参考[这里](https://ixyzero.com/blog/archives/2512.html)
 
 多行注释
 ```sh
@@ -3396,4 +3411,5 @@ XDG (X Desktop Group) 定义了一套指向应用程序的环境变量，
 [^map]: https://zhuanlan.zhihu.com/p/289274320
 [^pipefail]: https://zhuanlan.zhihu.com/p/107135290
 [^sysctl]: https://www.iplaysoft.com/tools/linux-command/c/sysctl.html
+[^multi-lines]: [https://blog.51cto.com/seekstar/5756772]
 
