@@ -1840,6 +1840,11 @@ find . -maxdepth 1 -ctime +5 -exec rm -rf {} \;
   5天前              今天
 ```
 
+精确时间定位到1天
+这个命令查找到比 2/8 新，但不比2/9新。所以就是2/9那天。
+```bash
+find . -newermt "2024-02-08" ! -newermt "2024-02-09"
+```
 
 ### find 找到可执行文件 并strip
 ```sh
