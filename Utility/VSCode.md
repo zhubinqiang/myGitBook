@@ -13,7 +13,7 @@ http://vscode.cdn.azure.cn/stable/VSCode-win32-x64-1.45.1.zip
 ## 插件
 `Ctrl + Shift + P` 输入 `Install Extensions` 进行插件的安装
 
-插件默认安装的位置: `C:\Users\用户名\.vscode\extensions`
+插件默认安装的位置: `%HOMEPATH%\.vscode\extensions`
 
 常用插件:
 - Vim 
@@ -47,6 +47,8 @@ ctrl + ,: 打开Settings
 ## 设置
 打开文件始终在新标签页打开：`workbench.editor.enablePreview`: `false`
 关闭自动更新：`Update: Mode`: `none`
+设置 git bash 为默认Shell：
+Ctrl + Shift + P: Select Default Profile --> git bash
 
 ## 在Windows下创建快捷方式
 ```bat
