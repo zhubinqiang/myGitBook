@@ -12,8 +12,15 @@
 ## 晶体管
 ![](images/compute_base/transistor.png)
 
-> N型MOS管高电平导通  
+> N型MOS管高电平导通
 > P型MOS管低电平导通
+
+以下图为例[^mosfet]
+当栅极通电时，会产生电场，吸引P区的电子往栅极移动。由于栅极的下方是绝缘体的二氧化硅。
+当P区上方的自由电子浓度变高，整个晶体管就可以导通。
+当栅极不通电时，此时栅极附近的电子不在此处聚焦，整个晶体管就截止了。
+
+![](images/compute_base/mosfet.png)
 
 ### 逻辑电路
 ### 非门
@@ -107,7 +114,7 @@
 ### 存储器
 ![](images/compute_base/simple-mode-2.png)
 
-### CPU 控制器 
+### CPU 控制器
 ![](images/compute_base/simple-mode-3.png)
 
 #### 控制器的基本组成
@@ -424,4 +431,6 @@ VNC
 
 [^and-or-latch]: https://www.bilibili.com/video/BV1EW411u7th/?p=6&vd_source=5483606993f558f6ec3fbc3230b66c5d
 [^add-xor-and]: https://www.youtube.com/watch?v=1I5ZMmrOfnA&list=PL8dPuuaLjXtNlUrzyH5r6jN9ulIgZBpdo&index=6
+[^mosfet]: https://www.youtube.com/watch?v=rqX22NgFzMk
+
 

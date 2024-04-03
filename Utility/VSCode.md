@@ -23,6 +23,7 @@ http://vscode.cdn.azure.cn/stable/VSCode-win32-x64-1.45.1.zip
 - Markmap
 - vscode-note
 - Remote - SSH
+- C/C++ Extension Pack
 - Python
 - One Dark Pro
 - eva theme
