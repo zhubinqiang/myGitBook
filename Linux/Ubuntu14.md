@@ -62,6 +62,20 @@ apt-get remove python-apt
 apt-get remove --purge python-apt
 ```
 
+`apt update` 命令主要更新以下两个文件
+
+Packages 文件：Packages 文件是软件包索引的核心文件之一。当运行 apt update 命令时，系统会从配置的软件源中下载最新的 Packages 文件，其中**包含了所有可用软件包的信息**，如软件包的名称、版本号、依赖关系、描述等。更新 Packages 文件可以确保系统获取到最新的软件包列表，以便后续的软件包管理操作。
+
+Release 文件：Release 文件是软件源的元数据文件，**包含了软件源的信息和数字签名**。当运行 apt update 命令时，系统还会下载最新的 Release 文件，用于验证软件源的完整性和可信度。通过检查 Release 文件的数字签名，系统可以确保从可信的软件源中获取软件包信息，提高系统的安全性。
+
+在 Ubuntu 系统中，软件包索引文件通常存储在 /var/lib/apt/lists/ 目录下。每个软件源对应一个文件，文件名通常以软件源的名称和扩展名结尾（如 archive.ubuntu.com_ubuntu_dists_bionic_main_binary-amd64_Packages）。这些文件包含了软件包的元数据信息，如软件包的名称、版本号、依赖关系等。
+
+```bash
+apt-get install -y liblz4-tool
+lz4 ubuntu_dists_focal-updates_Contents-amd64.lz4
+```
+
+
 ### apt-cache
 ```sh
 ## 搜索包
