@@ -95,6 +95,7 @@
     * [apache](Service/apache.md)
     * [nginx](Service/nginx.md)
     * [numactl](Service/numactl.md)
+    * [cockpit](Service/cockpit.md)
 
 * [Windows](Windows/README.md)
     * [Windows常用命令](Windows/Windows-common-commands.md)
