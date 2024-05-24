@@ -219,6 +219,7 @@ media       ALL=(ALL)   NOPASSWD:  ALL
 ```
 
 > media 用户得要加入wheel组  `usermod -G wheel media`
+> 执行了 `newgrp media` 之后就不用logout
 
 
 或者添加到 /etc/sudoers.d/nopasswd 文件中
@@ -270,6 +271,17 @@ sudo sh -c "echo a > 1.txt"
 ```
 
 > `sudo bash -c "echo a > 1.txt"` 也可以
+
+### sudo 之后 command not found
+在 /etc/sudoers 文件中，把路径加入到 secure_path 中：
+```
+Defaults secure_path="/usr/local/sbin:/home/your_username/.local/bin"
+```
+
+```bash
+sudo vi
+sudo -E vi
+```
 
 ## Terminal 有颜色
 ```sh
@@ -1865,6 +1877,11 @@ find . -path ./.git -prune -o -type f -print
 
 > 这里的 `-o` 是短路求值
 > 排除 .repo 后面 `-print` 不能少
+
+### find 正则
+```bash
+ find /sys/devices -regex '.*/drm/card[0-9]*/engine/[rc]cs[0-9]*/preempt_timeout_ms' -exec echo {} \; -exec cat {} \;
+```
 
 ## xargs
 xargs命令的作用，是将标准输入转为命令行参数

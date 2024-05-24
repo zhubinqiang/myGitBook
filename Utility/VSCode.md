@@ -44,6 +44,20 @@ ctrl + ,: 打开Settings
 
 `ctrl + K` 是一个快捷键前缀
 
+
+vim插件中，禁用某些快捷键 [^vim_handlekeys], Settings --> vim handle --> Edit in settings.json
+```json
+{
+    "vim.handleKeys": {
+
+        "<C-a>": false,
+        "<C-d>": false,
+        "<C-s>": false,
+        "<C-z>": false
+    }
+}
+```
+
 ## 设置
 打开文件始终在新标签页打开：`workbench.editor.enablePreview`: `false`
 关闭自动更新：`Update: Mode`: `none`
@@ -187,4 +201,5 @@ logpoints: 使用它我们可以以非阻塞、打日志的方式来调试程序
 [^VSCode_Cool_youtube]: https://www.youtube.com/watch?v=HfHsX2yxfNg&list=PLNEp_Xli9W_lUQTtRYG7883bGah63UkNB
 [^VSCode_Cool_bilibili]: https://space.bilibili.com/30677217/video
 [^debug_toolbar]: https://github.com/vscodecool/vscodecool.github.io#23-debug-toolbar%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F
+[^vim_handlekeys]: https://blog.csdn.net/weixin_50134791/article/details/121179927
 

@@ -87,6 +87,8 @@ iptables -t filter -A INPUT -s 172.18.0.1/16 -d 10.xxx.xxx.xxx -p tcp --dport 22
 
 -t: 指定要查看的表名。不指定的话，默认查询filter表。
 -A: append 追加
+-I: insert
+-R: replace
 -s: source 来源
 -d: destination 目标
 -p: protocol 协议
@@ -110,6 +112,19 @@ iptables -t nat -I PREROUTING -p tcp --dport 10002 -j DNAT --to 192.168.112.98:3
 
 iptables -t nat -L -n | grep -E '10001|10002'
 ```
+
+> 在使用 NAT 时，通常需要启用 IP 转发
+
+除了上面 `sysctl -w net.ipv4.ip_forward=1` 之外，还可以这样做：
+```bash
+# 启用 IP 转发
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+# 永久启用 IP 转发（编辑 /etc/sysctl.conf 文件）
+echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+sysctl -p
+```
+
 
 [^quick]: https://www.bilibili.com/video/BV1Ym4y1X7CK/
 [^jump]: https://bbs.huaweicloud.com/blogs/105847

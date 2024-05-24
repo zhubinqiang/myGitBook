@@ -54,6 +54,7 @@
     * [GPG](Utility/gpg.md)
     * [hashcat](Utility/hashcat.md)
     * [Ventoy](Utility/ventoy.md)
+    * [有意思的命令](Utility/interesting-commands.md)
 
 * [Programing](Programing/README.md)
     * [Shell 模板](Programing/Shell_Template.md)
